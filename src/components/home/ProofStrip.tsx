@@ -22,7 +22,7 @@ export function ProofStrip() {
                   i < 3 ? "md:border-r md:border-[rgba(139,155,247,0.14)]" : ""
                 }`}
               >
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold font-display text-[#8B9BF7] tracking-tight drop-shadow-[0_0_16px_rgba(139,155,247,0.25)] group-hover:scale-[1.03] transition-transform origin-left">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display bg-gradient-to-r from-white via-[#CAD1F0] to-[#8B9BF7] bg-clip-text text-transparent tracking-tight drop-shadow-[0_0_16px_rgba(139,155,247,0.25)] group-hover:scale-[1.03] transition-transform origin-left">
                   <AnimatedCounter value={stat.value} duration={1.2} />
                 </div>
                 <div className="text-xs font-semibold text-white group-hover:text-[#B8C0EC] transition-colors">

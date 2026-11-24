@@ -59,28 +59,28 @@ export default function HackathonsPage() {
 
       {/* 10.2 Achievement Overview: Separated Totals */}
       <MotionReveal delay={0.1}>
-        <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] grid grid-cols-2 md:grid-cols-4 gap-6 text-xs font-mono shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+        <div className="editorial-card meadow-card p-5 sm:p-6 bg-[#0F1118] border border-[#1E2337] grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-xs font-mono shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
           <div className="space-y-1">
             <span className="text-[#727896] uppercase tracking-wider block text-[10px]">Total Competitions</span>
-            <span className="text-3xl font-bold font-display text-white block">18</span>
+            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">18</span>
             <span className="text-[11px] text-[#727896]">National &amp; global sprints</span>
           </div>
 
-          <div className="space-y-1 border-l border-[#1E2337] pl-6">
+          <div className="space-y-1 border-l border-[#1E2337] pl-4 sm:pl-6">
             <span className="text-[#FFC857] uppercase tracking-wider block text-[10px]">Grand Champions</span>
-            <span className="text-3xl font-bold font-display text-[#FFC857] block drop-shadow-[0_0_12px_rgba(255,200,87,0.3)]">7</span>
+            <span className="text-2xl sm:text-3xl font-bold font-display text-[#FFC857] block drop-shadow-[0_0_12px_rgba(255,200,87,0.3)]">7</span>
             <span className="text-[11px] text-[#BAC0DC]">1st place &amp; track awards</span>
           </div>
 
-          <div className="space-y-1 border-l border-[#1E2337] pl-6">
+          <div className="space-y-1 border-t md:border-t-0 pt-3 md:pt-0 md:border-l border-[#1E2337] md:pl-6">
             <span className="text-[#8B9BF7] uppercase tracking-wider block text-[10px]">Runners-Up</span>
-            <span className="text-3xl font-bold font-display text-[#8B9BF7] block">5</span>
+            <span className="text-2xl sm:text-3xl font-bold font-display text-[#8B9BF7] block">5</span>
             <span className="text-[11px] text-[#BAC0DC]">2nd place &amp; track honors</span>
           </div>
 
-          <div className="space-y-1 border-l border-[#1E2337] pl-6">
+          <div className="space-y-1 border-t md:border-t-0 pt-3 md:pt-0 border-l border-[#1E2337] pl-4 sm:pl-6">
             <span className="text-[#BAC0DC] uppercase tracking-wider block text-[10px]">Finalists / Sprints</span>
-            <span className="text-3xl font-bold font-display text-white block">6</span>
+            <span className="text-2xl sm:text-3xl font-bold font-display text-white block">6</span>
             <span className="text-[11px] text-[#727896]">Top selections &amp; entrants</span>
           </div>
         </div>
@@ -148,14 +148,14 @@ export default function HackathonsPage() {
       <div className="space-y-6">
         <MotionReveal delay={0.1}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E2337]">
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1.5 sm:pb-0 -mx-1 px-1">
               {filterTabs.map((tab) => {
                 const isSelected = resultFilter === tab.id;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setResultFilter(tab.id)}
-                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                       isSelected
                         ? "text-[#08090E] font-semibold"
                         : "text-[#BAC0DC] hover:text-white bg-[#151824] border border-[#1E2337]"

@@ -70,14 +70,14 @@ export default function ProjectsPage() {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             
             {/* Category Filter Chips with sliding layout pill */}
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1.5 sm:pb-0 -mx-1 px-1">
               {categories.map((cat) => {
                 const isSelected = activeCategory === cat;
                 return (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                    className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 transition-colors cursor-pointer ${
                       isSelected
                         ? "text-[#08090E] font-semibold"
                         : "text-[#BAC0DC] hover:text-white bg-[#151824] border border-[#1E2337]"
@@ -97,7 +97,7 @@ export default function ProjectsPage() {
             </div>
 
             {/* Search Field & Sort */}
-            <div className="flex items-center gap-3 w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto">
               <div className="relative flex-1 lg:w-64">
                 <Search className="w-4 h-4 text-[#727896] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
@@ -112,7 +112,7 @@ export default function ProjectsPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as "newest" | "featured")}
-                className="bg-[#08090E] border border-[#1E2337] rounded-lg px-3 py-2 text-xs text-[#BAC0DC] focus:outline-none focus:border-[#8B9BF7]/60"
+                className="bg-[#08090E] border border-[#1E2337] rounded-lg px-3 py-2 text-xs text-[#BAC0DC] focus:outline-none focus:border-[#8B9BF7]/60 cursor-pointer"
               >
                 <option value="featured">Featured First</option>
                 <option value="newest">Newest First</option>

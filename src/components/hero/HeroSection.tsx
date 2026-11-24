@@ -34,13 +34,16 @@ export function HeroSection() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.4 }}
-              className="chip py-1 px-3.5 h-auto text-xs font-mono inline-flex items-center gap-2.5 shadow-[0_0_12px_rgba(47,179,106,0.15)]"
+              className="chip py-1 px-3 sm:px-3.5 h-auto text-[11px] sm:text-xs font-mono inline-flex items-center gap-2 sm:gap-2.5 shadow-[0_0_12px_rgba(47,179,106,0.15)] max-w-full"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2FB36A] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2FB36A]" />
               </span>
-              <span>Independent Engineering Squad • 18 Competitions</span>
+              <span className="truncate sm:whitespace-normal">
+                <span className="hidden xs:inline">Independent Engineering Squad</span>
+                <span className="xs:hidden">Squad</span> • 18 Competitions
+              </span>
             </motion.div>
 
             {/* Headline */}
@@ -71,11 +74,11 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="pt-4 flex flex-wrap items-center gap-4"
+              className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4"
             >
               <Link
                 href="/projects"
-                className="btn-meadow-dark"
+                className="btn-meadow-dark justify-center w-full sm:w-auto"
               >
                 <span>Explore our work</span>
                 <ArrowRight className="w-4 h-4" />
@@ -83,7 +86,7 @@ export function HeroSection() {
 
               <Link
                 href="/hackathons"
-                className="btn-meadow-secondary"
+                className="btn-meadow-secondary justify-center w-full sm:w-auto"
               >
                 <Trophy className="w-4 h-4 text-[#FFC857]" />
                 <span>Our hackathon journey</span>
@@ -98,7 +101,7 @@ export function HeroSection() {
             transition={{ delay: 0.25, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-5"
           >
-            <div className="meadow-card p-6 sm:p-7 relative overflow-hidden space-y-5">
+            <div className="meadow-card p-5 sm:p-7 relative overflow-hidden space-y-5">
               
               {/* Card Header & Interactive Tabs */}
               <div className="flex items-center justify-between pb-3 border-b border-[rgba(139,155,247,0.15)]">

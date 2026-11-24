@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { InteractiveBackground } from "@/components/ui/InteractiveBackground";
+import { CloudIntroLoader } from "@/components/ui/CloudIntroLoader";
 import { siteConfig } from "@/data/siteConfig";
 
 const inter = Inter({
@@ -74,6 +75,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#08090E] text-[#FFFFFF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-[#FFFFFF]`}
       >
+        <CloudIntroLoader />
         <InteractiveBackground />
         <Navbar />
         <main className="flex-1 relative z-10">{children}</main>

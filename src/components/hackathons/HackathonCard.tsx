@@ -23,18 +23,18 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
   const getBadgeStyle = () => {
     switch (hackathon.resultType) {
       case "winner":
-        return "bg-[#FFC857]/10 text-[#FFC857] border-[#FFC857]/40 shadow-[0_0_12px_rgba(255,200,87,0.15)]";
+        return "bg-[#FFC857]/15 text-[#FFC857] border-[#FFC857]/45 shadow-[0_0_14px_rgba(255,200,87,0.25)]";
       case "runner_up":
-        return "bg-[#8B9BF7]/10 text-[#8B9BF7] border-[#8B9BF7]/40 shadow-[0_0_12px_rgba(139,155,247,0.15)]";
+        return "bg-[#8B9BF7]/15 text-[#8B9BF7] border-[#8B9BF7]/45 shadow-[0_0_14px_rgba(139,155,247,0.25)]";
       case "finalist":
-        return "bg-[#151824] text-[#BAC0DC] border-[#1E2337]";
+        return "bg-[rgba(22,27,44,0.7)] text-[#CAD1F0] border-[rgba(139,155,247,0.25)]";
       default:
-        return "bg-[#151824] text-[#727896] border-[#1E2337]";
+        return "bg-[rgba(22,27,44,0.7)] text-[#8E96B8] border-[rgba(139,155,247,0.2)]";
     }
   };
 
   return (
-    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#2B324E] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(139,155,247,0.1)] h-full">
+    <div className="meadow-card p-6 sm:p-7 flex flex-col justify-between group h-full">
       {/* Top Header */}
       <div className="space-y-4">
         

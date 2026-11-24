@@ -39,10 +39,10 @@ export function FeaturedProjectsEditorial() {
 
         {/* Primary Project Feature: 7/5 Split */}
         <MotionReveal delay={0.1} duration={0.6}>
-          <div className="meadow-card p-6 sm:p-10 bg-[#0F1118] border border-[#1E2337] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-[0_12px_36px_rgba(0,0,0,0.6)] group hover:border-[#2B324E] transition-all duration-300">
+          <div className="meadow-card p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center group">
             
             {/* Left 7 Columns: Visual Preview & Diagrammatic Badge */}
-            <div className="lg:col-span-7 relative overflow-hidden rounded-lg border border-[#1E2337] bg-[#08090E] aspect-video">
+            <div className="lg:col-span-7 relative overflow-hidden rounded-xl border border-[rgba(139,155,247,0.22)] bg-[#08090E]/60 aspect-video">
               <img
                 src={flagship.coverImage}
                 alt={flagship.title}
@@ -50,7 +50,7 @@ export function FeaturedProjectsEditorial() {
                 loading="lazy"
               />
               <div className="absolute top-4 left-4">
-                <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-[#151824]/95 text-[#8B9BF7] border border-[#8B9BF7]/40 shadow-[0_0_12px_rgba(139,155,247,0.25)]">
+                <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-semibold bg-[#151824]/90 backdrop-blur-md text-[#8B9BF7] border border-[#8B9BF7]/40 shadow-[0_0_14px_rgba(139,155,247,0.3)]">
                   Flagship Case Study
                 </span>
               </div>
@@ -58,7 +58,7 @@ export function FeaturedProjectsEditorial() {
 
             {/* Right 5 Columns: Metadata, Context & Actions */}
             <div className="lg:col-span-5 space-y-5">
-              <div className="flex items-center gap-2 text-xs font-mono text-[#727896]">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#8E96B8]">
                 <span>{flagship.category}</span>
                 <span>•</span>
                 <span>{flagship.year}</span>
@@ -70,12 +70,12 @@ export function FeaturedProjectsEditorial() {
                 {flagship.title}
               </h3>
 
-              <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans">
+              <p className="text-sm text-[#CAD1F0] leading-relaxed font-sans">
                 {flagship.summary}
               </p>
 
-              <div className="p-3.5 rounded-lg bg-[#151824] border border-[#1E2337] text-xs space-y-1">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#727896]">
+              <div className="p-3.5 rounded-lg glass-panel-inset text-xs space-y-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#8E96B8]">
                   Validated Outcome
                 </div>
                 <div className="text-xs text-white">
@@ -123,11 +123,11 @@ export function FeaturedProjectsEditorial() {
           {secondaryProjects.map((project) => (
             <MotionItem key={project.slug}>
               <div 
-                className="meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between space-y-5 shadow-[0_8px_24px_rgba(0,0,0,0.5)] h-full hover:border-[#2B324E] hover:-translate-y-1 transition-all duration-300"
+                className="meadow-card p-6 sm:p-7 flex flex-col justify-between space-y-5 h-full"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-[#727896]">{project.category} • {project.year}</span>
+                    <span className="text-[#8E96B8]">{project.category} • {project.year}</span>
                     <span className="text-[#2FB36A] font-medium">{project.status}</span>
                   </div>
 
@@ -137,7 +137,7 @@ export function FeaturedProjectsEditorial() {
                     </h4>
                   </Link>
 
-                  <p className="text-xs text-[#BAC0DC] leading-relaxed line-clamp-2">
+                  <p className="text-xs text-[#CAD1F0] leading-relaxed line-clamp-2">
                     {project.summary}
                   </p>
 
@@ -150,8 +150,8 @@ export function FeaturedProjectsEditorial() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#1E2337] flex items-center justify-between">
-                  <span className="text-[11px] font-mono text-[#727896]">
+                <div className="pt-4 border-t border-[rgba(139,155,247,0.14)] flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-[#8E96B8]">
                     {project.outcome}
                   </span>
                   <Link

@@ -98,17 +98,17 @@ export function HeroSection() {
             transition={{ delay: 0.25, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="lg:col-span-5"
           >
-            <div className="meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] relative overflow-hidden space-y-5 shadow-[0_16px_40px_rgba(0,0,0,0.6)]">
+            <div className="meadow-card p-6 sm:p-7 relative overflow-hidden space-y-5">
               
               {/* Card Header & Interactive Tabs */}
-              <div className="flex items-center justify-between pb-3 border-b border-[#1E2337]">
-                <div className="flex items-center gap-1.5 bg-[#151824] p-1 rounded-lg border border-[#1E2337]/80">
+              <div className="flex items-center justify-between pb-3 border-b border-[rgba(139,155,247,0.15)]">
+                <div className="flex items-center gap-1.5 glass-panel-inset p-1 rounded-lg">
                   <button
                     onClick={() => setActiveTab("console")}
                     className={`px-2.5 py-1 rounded text-[11px] font-mono transition-all ${
                       activeTab === "console"
-                        ? "bg-[#0F1118] text-[#8B9BF7] font-semibold shadow-sm"
-                        : "text-[#727896] hover:text-white"
+                        ? "bg-[#8B9BF7]/20 text-[#8B9BF7] border border-[#8B9BF7]/40 font-semibold shadow-sm"
+                        : "text-[#BAC0DC] hover:text-white"
                     }`}
                   >
                     Console
@@ -117,8 +117,8 @@ export function HeroSection() {
                     onClick={() => setActiveTab("telemetry")}
                     className={`px-2.5 py-1 rounded text-[11px] font-mono transition-all ${
                       activeTab === "telemetry"
-                        ? "bg-[#0F1118] text-[#8B9BF7] font-semibold shadow-sm"
-                        : "text-[#727896] hover:text-white"
+                        ? "bg-[#8B9BF7]/20 text-[#8B9BF7] border border-[#8B9BF7]/40 font-semibold shadow-sm"
+                        : "text-[#BAC0DC] hover:text-white"
                     }`}
                   >
                     Telemetry
@@ -127,8 +127,8 @@ export function HeroSection() {
                     onClick={() => setActiveTab("stack")}
                     className={`px-2.5 py-1 rounded text-[11px] font-mono transition-all ${
                       activeTab === "stack"
-                        ? "bg-[#0F1118] text-[#8B9BF7] font-semibold shadow-sm"
-                        : "text-[#727896] hover:text-white"
+                        ? "bg-[#8B9BF7]/20 text-[#8B9BF7] border border-[#8B9BF7]/40 font-semibold shadow-sm"
+                        : "text-[#BAC0DC] hover:text-white"
                     }`}
                   >
                     Stack
@@ -187,16 +187,16 @@ export function HeroSection() {
                       transition={{ duration: 0.2 }}
                       className="space-y-3 pt-2 text-xs font-mono"
                     >
-                      <div className="p-2.5 rounded bg-[#151824] border border-[#1E2337] flex justify-between items-center">
-                        <span className="text-[#727896]">Championship Record:</span>
+                      <div className="p-2.5 rounded-lg glass-panel-inset flex justify-between items-center">
+                        <span className="text-[#8E96B8]">Championship Record:</span>
                         <span className="text-[#FFC857] font-semibold">7 Titles · 12 Podiums</span>
                       </div>
-                      <div className="p-2.5 rounded bg-[#151824] border border-[#1E2337] flex justify-between items-center">
-                        <span className="text-[#727896]">Sub-10ms Telemetry:</span>
+                      <div className="p-2.5 rounded-lg glass-panel-inset flex justify-between items-center">
+                        <span className="text-[#8E96B8]">Sub-10ms Telemetry:</span>
                         <span className="text-[#8B9BF7] font-semibold">9.4ms Sliding Window</span>
                       </div>
-                      <div className="p-2.5 rounded bg-[#151824] border border-[#1E2337] flex justify-between items-center">
-                        <span className="text-[#727896]">Squad Uptime:</span>
+                      <div className="p-2.5 rounded-lg glass-panel-inset flex justify-between items-center">
+                        <span className="text-[#8E96B8]">Squad Uptime:</span>
                         <span className="text-white font-semibold">18 Sprints Continuous</span>
                       </div>
                     </motion.div>

@@ -71,8 +71,8 @@ export default function ContactPage() {
         
         {/* 12.2 Contact Methods & Telemetry (Left 5 Columns) */}
         <MotionReveal direction="left" delay={0.1} className="lg:col-span-5 space-y-6">
-          <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] rounded-xl space-y-5">
-            <h2 className="text-base font-bold text-[#FFFFFF] pb-3 border-b border-[#1E2337]">
+          <div className="meadow-card p-6 space-y-5">
+            <h2 className="text-base font-bold text-[#FFFFFF] pb-3 border-b border-[rgba(139,155,247,0.14)]">
               Direct Inquiries
             </h2>
 
@@ -157,7 +157,7 @@ export default function ContactPage() {
 
         {/* 12.3 Contact Form (Right 7 Columns) */}
         <MotionReveal direction="right" delay={0.15} className="lg:col-span-7">
-          <div className="editorial-card meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] rounded-xl shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+          <div className="meadow-card p-6 sm:p-8">
             <AnimatePresence mode="wait">
               {submitted ? (
                 <motion.div

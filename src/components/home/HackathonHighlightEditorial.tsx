@@ -57,13 +57,13 @@ export function HackathonHighlightEditorial() {
           <MotionReveal direction="right" delay={0.15} className="lg:col-span-7 space-y-6">
             
             {/* Featured Event Story Card */}
-            <div className="meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] space-y-4 shadow-[0_12px_36px_rgba(0,0,0,0.6)] hover:border-[#2B324E] transition-all duration-300">
+            <div className="meadow-card p-6 sm:p-8 space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
                 <span className={`px-2.5 py-0.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 ${getResultBadge(featuredWin.resultType)}`}>
                   <Trophy className="w-3.5 h-3.5 text-[#FFC857]" />
                   <span>{featuredWin.badgeLabel}</span>
                 </span>
-                <span className="text-[#727896]">
+                <span className="text-[#8E96B8]">
                   {featuredWin.date} • {featuredWin.duration}
                 </span>
               </div>
@@ -74,16 +74,16 @@ export function HackathonHighlightEditorial() {
                     {featuredWin.name}
                   </h3>
                 </Link>
-                <p className="text-xs text-[#727896] mt-1 font-mono">
+                <p className="text-xs text-[#8E96B8] mt-1 font-mono">
                   Organized by {featuredWin.organizer} • {featuredWin.location}
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-lg bg-[#151824] border border-[#1E2337] text-xs space-y-1">
+              <div className="p-3.5 rounded-lg glass-panel-inset text-xs space-y-1">
                 <div className="font-mono text-[#8B9BF7] font-semibold">
                   Built: {featuredWin.projectTitle}
                 </div>
-                <p className="text-[#BAC0DC] leading-relaxed">
+                <p className="text-[#CAD1F0] leading-relaxed">
                   {featuredWin.solutionSummary}
                 </p>
               </div>
@@ -103,19 +103,19 @@ export function HackathonHighlightEditorial() {
             </div>
 
             {/* Notable Timeline Strip Beneath */}
-            <div className="meadow-card p-4 sm:p-6 bg-[#0F1118]/60 border border-[#1E2337] space-y-3">
-              <div className="text-[11px] font-mono text-[#727896] uppercase tracking-wider">
+            <div className="meadow-card p-4 sm:p-6 space-y-3">
+              <div className="text-[11px] font-mono text-[#8E96B8] uppercase tracking-wider">
                 Recent Notable Sprints
               </div>
               
-              <div className="divide-y divide-[#1E2337]">
+              <div className="divide-y divide-[rgba(139,155,247,0.14)]">
                 {timelineEvents.map((evt) => (
-                  <div key={evt.slug} className="py-3 first:pt-1 last:pb-1 flex items-center justify-between gap-4 group hover:bg-[#151824]/30 px-2 -mx-2 rounded transition-colors">
+                  <div key={evt.slug} className="py-3 first:pt-1 last:pb-1 flex items-center justify-between gap-4 group hover:bg-[rgba(139,155,247,0.06)] px-2 -mx-2 rounded transition-colors">
                     <div className="space-y-0.5">
                       <div className="text-xs font-semibold text-white group-hover:text-[#8B9BF7] transition-colors">
                         {evt.name}
                       </div>
-                      <div className="text-[11px] text-[#727896] font-mono">
+                      <div className="text-[11px] text-[#8E96B8] font-mono">
                         {evt.date} • {evt.projectTitle}
                       </div>
                     </div>

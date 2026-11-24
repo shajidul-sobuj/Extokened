@@ -40,11 +40,11 @@ export function TeamPreviewEditorial() {
           {teamMembers.map((member) => (
             <MotionItem key={member.slug}>
               <div 
-                className="meadow-card p-6 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between space-y-5 shadow-[0_8px_24px_rgba(0,0,0,0.5)] h-full hover:border-[#2B324E] hover:-translate-y-1 transition-all duration-300 group"
+                className="meadow-card p-6 flex flex-col justify-between space-y-5 h-full group"
               >
                 <div className="space-y-4">
                   {/* Avatar with consistent crop */}
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#151824] border border-[#1E2337] group-hover:border-[#8B9BF7]/50 transition-colors">
+                  <div className="w-16 h-16 rounded-xl overflow-hidden glass-panel-inset shrink-0">
                     <img
                       src={member.avatar}
                       alt={member.name}

@@ -44,17 +44,17 @@ export function PhilosophyEditorial() {
         </div>
 
         {/* 3 Core Principles List with MotionStagger */}
-        <MotionStagger stagger={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[#1E2337]">
+        <MotionStagger stagger={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[rgba(139,155,247,0.14)]">
           {siteConfig.principles.map((principle, idx) => (
             <MotionItem key={idx}>
-              <div className="meadow-card p-6 bg-[#0F1118]/60 border border-[#1E2337] rounded-xl space-y-3 h-full hover:border-[#2B324E] hover:-translate-y-1 transition-all duration-300">
+              <div className="meadow-card p-6 space-y-3 h-full">
                 <div className="text-xs font-mono font-bold text-[#8B9BF7]">
                   0{idx + 1} // PRINCIPLE
                 </div>
                 <h3 className="text-lg font-bold text-white">
                   {principle.title}
                 </h3>
-                <p className="text-xs text-[#BAC0DC] leading-relaxed">
+                <p className="text-xs text-[#CAD1F0] leading-relaxed">
                   {principle.description}
                 </p>
               </div>

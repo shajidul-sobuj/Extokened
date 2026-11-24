@@ -10,23 +10,23 @@ interface MemberCardProps {
 
 export function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all space-y-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <div className="meadow-card p-6 flex flex-col justify-between group space-y-6">
       {/* Top Header */}
       <div className="space-y-4">
         
         {/* Identifier & Badge */}
-        <div className="flex items-center justify-between text-xs pb-3 border-b border-[#1E2337]">
-          <span className="text-[11px] font-mono text-[#727896]">
+        <div className="flex items-center justify-between text-xs pb-3 border-b border-[rgba(139,155,247,0.14)]">
+          <span className="text-[11px] font-mono text-[#8E96B8]">
             @{member.slug}
           </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#8B9BF7]/10 text-[#8B9BF7] border border-[#8B9BF7]/30">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#8B9BF7]/15 text-[#8B9BF7] border border-[#8B9BF7]/35 shadow-[0_0_10px_rgba(139,155,247,0.15)]">
             {member.badge}
           </span>
         </div>
 
         {/* Portrait & Identity */}
         <div className="space-y-3">
-          <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#151824] border border-[#1E2337] shrink-0">
+          <div className="w-16 h-16 rounded-xl overflow-hidden glass-panel-inset shrink-0">
             <img
               src={member.avatar}
               alt={member.name}

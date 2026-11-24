@@ -12,15 +12,15 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#2B324E] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(139,155,247,0.1)] h-full">
+    <div className="meadow-card p-6 sm:p-7 flex flex-col justify-between group h-full">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-          <span className="text-[#727896]">
+          <span className="text-[#8E96B8]">
             {project.category}
           </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border border-[#2FB36A]/30 text-[#2FB36A] bg-[#2FB36A]/10">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border border-[#2FB36A]/40 text-[#2FB36A] bg-[#2FB36A]/10 shadow-[0_0_10px_rgba(47,179,106,0.15)]">
             {project.status}
           </span>
         </div>

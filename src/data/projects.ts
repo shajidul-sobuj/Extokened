@@ -42,7 +42,7 @@ export const projects: Project[] = [
     category: "AI & Agents",
     status: "Prototype",
     year: 2025,
-    coverImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80",
     technologies: ["Next.js 15", "Google Gemini API", "FastAPI", "Python", "WebSockets", "TimescaleDB", "Tailwind CSS"],
     liveUrl: "https://pulse-ai.extokened.dev",
     sourceUrl: "https://github.com/extokened/pulse-ai",

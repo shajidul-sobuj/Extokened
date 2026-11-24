@@ -37,9 +37,6 @@ export default function ProjectsPage() {
       return b.year - a.year;
     });
 
-  const featuredWide = filtered[0];
-  const remainingProjects = filtered.slice(1);
-
   const hasActiveFilters = activeCategory !== "All" || activeStatus !== "All" || searchQuery !== "";
 
   const clearFilters = () => {
@@ -195,75 +192,22 @@ export default function ProjectsPage() {
           </div>
         </MotionReveal>
       ) : (
-        <div className="space-y-6">
-          
-          {/* Top Wide Feature (when no search query is active and items exist) */}
-          {featuredWide && (
-            <MotionReveal delay={0.15}>
-              <div className="editorial-card meadow-card p-6 sm:p-10 bg-[#0F1118] border border-[#1E2337] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-[0_12px_36px_rgba(0,0,0,0.5)] group hover:border-[#2B324E] transition-all duration-300">
-                <div className="lg:col-span-7 relative overflow-hidden rounded-lg border border-[#1E2337] bg-[#08090E] aspect-video">
-                  <img
-                    src={featuredWide.coverImage}
-                    alt={featuredWide.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                  />
-                </div>
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-mono text-[#727896]">
-                    <span>{featuredWide.category}</span>
-                    <span>•</span>
-                    <span>{featuredWide.year}</span>
-                    <span>•</span>
-                    <span className="text-[#2FB36A] font-medium">{featuredWide.status}</span>
-                  </div>
-                  <h3 className="font-card-title font-bold text-white group-hover:text-[#B8C0EC] transition-colors">
-                    {featuredWide.title}
-                  </h3>
-                  <p className="text-sm text-[#BAC0DC] leading-relaxed">
-                    {featuredWide.summary}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {featuredWide.technologies.slice(0, 5).map((tech) => (
-                      <span key={tech} className="tech-tag">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="pt-2">
-                    <Link
-                      href={`/projects/${featuredWide.slug}`}
-                      className="btn-meadow-dark"
-                    >
-                      <span>Read case study</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </MotionReveal>
-          )}
-
-          {/* Remaining Projects in a 2-Column Balanced Mixed Grid */}
-          {remainingProjects.length > 0 && (
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-              <AnimatePresence>
-                {remainingProjects.map((project) => (
-                  <motion.div
-                    key={project.slug}
-                    layout
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ProjectCard project={project} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          )}
-
-        </div>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+          <AnimatePresence>
+            {filtered.map((project) => (
+              <motion.div
+                key={project.slug}
+                layout
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
 
       {/* 8.5 End CTA */}

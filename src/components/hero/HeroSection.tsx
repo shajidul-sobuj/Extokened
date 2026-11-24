@@ -20,31 +20,11 @@ export function HeroSection() {
         {/* ======================================================== */}
         <div className="text-center max-w-4xl mx-auto space-y-6 sm:space-y-7">
           
-          {/* Top Live Achievement Pill */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[rgba(16,20,38,0.7)] backdrop-blur-xl border border-[rgba(139,155,247,0.28)] shadow-[0_4px_20px_rgba(0,0,0,0.4),0_0_20px_rgba(139,155,247,0.12),inset_0_1px_0_rgba(255,255,255,0.15)] max-w-full hover:border-[rgba(139,155,247,0.45)] transition-all"
-          >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2FB36A] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2FB36A] shadow-[0_0_8px_#2FB36A]" />
-            </span>
-            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-mono font-medium truncate">
-              <span className="text-[#CAD1F0] tracking-[0.08em] uppercase">EXTOKENED SQUAD</span>
-              <span className="text-[#3E4770]">/</span>
-              <span className="text-[#8B9BF7] tracking-wider">18 HACKATHONS</span>
-              <span className="text-[#3E4770]">/</span>
-              <span className="text-[#FFC857] tracking-wider font-semibold">7 CHAMPIONSHIPS</span>
-            </div>
-          </motion.div>
-
           {/* Main Title */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.6 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
             className="font-hero-display font-extrabold tracking-[-0.04em] text-white select-none"
           >
             <span className="block bg-gradient-to-b from-[#FFFFFF] via-[#F0F3FF] to-[#CAD3FF] bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(255,255,255,0.1)]">

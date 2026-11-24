@@ -1,179 +1,276 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Github, Linkedin, Facebook } from "@/components/ui/Icons";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubscribed(true);
+      setEmail("");
+    }
+  };
 
   return (
-    <footer className="relative bg-[#0A0A0B] border-t border-[#292B2E] pt-20 pb-12 text-sm font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative bg-[#0D0D0D] border-t border-[#2D221A] pt-16 sm:pt-20 pb-0 text-sm font-sans overflow-hidden">
+      
+      {/* Background Ambient Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#F0A24C]/[0.03] blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Top: Wordmark + Short Positioning Statement */}
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 pb-14 border-b border-[#292B2E]">
-          <div className="space-y-3 max-w-md">
+        {/* Main 4-Part Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-[#2D221A]">
+          
+          {/* Part 1: Brand & Positioning (4 columns) */}
+          <div className="lg:col-span-4 space-y-5">
             <Link 
               href="/" 
-              className="flex items-center gap-3 group inline-flex focus:outline-none"
+              className="inline-flex items-center gap-3 group focus:outline-none"
             >
-              <div className="w-8 h-8 rounded-md bg-[#111214] border border-[#292B2E] flex items-center justify-center font-mono font-bold text-[#F3F1EC] text-xs">
+              <div className="w-8 h-8 rounded-md bg-[#1D1510] border border-[#F0A24C]/40 flex items-center justify-center font-mono font-bold text-[#F0A24C] text-xs group-hover:border-[#F0A24C] group-hover:shadow-[0_0_12px_rgba(240,162,76,0.3)] transition-all">
                 &lt;E/&gt;
               </div>
-              <span className="font-display font-semibold text-xl tracking-tight text-[#F3F1EC]">
+              <span className="font-display font-semibold text-xl tracking-tight text-white">
                 Extokened
               </span>
             </Link>
-            <p className="text-sm text-[#AAA9A3] leading-relaxed">
-              {siteConfig.positioning}
+
+            <p className="text-sm text-[#ADADAD] leading-relaxed max-w-sm">
+              Extokened keeps every system resilient and fast, so we never rebuild from scratch. An independent squad shipping practical software from hackathons to production.
             </p>
+
+            {/* Social Outline Icons in #E0A165 */}
+            <div className="flex items-center gap-3 pt-2">
+              <a
+                href={siteConfig.socials.github.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Extokened GitHub"
+                className="w-9 h-9 rounded-full bg-[#1D1510] border border-[#2D221A] flex items-center justify-center text-[#E0A165] hover:border-[#F0A24C]/60 hover:text-white hover:shadow-[0_0_12px_rgba(240,162,76,0.25)] transition-all"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href={siteConfig.socials.linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Extokened LinkedIn"
+                className="w-9 h-9 rounded-full bg-[#1D1510] border border-[#2D221A] flex items-center justify-center text-[#E0A165] hover:border-[#F0A24C]/60 hover:text-white hover:shadow-[0_0_12px_rgba(240,162,76,0.25)] transition-all"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href={siteConfig.socials.facebook.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Extokened Facebook"
+                className="w-9 h-9 rounded-full bg-[#1D1510] border border-[#2D221A] flex items-center justify-center text-[#E0A165] hover:border-[#F0A24C]/60 hover:text-white hover:shadow-[0_0_12px_rgba(240,162,76,0.25)] transition-all"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
-          {/* Direct Contact Pill */}
-          <div className="space-y-2">
-            <span className="text-xs font-mono text-[#777873] uppercase tracking-wider block">
-              Direct Contact
-            </span>
-            <a
-              href={`mailto:${siteConfig.contactEmail}`}
-              className="inline-flex items-center gap-1.5 text-sm font-mono text-[#F3F1EC] hover:text-[#C6F36A] transition-colors"
-            >
-              <span>{siteConfig.contactEmail}</span>
-              <ArrowUpRight className="w-4 h-4 text-[#777873]" />
-            </a>
-            <p className="text-xs text-[#777873] font-mono">
-              {siteConfig.location}
-            </p>
+          {/* Part 2: Navigation Columns (5 columns split into 3 sub-columns) */}
+          <div className="lg:col-span-5 grid grid-cols-3 gap-6 sm:gap-8">
+            {/* Column 1: Projects */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-white">
+                Projects
+              </h4>
+              <ul className="space-y-2 text-xs text-[#ADADAD]">
+                <li>
+                  <Link href="/projects/pulseai" className="hover:text-[#F0A24C] transition-colors">
+                    PulseAI
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects/gridsync" className="hover:text-[#F0A24C] transition-colors">
+                    GridSync
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects/khashra" className="hover:text-[#F0A24C] transition-colors">
+                    Khashra
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects/sentinelx" className="hover:text-[#F0A24C] transition-colors">
+                    SentinelX
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects" className="text-[#F0A24C] hover:underline flex items-center gap-1 pt-1">
+                    <span>All Projects</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: Hackathons */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-white">
+                Hackathons
+              </h4>
+              <ul className="space-y-2 text-xs text-[#ADADAD]">
+                <li>
+                  <Link href="/hackathons" className="hover:text-[#F0A24C] transition-colors">
+                    National &apos;24
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hackathons" className="hover:text-[#F0A24C] transition-colors">
+                    Global AI &apos;24
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hackathons" className="hover:text-[#F0A24C] transition-colors">
+                    NASA Apps &apos;23
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hackathons" className="hover:text-[#F0A24C] transition-colors">
+                    Devpost Track
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hackathons" className="text-[#F0A24C] hover:underline flex items-center gap-1 pt-1">
+                    <span>Honor Roll</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Company */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-white">
+                Company
+              </h4>
+              <ul className="space-y-2 text-xs text-[#ADADAD]">
+                <li>
+                  <Link href="/about" className="hover:text-[#F0A24C] transition-colors">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/team" className="hover:text-[#F0A24C] transition-colors">
+                    Core Team
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-[#F0A24C] transition-colors">
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-[#F0A24C] transition-colors">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/links" className="hover:text-[#F0A24C] transition-colors">
+                    Links Hub
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
+
+          {/* Part 3: Newsletter & Direct Inquiries (3 columns) */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-white">
+              Subscribe to Updates
+            </h4>
+            <p className="text-xs text-[#ADADAD] leading-relaxed">
+              Get notified of hackathon results, project breakdowns, and sprint logs.
+            </p>
+
+            <form onSubmit={handleSubscribe} className="space-y-2">
+              <div className="relative flex items-center">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="team@extokened.dev"
+                  required
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-[#141210] border border-[#2D221A] text-xs text-white placeholder-[#7D7D7D] focus:outline-none focus:border-[#F0A24C]/60 focus:ring-1 focus:ring-[#F0A24C]/60 pr-11"
+                />
+                <button
+                  type="submit"
+                  aria-label="Subscribe"
+                  className="absolute right-1 top-1 bottom-1 px-3 btn-metal flex items-center justify-center rounded-md text-white"
+                >
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {subscribed ? (
+                <div className="flex items-center gap-1.5 text-[11px] text-[#74C69D] font-mono pt-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Subscribed! We respect your inbox.</span>
+                </div>
+              ) : (
+                <p className="text-[11px] text-[#7D7D7D] font-mono">
+                  Verified updates. Unsubscribe anytime.
+                </p>
+              )}
+            </form>
+          </div>
+
         </div>
 
-        {/* Middle: Navigation Columns & Social Links */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-b border-[#292B2E]">
-          {/* Column 1: Navigation */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#F3F1EC]">
-              Navigation
-            </h4>
-            <ul className="space-y-2 text-[#AAA9A3]">
-              <li>
-                <Link href="/" className="hover:text-[#F3F1EC] transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#F3F1EC] transition-colors">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="hover:text-[#F3F1EC] transition-colors">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/hackathons" className="hover:text-[#F3F1EC] transition-colors">
-                  Hackathons
-                </Link>
-              </li>
-              <li>
-                <Link href="/team" className="hover:text-[#F3F1EC] transition-colors">
-                  Team
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-[#F3F1EC] transition-colors">
-                  Contact
-                </Link>
-              </li>
-            </ul>
+        {/* Part 4: Reaching Marble Hands & Giant Sunken EXTOKENED Wordmark */}
+        <div className="relative pt-12 sm:pt-16 pb-0 flex flex-col items-center justify-end overflow-hidden min-h-[220px] sm:min-h-[260px] md:min-h-[300px]">
+          
+          {/* Centered Copyright Statement */}
+          <div className="relative z-20 text-center space-y-1 mb-6 sm:mb-8">
+            <div className="text-xs sm:text-sm font-mono tracking-wider text-[#ADADAD]">
+              ©{currentYear} <span className="text-white font-medium">Extokened</span>
+            </div>
+            <div className="text-xs font-mono text-[#7D7D7D]">
+              Build real software, fast.
+            </div>
           </div>
 
-          {/* Column 2: Focus Areas */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#F3F1EC]">
-              Demonstrated Areas
-            </h4>
-            <ul className="space-y-2 text-[#AAA9A3]">
-              <li>Generative AI &amp; Agents</li>
-              <li>Modern Web Architectures</li>
-              <li>Distributed Backend &amp; Data</li>
-              <li>Applied Computer Vision</li>
-            </ul>
+          {/* Left Hand: Marble sculpture reaching right with warm amber rim light */}
+          <div className="absolute left-0 bottom-4 sm:bottom-6 md:bottom-8 w-44 sm:w-64 md:w-80 lg:w-[420px] pointer-events-none select-none z-10 opacity-90 transition-transform duration-700 hover:translate-x-2">
+            <Image
+              src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4c029f38-d0a0-46d1-9ebc-3edcdaa11fc1.png"
+              alt="Carrara marble left hand reaching right with amber rim light"
+              width={582}
+              height={290}
+              className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(240,162,76,0.2)]"
+            />
           </div>
 
-          {/* Column 3: Official Social Channels */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#F3F1EC]">
-              Official Channels
-            </h4>
-            <ul className="space-y-2 text-[#AAA9A3]">
-              <li>
-                <a
-                  href={siteConfig.socials.github.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#F3F1EC] transition-colors inline-flex items-center gap-1.5"
-                >
-                  <Github className="w-3.5 h-3.5" />
-                  <span>GitHub</span>
-                  <ArrowUpRight className="w-3 h-3 text-[#777873]" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={siteConfig.socials.linkedin.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#F3F1EC] transition-colors inline-flex items-center gap-1.5"
-                >
-                  <Linkedin className="w-3.5 h-3.5" />
-                  <span>LinkedIn</span>
-                  <ArrowUpRight className="w-3 h-3 text-[#777873]" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={siteConfig.socials.facebook.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#F3F1EC] transition-colors inline-flex items-center gap-1.5"
-                >
-                  <Facebook className="w-3.5 h-3.5" />
-                  <span>Facebook</span>
-                  <ArrowUpRight className="w-3 h-3 text-[#777873]" />
-                </a>
-              </li>
-            </ul>
+          {/* Right Hand: Marble sculpture reaching left with warm amber rim light */}
+          <div className="absolute right-0 bottom-4 sm:bottom-6 md:bottom-8 w-44 sm:w-64 md:w-80 lg:w-[420px] pointer-events-none select-none z-10 opacity-90 transition-transform duration-700 hover:-translate-x-2">
+            <Image
+              src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7eba3f06-a99e-44b8-bd46-7ccfaf6b2363.png"
+              alt="Carrara marble right hand reaching left with amber rim light"
+              width={558}
+              height={328}
+              className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(240,162,76,0.2)]"
+            />
           </div>
 
-          {/* Column 4: Standards */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#F3F1EC]">
-              Integrity
-            </h4>
-            <p className="text-xs text-[#AAA9A3] leading-relaxed">
-              Every hackathon result, project outcome, and telemetry metric published on this site is verified with public repository and competition evidence.
-            </p>
+          {/* Giant Thin Amber-Brown EXTOKENED Wordmark Sinking Off Bottom */}
+          <div className="wordmark-sunken relative z-0 w-full translate-y-[24%] sm:translate-y-[28%] font-display font-light uppercase opacity-75 pointer-events-none select-none tracking-widest text-[#5A3418]">
+            EXTOKENED
           </div>
-        </div>
 
-        {/* Bottom: Legal / Privacy / Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#777873]">
-          <div>
-            © {currentYear} Extokened. All rights reserved.
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-[#AAA9A3] transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/links" className="hover:text-[#AAA9A3] transition-colors">
-              Profile Links
-            </Link>
-            <Link href="/contact" className="hover:text-[#AAA9A3] transition-colors">
-              Contact Team
-            </Link>
-          </div>
         </div>
 
       </div>

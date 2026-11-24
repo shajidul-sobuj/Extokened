@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #0A0A0B;
-  --foreground: #F3F1EC;
+  --background: #0D0D0D;
+  --foreground: #FFFFFF;
 }
 
 * {
@@ -17,8 +17,8 @@ html {
 }
 
 body {
-  background-color: #0A0A0B;
-  color: #F3F1EC;
+  background-color: #0D0D0D;
+  color: #FFFFFF;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
@@ -26,27 +26,27 @@ body {
 
 /* Custom Editorial Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0B;
+  background: #0D0D0D;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #292B2E;
-  border-radius: 2px;
+  background: #2D221A;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #414449;
+  background: #3D2E24;
 }
 
-/* Selection highlight using Acid-Lime */
+/* Selection highlight using Warm Amber */
 ::selection {
-  background-color: rgba(198, 243, 106, 0.25);
-  color: #F3F1EC;
+  background-color: rgba(240, 162, 76, 0.35);
+  color: #FFFFFF;
 }
 
 @layer utilities {
@@ -75,54 +75,62 @@ body {
     letter-spacing: -0.015em;
   }
 
-  /* Architectural Grid */
-  .editorial-grid {
+  /* Architectural Warm Grid */
+  .editorial-grid,
+  .studio-grid,
+  .warm-grid {
     background-size: 64px 64px;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(to right, rgba(240, 162, 76, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(240, 162, 76, 0.025) 1px, transparent 1px);
   }
 
-  .studio-grid {
-    background-size: 64px 64px;
-    background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  }
-
-  /* Editorial Card */
+  /* Warm Card Surfaces */
   .editorial-card,
-  .studio-card {
-    background-color: #191B1F;
-    border: 1px solid #292B2E;
-    border-radius: 10px;
-    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease;
+  .studio-card,
+  .warm-card {
+    background-color: #141210;
+    border: 1px solid #2D221A;
+    border-radius: 12px;
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease, box-shadow 240ms ease;
   }
 
   .editorial-card:hover,
-  .studio-card:hover {
+  .studio-card:hover,
+  .warm-card:hover {
     transform: translateY(-2px);
-    border-color: #414449;
+    border-color: #3D2E24;
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(240, 162, 76, 0.04);
   }
 
-  /* Primary Button (Acid-Lime) */
+  /* Glossy Amber-Glass Button (Signature CTA) */
+  .btn-amber-glass,
   .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.625rem 1.25rem;
-    background-color: #C6F36A;
-    color: #10120A;
+    padding: 0.65rem 1.4rem;
+    background: linear-gradient(135deg, #2C241D 0%, #7A5832 100%);
+    color: #FFFFFF;
     font-size: 0.875rem;
     font-weight: 600;
-    border-radius: 8px;
-    transition: background-color 180ms ease, transform 180ms ease;
+    border-radius: 9999px;
+    border: 1px solid rgba(240, 162, 76, 0.45);
+    box-shadow: 0 0 24px rgba(240, 162, 76, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
+  .btn-amber-glass:hover,
   .btn-primary:hover {
-    background-color: #B6E659;
+    background: linear-gradient(135deg, #382E25 0%, #8E673B 100%);
+    border-color: rgba(240, 162, 76, 0.7);
+    box-shadow: 0 0 32px rgba(240, 162, 76, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+    color: #FFFFFF;
   }
 
+  .btn-amber-glass:active,
   .btn-primary:active {
     transform: scale(0.98);
   }
@@ -131,51 +139,90 @@ body {
   .btn-secondary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.625rem 1.25rem;
-    background-color: transparent;
-    color: #F3F1EC;
+    padding: 0.65rem 1.25rem;
+    background-color: #141210;
+    color: #ADADAD;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #292B2E;
-    border-radius: 8px;
-    transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    border: 1px solid #2D221A;
+    border-radius: 9999px;
+    transition: all 180ms ease;
   }
 
   .btn-secondary:hover {
-    background-color: #191B1F;
-    border-color: #414449;
+    background-color: #1D1814;
+    border-color: #3D2E24;
+    color: #FFFFFF;
+    transform: translateY(-1px);
   }
 
   .btn-secondary:active {
     transform: scale(0.98);
   }
 
-  /* Metadata Label / Eyebrow */
+  /* Warm Metal Button (Newsletter Submit Key) */
+  .btn-metal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4A3525 0%, #8C5E32 100%);
+    color: #FFFFFF;
+    border: 1px solid rgba(240, 162, 76, 0.45);
+    border-radius: 8px;
+    transition: all 180ms ease;
+  }
+
+  .btn-metal:hover {
+    background: linear-gradient(135deg, #5C422F 0%, #A26D3A 100%);
+    border-color: rgba(240, 162, 76, 0.7);
+    box-shadow: 0 0 18px rgba(240, 162, 76, 0.35);
+  }
+
+  /* Dark Amber Pill Badge */
+  .pill-amber,
   .eyebrow-label {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    background-color: #1D1510;
+    border: 1px solid rgba(240, 162, 76, 0.4);
+    border-radius: 9999px;
     font-family: var(--font-jetbrains-mono), monospace;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #C6F36A;
+    letter-spacing: 0.06em;
+    color: #F0A24C;
+    box-shadow: 0 0 14px rgba(240, 162, 76, 0.1);
   }
 
   /* Compact Tech & Result Tags */
   .tech-tag {
     display: inline-flex;
     align-items: center;
-    padding: 0.2rem 0.55rem;
-    border-radius: 4px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
     font-size: 0.6875rem;
     font-family: var(--font-jetbrains-mono), monospace;
     font-weight: 500;
-    border: 1px solid #292B2E;
-    background-color: #111214;
-    color: #AAA9A3;
+    border: 1px solid #2D221A;
+    background-color: #1D1814;
+    color: #ADADAD;
+  }
+
+  /* Giant Sunken Wordmark */
+  .wordmark-sunken {
+    font-size: clamp(4.5rem, 15vw, 15rem);
+    font-weight: 200;
+    letter-spacing: 0.05em;
+    line-height: 0.75;
+    color: #5A3418;
+    user-select: none;
+    pointer-events: none;
+    text-align: center;
   }
 }
 
@@ -190,3 +237,4 @@ body {
     scroll-behavior: auto !important;
   }
 }
+

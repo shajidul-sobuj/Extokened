@@ -71,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#0A0A0B] text-[#F3F1EC] min-h-screen flex flex-col selection:bg-[#C6F36A]/25 selection:text-[#F3F1EC]`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#0D0D0D] text-[#FFFFFF] min-h-screen flex flex-col selection:bg-[#F0A24C]/35 selection:text-[#FFFFFF]`}
       >
         <InteractiveBackground />
         <Navbar />

@@ -1,21 +1,21 @@
 import { HeroSection } from "@/components/hero/HeroSection";
-import { HackathonHallOfFame } from "@/components/hackathons/HackathonHallOfFame";
-import { ProjectGallery } from "@/components/projects/ProjectGallery";
-import { SquadSection } from "@/components/team/SquadSection";
-import { InteractiveTerminal } from "@/components/terminal/InteractiveTerminal";
-import { SocialHub } from "@/components/socials/SocialHub";
-import { CollabSection } from "@/components/contact/CollabSection";
+import { ProofStrip } from "@/components/home/ProofStrip";
+import { FeaturedProjectsEditorial } from "@/components/home/FeaturedProjectsEditorial";
+import { HackathonHighlightEditorial } from "@/components/home/HackathonHighlightEditorial";
+import { PhilosophyEditorial } from "@/components/home/PhilosophyEditorial";
+import { TeamPreviewEditorial } from "@/components/home/TeamPreviewEditorial";
+import { CollabCTAEditorial } from "@/components/home/CollabCTAEditorial";
 
 export default function HomePage() {
   return (
-    <div className="relative space-y-12">
+    <div className="relative">
       <HeroSection />
-      <HackathonHallOfFame />
-      <ProjectGallery />
-      <SquadSection />
-      <InteractiveTerminal />
-      <SocialHub />
-      <CollabSection />
+      <ProofStrip />
+      <FeaturedProjectsEditorial />
+      <HackathonHighlightEditorial />
+      <PhilosophyEditorial />
+      <TeamPreviewEditorial />
+      <CollabCTAEditorial />
     </div>
   );
 }

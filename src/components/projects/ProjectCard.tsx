@@ -3,11 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Project } from "@/data/projects";
-import { 
-  ExternalLink, 
-  ArrowRight,
-  CheckCircle2
-} from "lucide-react";
+import { ExternalLink, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
 
 interface ProjectCardProps {
@@ -15,29 +11,16 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const getStatusBadge = () => {
-    switch (project.status) {
-      case "Shipped":
-        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
-      case "Prototype":
-        return "bg-[#22D3C5]/10 text-[#22D3C5] border-[#22D3C5]/30";
-      case "In Progress":
-        return "bg-[#7C5CFF]/10 text-[#A78BFA] border-[#7C5CFF]/30";
-      default:
-        return "bg-zinc-800 text-zinc-400 border-zinc-700";
-    }
-  };
-
   return (
-    <div className="studio-card p-6 sm:p-7 flex flex-col justify-between group transition-all duration-200 hover:border-zinc-500/50">
+    <div className="editorial-card p-6 sm:p-7 bg-[#111214] border border-[#292B2E] flex flex-col justify-between group transition-all">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="px-2.5 py-1 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+          <span className="text-[#777873]">
             {project.category}
           </span>
-          <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium border ${getStatusBadge()}`}>
+          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium border border-[#74C69D]/30 text-[#74C69D] bg-[#74C69D]/10">
             {project.status}
           </span>
         </div>
@@ -45,14 +28,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Title & Summary */}
         <div>
           <Link href={`/projects/${project.slug}`} className="group/link block">
-            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover/link:text-[#22D3C5] transition-colors">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#F3F1EC] group-hover/link:text-[#C6F36A] transition-colors">
               {project.title}
             </h3>
           </Link>
-          <p className="text-xs text-[#A78BFA] mt-1 font-mono">
+          <p className="text-xs text-[#AAA9A3] mt-1 font-mono">
             {project.year} • {project.summary}
           </p>
-          <p className="text-sm text-zinc-300 mt-2.5 leading-relaxed font-sans line-clamp-3">
+          <p className="text-sm text-[#777873] mt-2.5 leading-relaxed font-sans line-clamp-3">
             {project.description}
           </p>
         </div>
@@ -61,9 +44,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.keyFeatures.length > 0 && (
           <div className="space-y-1.5 pt-1">
             {project.keyFeatures.slice(0, 2).map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#22D3C5] shrink-0 mt-0.5" />
-                <span className="text-zinc-300 font-sans">{feat}</span>
+              <div key={idx} className="flex items-start gap-2 text-xs text-[#AAA9A3]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C6F36A] shrink-0 mt-0.5" />
+                <span className="font-sans">{feat}</span>
               </div>
             ))}
           </div>
@@ -71,37 +54,34 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Bottom Section: Technologies & Links */}
-      <div className="pt-6 mt-6 border-t border-[#253044]/60 space-y-4">
+      <div className="pt-6 mt-6 border-t border-[#292B2E] space-y-4">
         {/* Tech Stack Pills */}
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 5).map((tech) => (
-            <span
-              key={tech}
-              className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]"
-            >
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span key={tech} className="tech-tag">
               {tech}
             </span>
           ))}
-          {project.technologies.length > 5 && (
-            <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-400 border border-[#253044]">
-              +{project.technologies.length - 5}
+          {project.technologies.length > 4 && (
+            <span className="tech-tag text-[#777873]">
+              +{project.technologies.length - 4}
             </span>
           )}
         </div>
 
         {/* Action Row */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-1">
           <div className="flex items-center gap-2">
             {project.sourceUrl && (
               <a
                 href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-[#151F2E] border border-[#253044] hover:text-white text-zinc-400 transition-colors"
+                className="p-1.5 rounded bg-[#191B1F] border border-[#292B2E] hover:text-white text-[#AAA9A3] transition-colors"
                 title="GitHub Source"
                 aria-label="View Source Code"
               >
-                <Github className="w-4 h-4" />
+                <Github className="w-3.5 h-3.5" />
               </a>
             )}
             {project.liveUrl && (
@@ -109,20 +89,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-[#151F2E] border border-[#253044] hover:text-white text-zinc-400 transition-colors"
+                className="p-1.5 rounded bg-[#191B1F] border border-[#292B2E] hover:text-white text-[#AAA9A3] transition-colors"
                 title="Live Deployment"
                 aria-label="View Live Deployment"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-3.5 h-3.5" />
               </a>
             )}
           </div>
 
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-white hover:text-[#22D3C5] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#F3F1EC] hover:text-[#C6F36A] transition-colors"
           >
-            <span>Case Study</span>
+            <span>Read case study</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

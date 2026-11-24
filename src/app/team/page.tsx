@@ -2,124 +2,106 @@ import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 import { teamMembers } from "@/data/team";
-import { siteConfig } from "@/data/siteConfig";
 import { MemberCard } from "@/components/team/MemberCard";
 import { 
   Users, 
   ArrowRight, 
-  CheckCircle2, 
-  Cpu, 
   Globe, 
+  Cpu, 
   Database, 
-  ShieldCheck,
-  Zap
+  ShieldCheck
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Team | The Engineers & Builders of Extokened",
+  title: "Team | The People Behind the Work",
   description:
-    "Meet the permanent squad behind Extokened: specialists across AI, full-stack architecture, distributed systems, and modern UI engineering.",
+    "Meet the permanent engineering squad behind Extokened: specialists across AI, full-stack architecture, distributed systems, and creative design.",
 };
 
 export default function TeamPage() {
-  const collectiveCapabilities = [
+  const capabilitiesByDiscipline = [
     {
-      category: "Frontend & Experience Architecture",
+      discipline: "Frontend & Experience Architecture",
       icon: Globe,
-      color: "#22D3C5",
-      skills: ["Next.js 15 App Router", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "WCAG AA a11y"],
-      summary: "Pixel-perfect interfaces, low cumulative layout shift, responsive layouts, and state management that remains predictable under load.",
+      summary: "Accessible, responsive web applications engineered with Next.js 15, React 19, and Tailwind CSS. Low cumulative layout shift and strict WCAG AA contrast compliance.",
+      skills: ["Next.js 15 App Router", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "WCAG AA"],
     },
     {
-      category: "Generative AI & Autonomous Workflows",
+      discipline: "Generative AI & Agent Workflows",
       icon: Cpu,
-      color: "#7C5CFF",
-      skills: ["Google Gemini API", "Claude & OpenAI Pipelines", "LangGraph", "Vector Retrieval (Chroma/Pinecone)", "Whisper Speech", "YOLOv9"],
-      summary: "Grounding multimodal models with verifiable sensors, sliding-window feature ingestion, and deterministic fallback evaluation.",
+      summary: "Multimodal LLM pipelines, autonomous reasoning agents, and computer vision edge workers grounded in verified data feeds with deterministic fallbacks.",
+      skills: ["Google Gemini API", "Claude & OpenAI", "LangGraph", "Chroma & Pinecone", "YOLOv9", "Whisper AI"],
     },
     {
-      category: "Distributed Backend & Telemetry",
+      discipline: "Distributed Systems & Telemetry",
       icon: Database,
-      color: "#FBBF24",
+      summary: "High-throughput WebSockets, time-series anomaly detection, distributed cache synchrony, and sub-10ms query execution across containerized microservices.",
       skills: ["FastAPI", "Go (Golang)", "PostgreSQL", "TimescaleDB", "Redis", "Docker", "WebSockets"],
-      summary: "High-throughput telemetry streaming, time-series anomaly detection, and sub-10ms query execution across containerized architectures.",
     },
     {
-      category: "Team Coordination & Stage Delivery",
+      discipline: "Sprint Delivery & Pitch Strategy",
       icon: ShieldCheck,
-      color: "#34D399",
-      skills: ["Contract-First Schema Freezing", "Parallel Sprint Execution", "Live Demo Sandboxing", "Pitch Narrative Strategy"],
-      summary: "Zero-blocker collaboration enabling front, back, and ML engineers to build in parallel from hour four of a hackathon.",
+      summary: "Disciplined contract-first schema design, parallel feature execution, and zero-downtime stage demonstrations with live telemetry sandboxes.",
+      skills: ["OpenAPI Contracts", "Stage Sandboxing", "Live Telemetry Feeds", "Pitch Narrative"],
     },
   ];
 
   return (
     <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
       
-      {/* Header */}
+      {/* 11.1 Page Hero */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#101724] border border-[#253044] text-xs font-mono text-[#22D3C5]">
-          <Users className="w-3.5 h-3.5" />
-          <span>Core Engineering Roster</span>
+        <div className="eyebrow-label">
+          TEAM / OPERATIONAL ROSTER
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
-          The People Behind Extokened
+        <h1 className="font-page-title font-semibold text-[#F3F1EC] leading-tight">
+          The People Behind the Work
         </h1>
-        <p className="text-zinc-300 text-base sm:text-lg leading-relaxed font-sans">
-          We operate as a synchronized, permanent squad. Four specialists across AI, full-stack architecture, distributed systems, and creative design united by shared accountability and rapid execution.
+        <p className="text-base sm:text-lg text-[#AAA9A3] leading-relaxed font-sans">
+          Extokened operates as a permanent squad. Four builders combining deep technical specialization with an established collaboration shorthand honed across 18 competitions.
         </p>
       </div>
 
-      {/* Member Cards Grid */}
+      {/* 11.2 Team Roster */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {teamMembers.map((member) => (
           <MemberCard key={member.slug} member={member} />
         ))}
       </div>
 
-      {/* Collective Capabilities Matrix */}
-      <section className="border-t border-[#253044] pt-16 space-y-10">
-        <div className="space-y-3 max-w-2xl">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#7C5CFF]">
-            Team Competencies
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Collective Capabilities
+      {/* 11.3 Skills and Capabilities Grouped by Discipline (No percentage bars) */}
+      <section className="border-t border-[#292B2E] pt-16 space-y-10">
+        <div className="space-y-2 max-w-xl">
+          <span className="eyebrow-label">Competency Matrix</span>
+          <h2 className="font-section-title font-semibold text-[#F3F1EC]">
+            Collective Discipline Mastery
           </h2>
-          <p className="text-sm text-zinc-400">
-            A comprehensive overview of our combined technical proficiencies across software layers.
+          <p className="text-sm text-[#AAA9A3]">
+            Grouped technical competencies backed by shipped software and competitive validation.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {collectiveCapabilities.map((cap, idx) => {
+          {capabilitiesByDiscipline.map((cap, idx) => {
             const Icon = cap.icon;
             return (
-              <div key={idx} className="studio-card p-6 sm:p-7 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div 
-                      className="w-8 h-8 rounded-md flex items-center justify-center bg-[#151F2E] border border-[#253044]"
-                      style={{ color: cap.color }}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-base font-bold text-white">
-                      {cap.category}
-                    </h3>
+              <div key={idx} className="editorial-card p-6 sm:p-7 bg-[#111214] border border-[#292B2E] space-y-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center bg-[#191B1F] border border-[#292B2E] text-[#C6F36A]">
+                    <Icon className="w-4 h-4" />
                   </div>
+                  <h3 className="text-base font-bold text-[#F3F1EC]">
+                    {cap.discipline}
+                  </h3>
                 </div>
 
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
+                <p className="text-xs sm:text-sm text-[#AAA9A3] leading-relaxed font-sans">
                   {cap.summary}
                 </p>
 
                 <div className="pt-2 flex flex-wrap gap-1.5">
                   {cap.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]"
-                    >
+                    <span key={skill} className="tech-tag">
                       {skill}
                     </span>
                   ))}
@@ -130,64 +112,62 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* Culture & Collaboration Principles */}
-      <section className="border-t border-[#253044] pt-16 space-y-10">
-        <div className="space-y-3 max-w-2xl">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#22D3C5]">
-            Collaboration Dynamics
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            How We Operate as a Permanent Unit
+      {/* 11.4 Culture & Dynamics of a Permanent Unit */}
+      <section className="border-t border-[#292B2E] pt-16 space-y-10">
+        <div className="space-y-2 max-w-xl">
+          <span className="eyebrow-label">Team Culture</span>
+          <h2 className="font-section-title font-semibold text-[#F3F1EC]">
+            Why a Permanent Squad Wins
           </h2>
-          <p className="text-sm text-zinc-400">
-            Unlike makeshift teams formed hours before a hackathon starts, our long-term alignment delivers consistent results.
+          <p className="text-sm text-[#AAA9A3]">
+            Ad-hoc hackathon teams spend the first 8 hours figuring out personalities. We spend those hours building schemas.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="studio-card p-6 space-y-3">
-            <h3 className="text-base font-bold text-white">
-              Zero Role Confusion
+          <div className="editorial-card p-6 bg-[#111214] border border-[#292B2E] space-y-3">
+            <h3 className="text-base font-bold text-[#F3F1EC]">
+              Immediate Shorthand
             </h3>
-            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-              Every squad member has designated operational ownership. Decisions in API contracts, AI inference loops, and UI interactions are made swiftly without ego or prolonged deliberation.
+            <p className="text-xs text-[#AAA9A3] leading-relaxed font-sans">
+              TypeScript interfaces and API schemas are agreed upon within minutes. Frontend and backend developers work in tandem without blocking one another.
             </p>
           </div>
 
-          <div className="studio-card p-6 space-y-3">
-            <h3 className="text-base font-bold text-white">
-              Ruthless Prioritization
+          <div className="editorial-card p-6 bg-[#111214] border border-[#292B2E] space-y-3">
+            <h3 className="text-base font-bold text-[#F3F1EC]">
+              Ruthless Scope Discipline
             </h3>
-            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-              When working against a 36-hour clock, knowing what to cut is more critical than what to build. We focus entirely on core user impact and stage verification.
+            <p className="text-xs text-[#AAA9A3] leading-relaxed font-sans">
+              Knowing what not to build is our biggest competitive advantage. We cut extraneous features early to guarantee zero bugs on stage.
             </p>
           </div>
 
-          <div className="studio-card p-6 space-y-3">
-            <h3 className="text-base font-bold text-white">
-              Mutual Psychological Safety
+          <div className="editorial-card p-6 bg-[#111214] border border-[#292B2E] space-y-3">
+            <h3 className="text-base font-bold text-[#F3F1EC]">
+              Shared Accountability
             </h3>
-            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
-              Deep familiarity across 18+ competitions means bugs and setbacks during deep-night sprints are debugged collectively without finger-pointing.
+            <p className="text-xs text-[#AAA9A3] leading-relaxed font-sans">
+              Deep familiarity across 18 sprints means setbacks during deep-night coding hours are debugged constructively without friction.
             </p>
           </div>
         </div>
       </section>
 
       {/* Collaboration CTA */}
-      <div className="studio-card p-8 sm:p-12 text-center space-y-6 relative overflow-hidden">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">
+      <div className="p-8 sm:p-12 rounded-lg bg-[#111214] border border-[#292B2E] text-center space-y-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#F3F1EC]">
           Want to collaborate with our engineering squad?
         </h2>
-        <p className="text-sm sm:text-base text-zinc-300 max-w-xl mx-auto font-sans">
-          Whether you need a dedicated team for an enterprise hackathon challenge or want to discuss technical projects, we are available.
+        <p className="text-sm text-[#AAA9A3] max-w-md mx-auto">
+          We are available for technical hackathon invitations, engineering partnerships, and prototype development sprints.
         </p>
         <div className="pt-2">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium text-white bg-[#7C5CFF] hover:bg-[#6847ED] shadow-md shadow-[#7C5CFF]/20 transition-all"
+            className="btn-primary"
           >
-            <span>Initiate Contact</span>
+            <span>Contact the team</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

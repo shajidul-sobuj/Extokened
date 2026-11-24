@@ -1,6 +1,6 @@
 # ⚡ Extokened — Product Delivery Roadmap & Execution Tracker
 
-Based on **Product Design Brief v0.1 (Discovery baseline)**.
+Based on **Product Design Brief v0.1** and **UI/UX & Visual Design Specification v0.1 (Dark Editorial Engineering)**.
 
 ---
 
@@ -11,71 +11,69 @@ Based on **Product Design Brief v0.1 (Discovery baseline)**.
 
 ---
 
-## Phase 1: Foundation & Design Tokens
-- [x] Configure exact dark editorial-tech color tokens in Tailwind (`#080B12`, `#101724`, `#151F2E`, `#7C5CFF`, `#22D3C5`, `#253044`, `#34D399`, `#FBBF24`).
-- [x] Configure typography hierarchy: `Space Grotesk` (headings), `Inter` (body), `JetBrains Mono` (code/labels).
-- [x] Build responsive, accessible global Header with `Let's Collaborate` CTA and clear navigation.
-- [x] Build industrial, credible global Footer with official social links (GitHub, LinkedIn, Facebook).
-- [x] Set up purposeful, restrained motion system respecting `prefers-reduced-motion`.
+## Phase 1: Foundation & Dark Editorial Design Tokens (UI/UX Spec v0.1)
+- [x] Configure exact neutral and acid-lime tokens (`#0A0A0B`, `#111214`, `#191B1F`, `#22252A`, `#C6F36A`, `#10120A`, `#292B2E`, `#414449`).
+- [x] Configure typography hierarchy: `Space Grotesk` (headings), `Inter` (body), `JetBrains Mono` (metadata) with `clamp()` fluid scales.
+- [x] Build responsive, accessible global Header with Section 5.1 layout and `#C6F36A` Contact CTA.
+- [x] Build industrial global Footer with verified official links (GitHub, LinkedIn, Facebook).
+- [x] Remove generic purple/blue gradients, glowing blur blobs, and particle canvas loops.
 
 ---
 
-## Phase 2: Core Pages & Detail Routes
+## Phase 2: Page-Level Realignment (UI/UX Spec v0.1)
 - [x] **Home Page (`/`)**:
-  - [x] Section 1: Header with `Let's Collaborate` CTA
-  - [x] Section 2: Hero (`We build. We compete. We create what's next.` + Explore Our Work)
-  - [x] Section 3: Proof / quick stats (Substantiated metrics with distinct counting)
-  - [x] Section 4: Featured projects (Curated 3 flagship builds with status & tech tags)
-  - [x] Section 5: Hackathon highlights (Distinct Winner / Finalist badges)
-  - [x] Section 6: About / team statement & 3 principles
-  - [x] Section 7: Team preview
-  - [x] Section 8: Collaboration CTA (`Have a challenge worth building?`)
-  - [x] Section 9: Footer with official channels
+  - [x] 6.1 Header: Inline navigation + `#C6F36A` Contact CTA
+  - [x] 6.2 Hero: 7/5 editorial split (`We build what we imagine.` + typographic brand mark)
+  - [x] 6.3 Proof strip: Full-width horizontal band with top/bottom `#292B2E` rules and vertical dividers
+  - [x] 6.4 Featured projects: 7/5 split flagship feature + asymmetric secondary project rows
+  - [x] 6.5 Hackathon highlight: Split layout with verified result badge and notable sprint timeline
+  - [x] 6.6 Philosophy: 5-col statement + 7-col explanation + 3 numbered principles
+  - [x] 6.7 Team preview: 4 portrait tiles with roles and focus areas always visible
+  - [x] 6.8 Collaboration CTA: Full-width contrasting `#111214` surface + primary action
+  - [x] Omit decorative fake terminal window per Section 1.1 exclusion
 - [x] **About Page (`/about`)**:
-  - [x] Section 1: Page hero
-  - [x] Section 2: Origin story & name context
-  - [x] Section 3: Mission, vision, principles
-  - [x] Section 4: Demonstrated focus areas (Web, AI/ML, Cloud, Systems)
-  - [x] Section 5: How we work (48-Hour Hackathon Playbook)
-  - [x] Section 6: Connection CTA
+  - [x] 7.1 Page hero: `ABOUT / EXTOKENED`
+  - [x] 7.2 Two-column origin story
+  - [x] 7.3 Mission and vision
+  - [x] 7.4 Principles: Numbered rule-separated rows
+  - [x] 7.5 Focus areas grid (no percentage bars)
+  - [x] 7.6 6-step working process (`Discover → Design → Build → Test → Present → Improve`)
+  - [x] 7.7 Closing CTA
 - [x] **Projects Directory (`/projects`)**:
-  - [x] Page hero with focus problem overview
-  - [x] Filter by category, technology, status (Shipped, Prototype, In Progress, Archived), and year
-  - [x] Real-time search by name/keyword
-  - [x] Responsive project grid linking to `/projects/[slug]`
+  - [x] 8.1 Page hero with record count
+  - [x] 8.2 Wide editorial project feature
+  - [x] 8.3 Filter toolbar (search, category, status, sort, active removable chips, clear action)
+  - [x] 8.4 Deliberate mixed grid
+  - [x] 8.5 End CTA
 - [x] **Project Detail Case Study (`/projects/[slug]`)**:
-  - [x] Hero with value proposition, status, year, links
-  - [x] At a glance: problem domain, team contributors, duration, tech
-  - [x] Problem and solution context
-  - [x] Key features breakdown
-  - [x] Technical overview & architecture decisions
-  - [x] Challenges and learnings
-  - [x] Verified outcomes and metrics
+  - [x] 9.1 Masthead & metadata rail
+  - [x] 9.2 Wide hero media with caption
+  - [x] 9.4 Problem & solution two-column editorial
+  - [x] 9.5 Key capabilities breakdown
+  - [x] 9.6 Architecture notes & dataflow strategy
+  - [x] 9.7 Challenges & learnings post-mortem
+  - [x] 9.8 Validated outcome
+  - [x] 9.9 Contributor attribution
+  - [x] 9.10 Next project feature & back link
 - [x] **Hackathons Archive (`/hackathons`)**:
-  - [x] Page hero & journey introduction
-  - [x] Distinct achievement summary (Winners vs Finalists vs Special Awards calculated separately)
-  - [x] Chronological timeline with filter by year, result (Champions, Runners-up, Finalists, Competitors)
-  - [x] Link out to `/hackathons/[slug]`
+  - [x] 10.1 Page hero
+  - [x] 10.2 Achievement overview with separated totals (7 champions, 5 runners-up, 6 finalists)
+  - [x] 10.3 Featured result split card
+  - [x] 10.4 Vertical chronological timeline with exact verified result labels
+  - [x] 10.6 Closing event organizer CTA
 - [x] **Hackathon Detail (`/hackathons/[slug]`)**:
-  - [x] Event identity, organizer, date, award badge
-  - [x] Challenge statement & problem context
-  - [x] Solution overview & link to project case study
-  - [x] Key highlights & validation
-  - [x] Retrospective learnings & post-mortem
-  - [x] Evidence links (Devpost, GitHub, live deployment)
+  - [x] Event masthead, sprint telemetry, challenge statement, engineered solution, verified result badge, lessons learned, and evidence links
 - [x] **Team Directory (`/team`)**:
-  - [x] Hero & philosophy
-  - [x] Member cards with roles, focus areas, stats, approved social links
-  - [x] Collective capabilities matrix (Web, AI, Cloud, Systems)
-  - [x] Culture notes & permanent unit dynamics
+  - [x] 11.1 Page hero
+  - [x] 11.2 Portrait roster with roles and focus areas
+  - [x] 11.3 Discipline grouped capabilities matrix
+  - [x] 11.4 Culture dynamics & permanent unit philosophy
 - [x] **Contact & Collaboration (`/contact`)**:
-  - [x] Direct contact info (email, response time, location)
-  - [x] Accessible form (name, email, topic dropdown, message)
-  - [x] Explicit privacy & consent note
-- [x] **Privacy Policy (`/privacy`)**:
-  - [x] Data collection, handling, and third-party policy
-- [x] **Custom 404 (`/not-found`)**:
-  - [x] Helpful navigation links to Home, Projects, Hackathons, Contact
+  - [x] 12.1 Hero & scope of inquiries
+  - [x] 12.2 Direct channels (`team@extokened.dev`, GitHub, LinkedIn, Facebook)
+  - [x] 12.3 Accessible dispatch form with inline states, SLA (24–48h), and privacy note
+- [x] **Privacy Policy (`/privacy`) & Custom 404 (`/not-found`)**:
+  - [x] Aligned with `#0A0A0B` / `#C6F36A` palette
 
 ---
 
@@ -83,13 +81,13 @@ Based on **Product Design Brief v0.1 (Discovery baseline)**.
 - [x] Connect official Facebook page (`https://facebook.com/extokened`).
 - [x] Connect official LinkedIn company page (`https://linkedin.com/company/extokened`).
 - [x] Connect official GitHub organization (`https://github.com/extokened`).
-- [x] Mobile bento link hub (`/links`) with fast shareable links.
+- [x] Mobile bento link hub (`/links`).
 
 ---
 
 ## Phase 4: Quality, Accessibility & Performance
 - [x] Zero TypeScript errors (`npx tsc --noEmit` verified).
 - [x] Production build passes cleanly with full static prerendering (`npm run build`).
-- [x] Full responsive layout tested from mobile (<640px) to desktop (1280px+).
+- [x] Responsive layout tested from mobile (<640px) to desktop (1280px+).
 - [x] WCAG AA compliant text contrast and keyboard accessibility.
 - [x] `prefers-reduced-motion` compliance.

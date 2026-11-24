@@ -10,27 +10,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        studio: {
-          bg: "#080B12",
-          surface: "#101724",
-          elevated: "#151F2E",
-          border: "#253044",
-        },
+        canvas: "#0A0A0B",
+        "surface-1": "#111214",
+        "surface-2": "#191B1F",
+        "surface-3": "#22252A",
+        "text-primary": "#F3F1EC",
+        "text-secondary": "#AAA9A3",
+        "text-muted": "#777873",
+        "border-subtle": "#292B2E",
+        "border-strong": "#414449",
         accent: {
-          primary: "#7C5CFF",
-          primaryHover: "#6B46FE",
-          secondary: "#22D3C5",
-          secondaryHover: "#14B8A6",
-        },
-        content: {
-          primary: "#F4F7FB",
-          secondary: "#A6B1C2",
-          muted: "#718096",
+          DEFAULT: "#C6F36A",
+          hover: "#B6E659",
+          ink: "#10120A",
+          primary: "#C6F36A",
+          secondary: "#74C69D",
         },
         status: {
-          success: "#34D399",
-          warning: "#FBBF24",
-          info: "#60A5FA",
+          success: "#74C69D",
+          warning: "#E8B86D",
+          info: "#85B6FF",
+        },
+        studio: {
+          bg: "#0A0A0B",
+          surface: "#111214",
+          elevated: "#191B1F",
+          border: "#292B2E",
         },
       },
       fontFamily: {
@@ -39,11 +44,12 @@ const config: Config = {
         mono: ["var(--font-jetbrains-mono)", "monospace"],
       },
       borderRadius: {
-        card: "18px",
-        btn: "10px",
+        card: "10px",
+        btn: "8px",
+        input: "6px",
       },
       maxWidth: {
-        layout: "1280px",
+        layout: "1320px",
       },
     },
   },

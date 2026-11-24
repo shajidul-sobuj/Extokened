@@ -1,62 +1,81 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { projects, ProjectCategory, ProjectStatus } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
-import { Layers, Search, Filter } from "lucide-react";
+import { Search, X, ArrowRight, ArrowUpRight, Layers } from "lucide-react";
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [activeStatus, setActiveStatus] = useState<string>("All");
-  const [activeYear, setActiveYear] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<"newest" | "featured">("featured");
 
   const categories = ["All", "AI & Agents", "Full-Stack Web", "Systems & DevTools", "FinTech & Data"];
   const statuses = ["All", "Shipped", "Prototype", "In Progress"];
-  const years = ["All", "2025", "2024", "2023"];
 
-  const filtered = projects.filter((p) => {
-    const matchesCat = activeCategory === "All" || p.category === activeCategory;
-    const matchesStatus = activeStatus === "All" || p.status === activeStatus;
-    const matchesYear = activeYear === "All" || p.year.toString() === activeYear;
-    const matchesQuery =
-      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.technologies.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+  const filtered = projects
+    .filter((p) => {
+      const matchesCat = activeCategory === "All" || p.category === activeCategory;
+      const matchesStatus = activeStatus === "All" || p.status === activeStatus;
+      const matchesQuery =
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.technologies.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    return matchesCat && matchesStatus && matchesYear && matchesQuery;
-  });
+      return matchesCat && matchesStatus && matchesQuery;
+    })
+    .sort((a, b) => {
+      if (sortBy === "featured") {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+      }
+      return b.year - a.year;
+    });
+
+  const featuredWide = filtered[0];
+  const remainingProjects = filtered.slice(1);
+
+  const hasActiveFilters = activeCategory !== "All" || activeStatus !== "All" || searchQuery !== "";
+
+  const clearFilters = () => {
+    setActiveCategory("All");
+    setActiveStatus("All");
+    setSearchQuery("");
+  };
 
   return (
     <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-      {/* Header */}
+      
+      {/* 8.1 Page Hero */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#101724] border border-[#253044] text-xs font-mono text-[#A78BFA]">
-          <Layers className="w-3.5 h-3.5" />
-          <span>Case Studies &amp; Codebase Directory</span>
+        <div className="eyebrow-label">
+          PORTFOLIO / SELECTED WORK
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
-          Projects &amp; Prototypes
+        <h1 className="font-page-title font-semibold text-[#F3F1EC] leading-tight">
+          Everything We Have Shipped
         </h1>
-        <p className="text-zinc-300 text-base sm:text-lg leading-relaxed font-sans">
-          From 36-hour hackathon winning prototypes to production systems and open-source tooling. Every build includes architecture documentation, challenges overcome, and live repository links.
+        <p className="text-base sm:text-lg text-[#AAA9A3] leading-relaxed font-sans">
+          From 36-hour hackathon winning prototypes to production systems and open-source tooling ({projects.length} documented records). Every build includes real architecture notes, verified code, and live outcomes.
         </p>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="studio-card p-6 space-y-6">
+      {/* 8.3 Filter Toolbar */}
+      <div className="editorial-card p-6 bg-[#111214] border border-[#292B2E] space-y-6">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          {/* Categories */}
+          
+          {/* Category Filter Chips */}
           <div className="flex flex-wrap items-center gap-1.5">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                   activeCategory === cat
-                    ? "bg-[#151F2E] text-white border border-[#253044] shadow-sm"
-                    : "text-zinc-400 hover:text-white hover:bg-white/5"
+                    ? "bg-[#C6F36A] text-[#10120A] font-semibold"
+                    : "bg-[#191B1F] text-[#AAA9A3] hover:text-[#F3F1EC] border border-[#292B2E]"
                 }`}
               >
                 {cat}
@@ -64,32 +83,43 @@ export default function ProjectsPage() {
             ))}
           </div>
 
-          {/* Search Box */}
-          <div className="relative w-full lg:w-72">
-            <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search stack, AI, keyword..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#080B12] border border-[#253044] rounded-lg pl-10 pr-4 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#7C5CFF] transition-colors"
-            />
+          {/* Search Field & Sort */}
+          <div className="flex items-center gap-3 w-full lg:w-auto">
+            <div className="relative flex-1 lg:w-64">
+              <Search className="w-4 h-4 text-[#777873] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search stack, AI, keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[#0A0A0B] border border-[#292B2E] rounded-md pl-9 pr-3 py-2 text-xs text-[#F3F1EC] placeholder-[#777873] focus:outline-none focus:border-[#414449] transition-colors"
+              />
+            </div>
+
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as "newest" | "featured")}
+              className="bg-[#0A0A0B] border border-[#292B2E] rounded-md px-3 py-2 text-xs text-[#AAA9A3] focus:outline-none focus:border-[#414449]"
+            >
+              <option value="featured">Featured First</option>
+              <option value="newest">Newest First</option>
+            </select>
           </div>
         </div>
 
-        {/* Secondary Filters: Status & Year */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#253044]/60 text-xs">
+        {/* Secondary Status Filter & Active Chips */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#292B2E] text-xs">
           <div className="flex items-center gap-2">
-            <span className="text-zinc-500 font-mono">Status:</span>
-            <div className="flex items-center gap-1">
+            <span className="text-[#777873] font-mono">Status:</span>
+            <div className="flex items-center gap-1.5">
               {statuses.map((status) => (
                 <button
                   key={status}
                   onClick={() => setActiveStatus(status)}
                   className={`px-2.5 py-1 rounded text-[11px] font-mono transition-colors cursor-pointer ${
                     activeStatus === status
-                      ? "bg-[#151F2E] text-white border border-[#253044]"
-                      : "text-zinc-400 hover:text-white"
+                      ? "bg-[#191B1F] text-[#F3F1EC] border border-[#414449]"
+                      : "text-[#777873] hover:text-[#AAA9A3]"
                   }`}
                 >
                   {status}
@@ -98,50 +128,134 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-500 font-mono">Year:</span>
-            <div className="flex items-center gap-1">
-              {years.map((year) => (
-                <button
-                  key={year}
-                  onClick={() => setActiveYear(year)}
-                  className={`px-2.5 py-1 rounded text-[11px] font-mono transition-colors cursor-pointer ${
-                    activeYear === year
-                      ? "bg-[#151F2E] text-white border border-[#253044]"
-                      : "text-zinc-400 hover:text-white"
-                  }`}
-                >
-                  {year}
-                </button>
-              ))}
+          {/* Removable Active Filter Chips */}
+          {hasActiveFilters && (
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-[#777873]">Active filters:</span>
+              {activeCategory !== "All" && (
+                <span className="tech-tag text-[#C6F36A] flex items-center gap-1">
+                  {activeCategory}
+                  <button onClick={() => setActiveCategory("All")}>
+                    <X className="w-3 h-3 hover:text-white" />
+                  </button>
+                </span>
+              )}
+              {activeStatus !== "All" && (
+                <span className="tech-tag text-[#C6F36A] flex items-center gap-1">
+                  {activeStatus}
+                  <button onClick={() => setActiveStatus("All")}>
+                    <X className="w-3 h-3 hover:text-white" />
+                  </button>
+                </span>
+              )}
+              {searchQuery && (
+                <span className="tech-tag text-[#C6F36A] flex items-center gap-1">
+                  &quot;{searchQuery}&quot;
+                  <button onClick={() => setSearchQuery("")}>
+                    <X className="w-3 h-3 hover:text-white" />
+                  </button>
+                </span>
+              )}
+              <button
+                onClick={clearFilters}
+                className="text-[11px] text-[#C6F36A] hover:underline ml-1"
+              >
+                Clear all
+              </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Grid of Projects */}
+      {/* 8.4 Project Listing: Deliberate Mixed Grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 studio-card">
-          <p className="text-zinc-400 text-sm">No projects match the selected criteria.</p>
+        <div className="text-center py-20 editorial-card bg-[#111214] border border-[#292B2E] space-y-3">
+          <p className="text-[#AAA9A3] text-sm">No projects match the selected criteria.</p>
           <button
-            onClick={() => {
-              setActiveCategory("All");
-              setActiveStatus("All");
-              setActiveYear("All");
-              setSearchQuery("");
-            }}
-            className="mt-3 text-xs text-[#22D3C5] hover:underline cursor-pointer"
+            onClick={clearFilters}
+            className="text-xs text-[#C6F36A] hover:underline cursor-pointer"
           >
-            Reset all filters
+            Clear all filters
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+        <div className="space-y-6">
+          
+          {/* Top Wide Feature (when no search query is active and items exist) */}
+          {featuredWide && (
+            <div className="editorial-card p-6 sm:p-10 bg-[#111214] border border-[#292B2E] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 relative overflow-hidden rounded-lg border border-[#292B2E] bg-[#0A0A0B] aspect-video">
+                <img
+                  src={featuredWide.coverImage}
+                  alt={featuredWide.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="lg:col-span-5 space-y-4">
+                <div className="flex items-center gap-2 text-xs font-mono text-[#777873]">
+                  <span>{featuredWide.category}</span>
+                  <span>•</span>
+                  <span>{featuredWide.year}</span>
+                  <span>•</span>
+                  <span className="text-[#74C69D]">{featuredWide.status}</span>
+                </div>
+                <h3 className="font-card-title font-bold text-[#F3F1EC]">
+                  {featuredWide.title}
+                </h3>
+                <p className="text-sm text-[#AAA9A3] leading-relaxed">
+                  {featuredWide.summary}
+                </p>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {featuredWide.technologies.slice(0, 5).map((tech) => (
+                    <span key={tech} className="tech-tag">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="pt-2">
+                  <Link
+                    href={`/projects/${featuredWide.slug}`}
+                    className="btn-primary"
+                  >
+                    <span>Read case study</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Remaining Projects in a 2-Column Balanced Mixed Grid */}
+          {remainingProjects.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+              {remainingProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          )}
+
         </div>
       )}
+
+      {/* 8.5 End CTA */}
+      <div className="p-8 sm:p-12 rounded-lg bg-[#111214] border border-[#292B2E] text-center space-y-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#F3F1EC]">
+          Have a problem worth solving?
+        </h2>
+        <p className="text-sm text-[#AAA9A3] max-w-md mx-auto">
+          We partner with organizations and teams on rapid prototype execution and technical sprints.
+        </p>
+        <div className="pt-2">
+          <Link
+            href="/contact"
+            className="btn-primary"
+          >
+            <span>Contact the team</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+
     </div>
   );
 }

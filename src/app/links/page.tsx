@@ -31,8 +31,12 @@ export default function LinksPage() {
       
       {/* Profile Header */}
       <MotionReveal className="text-center space-y-4">
-        <div className="w-16 h-16 rounded-xl bg-[#0F1118] border border-[#1E2337] flex items-center justify-center font-mono font-bold text-[#FFFFFF] text-2xl mx-auto shadow-[0_0_24px_rgba(139,155,247,0.2)]">
-          &lt;E/&gt;
+        <div className="w-20 h-20 rounded-2xl glass-panel-inset p-2.5 flex items-center justify-center mx-auto shadow-[0_0_32px_rgba(139,155,247,0.3)] border border-[#8B9BF7]/35 overflow-hidden">
+          <img
+            src="/images/extokened-logo-glow.png"
+            alt="Extokened Logo"
+            className="w-full h-full object-contain filter drop-shadow-[0_0_12px_rgba(139,155,247,0.5)]"
+          />
         </div>
 
         <div>

@@ -45,9 +45,13 @@ export function Footer() {
               className="brand__logo inline-flex items-center gap-3 group focus:outline-none"
               aria-label="Extokened home"
             >
-              <span className="brand__mark w-8 h-8 rounded-lg bg-gradient-to-b from-[#252B44] to-[#0F1118] border border-[#8B9BF7]/35 flex items-center justify-center font-mono font-bold text-sm text-[#8B9BF7] group-hover:border-[#8B9BF7] group-hover:shadow-[0_0_14px_rgba(139,155,247,0.35)] transition-all">
-                &lt;E/&gt;
-              </span>
+              <div className="w-10 h-10 rounded-xl glass-panel-inset p-1 flex items-center justify-center group-hover:border-[#8B9BF7]/60 group-hover:shadow-[0_0_18px_rgba(139,155,247,0.4)] transition-all overflow-hidden shrink-0">
+                <img
+                  src="/images/extokened-logo-glow.png"
+                  alt="Extokened Logo"
+                  className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(139,155,247,0.4)] group-hover:scale-105 transition-transform"
+                />
+              </div>
               <span className="font-display font-semibold text-xl tracking-tight text-white group-hover:text-[#B8C0EC] transition-colors">
                 Extokened
               </span>

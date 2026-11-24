@@ -63,14 +63,18 @@ export function Navbar() {
             href="/"
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-b from-[#252B44] to-[#0F1118] border border-[#8B9BF7]/35 flex items-center justify-center font-mono font-bold text-[#8B9BF7] text-xs group-hover:border-[#8B9BF7] group-hover:shadow-[0_0_14px_rgba(139,155,247,0.35)] transition-all">
-              &lt;E/&gt;
+            <div className="w-9 h-9 rounded-xl glass-panel-inset p-1 flex items-center justify-center group-hover:border-[#8B9BF7]/60 group-hover:shadow-[0_0_18px_rgba(139,155,247,0.4)] transition-all overflow-hidden shrink-0">
+              <img
+                src="/images/extokened-logo-glow.png"
+                alt="Extokened Logo"
+                className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(139,155,247,0.4)] group-hover:scale-105 transition-transform"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-semibold text-base tracking-tight text-white group-hover:text-[#B8C0EC] transition-colors">
                 Extokened
               </span>
-              <span className="text-[10px] font-mono text-[#727896] uppercase tracking-wider">
+              <span className="text-[10px] font-mono text-[#8E96B8] uppercase tracking-wider">
                 Tech Team
               </span>
             </div>

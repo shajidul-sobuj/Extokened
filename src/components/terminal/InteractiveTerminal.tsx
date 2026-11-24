@@ -6,6 +6,7 @@ import { siteConfig } from "@/data/siteConfig";
 import { hackathons } from "@/data/hackathons";
 import { projects } from "@/data/projects";
 import { teamMembers } from "@/data/team";
+import { playClick, playHover, playGlitch, playVictory } from "@/lib/sound";
 
 interface HistoryItem {
   command: string;
@@ -16,10 +17,10 @@ export function InteractiveTerminal() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<HistoryItem[]>([
     {
-      command: "welcome",
+      command: "init",
       output: (
         <div className="space-y-1 text-xs">
-          <div className="text-cyber-cyan font-bold">
+          <div className="text-cyan-400 font-bold">
             ⚡ EXTOKENED PROTOCOL v2.4 // HACKATHON COMBAT OS
           </div>
           <div className="text-zinc-400">
@@ -40,6 +41,7 @@ export function InteractiveTerminal() {
   const executeCommand = (cmdStr: string) => {
     const rawCmd = cmdStr.trim().toLowerCase();
     if (!rawCmd) return;
+    playClick();
 
     let outputNode: React.ReactNode = null;
 
@@ -47,20 +49,21 @@ export function InteractiveTerminal() {
       case "help":
         outputNode = (
           <div className="space-y-1.5 text-xs font-mono text-zinc-300">
-            <div className="text-cyber-cyan">AVAILABLE COMMANDS:</div>
-            <div><span className="text-white font-semibold">wins</span> — Display 12+ hackathon trophies & victories</div>
-            <div><span className="text-white font-semibold">projects</span> — List flagship prototypes & live links</div>
-            <div><span className="text-white font-semibold">squad</span> — Show Extokened core team roster & superpowers</div>
-            <div><span className="text-white font-semibold">stack</span> — Print battle-tested tech arsenal</div>
-            <div><span className="text-white font-semibold">socials</span> — Facebook, LinkedIn, GitHub & Discord links</div>
-            <div><span className="text-white font-semibold">whoami</span> — Identity scanner</div>
-            <div><span className="text-white font-semibold">clear</span> — Clear terminal output</div>
+            <div className="text-cyan-400 font-bold">AVAILABLE COMMANDS:</div>
+            <div><span className="text-white font-bold">wins</span> — Display 12+ hackathon trophies & victories</div>
+            <div><span className="text-white font-bold">projects</span> — List flagship prototypes & live links</div>
+            <div><span className="text-white font-bold">squad</span> — Show Extokened core team roster & superpowers</div>
+            <div><span className="text-white font-bold">stack</span> — Print battle-tested tech arsenal</div>
+            <div><span className="text-white font-bold">socials</span> — Facebook, LinkedIn, GitHub & Discord links</div>
+            <div><span className="text-white font-bold">whoami</span> — Identity scanner</div>
+            <div><span className="text-white font-bold">clear</span> — Clear terminal output</div>
           </div>
         );
         break;
 
       case "wins":
       case "trophies":
+        playVictory();
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
             <div className="text-amber-400 font-bold">🏆 HALL OF FAME VICTORIES:</div>
@@ -78,9 +81,9 @@ export function InteractiveTerminal() {
       case "projects":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-cyber-cyan font-bold">🚀 FLAGSHIP PROTOTYPES:</div>
+            <div className="text-cyan-400 font-bold">🚀 FLAGSHIP PROTOTYPES:</div>
             {projects.slice(0, 4).map((p, i) => (
-              <div key={i} className="pl-2 border-l border-cyber-cyan/30 text-zinc-300">
+              <div key={i} className="pl-2 border-l border-cyan-500/30 text-zinc-300">
                 <span className="text-white font-bold">{p.title}</span> ({p.category}) —{" "}
                 <span className="text-zinc-400">{p.tagline}</span>
               </div>
@@ -108,7 +111,7 @@ export function InteractiveTerminal() {
       case "arsenal":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-cyber-purple font-bold">🛠️ WEAPONS OF CHOICE:</div>
+            <div className="text-purple-400 font-bold">🛠️ WEAPONS OF CHOICE:</div>
             {siteConfig.arsenal.map((cat, i) => (
               <div key={i} className="text-zinc-300">
                 <span className="text-white font-semibold">{cat.category}:</span>{" "}
@@ -124,7 +127,7 @@ export function InteractiveTerminal() {
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
             <div className="text-blue-400 font-bold">🌐 SOCIAL MATRIX:</div>
-            <div>• Facebook Page: <span className="text-white">{siteConfig.socials.facebook.url}</span></div>
+            <div>• Facebook: <span className="text-white">{siteConfig.socials.facebook.url}</span></div>
             <div>• LinkedIn: <span className="text-white">{siteConfig.socials.linkedin.url}</span></div>
             <div>• GitHub: <span className="text-white">{siteConfig.socials.github.url}</span></div>
             <div>• Discord: <span className="text-white">{siteConfig.socials.discord.url}</span></div>
@@ -135,7 +138,7 @@ export function InteractiveTerminal() {
       case "whoami":
         outputNode = (
           <div className="text-xs font-mono text-zinc-300">
-            Detected: Guest Hacker // Welcome to Extokened HQ. Have a hackathon you want us to enter?
+            Guest Operative // IP Verified. Welcome to Extokened HQ. Have a hackathon you want us to enter?
           </div>
         );
         break;
@@ -164,27 +167,30 @@ export function InteractiveTerminal() {
   };
 
   return (
-    <section className="py-16 relative">
+    <section className="py-16 relative font-mono">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         
         {/* Terminal Frame */}
-        <div className="rounded-2xl bg-[#080A0F] border border-white/10 shadow-2xl overflow-hidden font-mono">
+        <div className="rounded-2xl bg-[#06080D] border border-white/10 shadow-2xl overflow-hidden hud-border">
           {/* Top Title Bar */}
-          <div className="bg-[#0E1117] px-4 py-3 border-b border-white/10 flex items-center justify-between">
+          <div className="bg-[#0B0E14] px-4 py-3 border-b border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="text-xs text-zinc-400 font-mono ml-2 flex items-center gap-1.5">
-                <TerminalIcon className="w-3.5 h-3.5 text-cyber-cyan" />
-                <span>extokened-cli ~ guest@war-room</span>
+              <span className="text-xs text-zinc-400 ml-2 flex items-center gap-1.5">
+                <TerminalIcon className="w-3.5 h-3.5 text-cyan-400" />
+                <span>extokened-combat-shell v2.4 ~ guest@war-room</span>
               </span>
             </div>
 
             <div className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300">
               <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="p-1 rounded hover:bg-white/5 transition-colors"
+                onClick={() => {
+                  playClick();
+                  setIsExpanded(!isExpanded);
+                }}
+                className="p-1 rounded hover:bg-white/5 transition-colors cursor-pointer"
                 title={isExpanded ? "Collapse" : "Expand"}
               >
                 {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
@@ -201,9 +207,9 @@ export function InteractiveTerminal() {
           >
             {history.map((item, idx) => (
               <div key={idx} className="space-y-1">
-                {item.command !== "welcome" && (
+                {item.command !== "init" && (
                   <div className="flex items-center gap-2 text-xs text-zinc-500">
-                    <span className="text-cyber-cyan">&gt;</span>
+                    <span className="text-cyan-400 font-bold">&gt;</span>
                     <span className="text-white font-bold">{item.command}</span>
                   </div>
                 )}
@@ -214,13 +220,14 @@ export function InteractiveTerminal() {
           </div>
 
           {/* Suggestion Pills */}
-          <div className="px-4 py-2 bg-[#0A0D12] border-t border-white/5 flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-[10px] text-zinc-500 uppercase tracking-wider">Quick:</span>
-            {["wins", "projects", "squad", "stack", "socials"].map((cmd) => (
+          <div className="px-4 py-2.5 bg-[#090C12] border-t border-white/5 flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-[10px] text-zinc-500 uppercase tracking-wider">COMMANDS:</span>
+            {["wins", "projects", "squad", "stack", "socials", "clear"].map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => executeCommand(cmd)}
-                className="px-2 py-0.5 rounded text-[11px] bg-white/5 hover:bg-cyber-cyan/20 hover:text-cyber-cyan text-zinc-400 border border-white/5 transition-colors"
+                onMouseEnter={playHover}
+                className="px-2.5 py-1 rounded text-[11px] bg-white/5 hover:bg-cyan-500/20 hover:text-cyan-300 text-zinc-300 border border-white/10 transition-colors cursor-pointer"
               >
                 {cmd}
               </button>
@@ -228,19 +235,19 @@ export function InteractiveTerminal() {
           </div>
 
           {/* Interactive Command Input */}
-          <form onSubmit={handleSubmit} className="px-4 py-3 bg-[#0B0E14] border-t border-white/10 flex items-center gap-3">
-            <span className="text-cyber-cyan text-sm font-bold">&gt;</span>
+          <form onSubmit={handleSubmit} className="px-4 py-3 bg-[#080B10] border-t border-white/10 flex items-center gap-3">
+            <span className="text-cyan-400 text-sm font-bold">&gt;</span>
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="type command (e.g. wins, projects, squad)..."
+              placeholder="type command (e.g. wins, projects, squad, socials)..."
               className="w-full bg-transparent text-white text-xs font-mono focus:outline-none placeholder-zinc-600"
             />
             <button
               type="submit"
-              className="p-1 rounded bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+              className="p-1.5 rounded bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
               title="Execute"
             >
               <CornerDownLeft className="w-3.5 h-3.5" />

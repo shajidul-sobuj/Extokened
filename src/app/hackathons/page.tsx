@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { hackathons, AwardType } from "@/data/hackathons";
+import { hackathons } from "@/data/hackathons";
 import { HackathonCard } from "@/components/hackathons/HackathonCard";
-import { Trophy, Calendar, Award, Sparkles, Filter, Search } from "lucide-react";
+import { Trophy, Calendar, Award, Sparkles, Filter, Search, ShieldCheck } from "lucide-react";
+import { playHover, playClick } from "@/lib/sound";
 
 export default function HackathonsPage() {
   const [awardFilter, setAwardFilter] = useState<string>("all");
@@ -28,77 +29,89 @@ export default function HackathonsPage() {
   });
 
   return (
-    <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-mono">
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-400">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-xs text-amber-400">
           <Trophy className="w-3.5 h-3.5" />
-          <span>VICTORIES & TRACK RECORD ARCHIVE</span>
+          <span>VICTORIES & TRACK RECORD ARCHIVE // REF 0xEXT-WIN</span>
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
+        <h1 className="font-display text-4xl sm:text-6xl font-black text-white tracking-tight">
           The Extokened Trophy Cabinet
         </h1>
-        <p className="text-zinc-400 text-base leading-relaxed">
+        <p className="font-sans text-zinc-400 text-base leading-relaxed">
           From 24-hour university hackathons to 48-hour global AI competitions. A complete chronological record of challenges entered, solutions engineered, and podium honors claimed.
         </p>
       </div>
 
       {/* Summary KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 my-10">
-        <div className="glass-card rounded-xl p-4 border border-white/5">
-          <span className="text-xs font-mono text-zinc-400 block">Total Competitions</span>
-          <span className="text-2xl sm:text-3xl font-display font-black text-white mt-1 block">
+        <div className="rounded-xl p-5 bg-[#090C12] border border-white/10 hud-border">
+          <span className="text-xs text-zinc-400 block uppercase">Total Battles</span>
+          <span className="text-3xl font-display font-black text-white mt-1 block">
             18+
           </span>
-          <span className="text-[11px] font-mono text-zinc-500">National & Global</span>
+          <span className="text-[11px] text-zinc-500">National & Global</span>
         </div>
-        <div className="glass-card rounded-xl p-4 border border-amber-500/20 bg-amber-500/5">
-          <span className="text-xs font-mono text-amber-400 block">Champions (1st Place)</span>
-          <span className="text-2xl sm:text-3xl font-display font-black text-amber-300 mt-1 block">
+        <div className="rounded-xl p-5 bg-[#090C12] border border-amber-500/30 hud-border">
+          <span className="text-xs text-amber-400 block uppercase">Grand Champions</span>
+          <span className="text-3xl font-display font-black text-amber-300 mt-1 block">
             7 🏆
           </span>
-          <span className="text-[11px] font-mono text-zinc-400">Grand Winner Titles</span>
+          <span className="text-[11px] text-zinc-400">1st Place Titles</span>
         </div>
-        <div className="glass-card rounded-xl p-4 border border-white/5">
-          <span className="text-xs font-mono text-zinc-400 block">Runner-Up & Tracks</span>
-          <span className="text-2xl sm:text-3xl font-display font-black text-cyber-cyan mt-1 block">
+        <div className="rounded-xl p-5 bg-[#090C12] border border-cyan-500/30 hud-border">
+          <span className="text-xs text-cyan-400 block uppercase">Podiums & Tracks</span>
+          <span className="text-3xl font-display font-black text-cyan-300 mt-1 block">
             5 🥈
           </span>
-          <span className="text-[11px] font-mono text-zinc-500">Podium Finishes</span>
+          <span className="text-[11px] text-zinc-500">Track Victories</span>
         </div>
-        <div className="glass-card rounded-xl p-4 border border-white/5">
-          <span className="text-xs font-mono text-zinc-400 block">Live Demo Rate</span>
-          <span className="text-2xl sm:text-3xl font-display font-black text-emerald-400 mt-1 block">
+        <div className="rounded-xl p-5 bg-[#090C12] border border-emerald-500/30 hud-border">
+          <span className="text-xs text-emerald-400 block uppercase">Live Demo Rate</span>
+          <span className="text-3xl font-display font-black text-emerald-400 mt-1 block">
             100%
           </span>
-          <span className="text-[11px] font-mono text-zinc-500">Zero Mockups on Stage</span>
+          <span className="text-[11px] text-zinc-500">Zero Fake Mockups</span>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4 border-y border-white/5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4 border-y border-white/10">
         <div className="flex flex-wrap items-center gap-2">
           {/* Award Filter */}
           <button
-            onClick={() => setAwardFilter("all")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
-              awardFilter === "all" ? "bg-white text-black font-semibold" : "bg-white/5 text-zinc-400 hover:text-white"
+            onClick={() => {
+              playClick();
+              setAwardFilter("all");
+            }}
+            onMouseEnter={playHover}
+            className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+              awardFilter === "all" ? "bg-cyan-400 text-black font-bold shadow-md shadow-cyan-400/20" : "bg-white/5 text-zinc-400 hover:text-white"
             }`}
           >
             All Victories
           </button>
           <button
-            onClick={() => setAwardFilter("champion")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
-              awardFilter === "champion" ? "bg-amber-400 text-black font-semibold" : "bg-white/5 text-zinc-400 hover:text-white"
+            onClick={() => {
+              playClick();
+              setAwardFilter("champion");
+            }}
+            onMouseEnter={playHover}
+            className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+              awardFilter === "champion" ? "bg-amber-400 text-black font-bold shadow-md shadow-amber-400/20" : "bg-white/5 text-zinc-400 hover:text-white"
             }`}
           >
             🏆 Grand Champions
           </button>
           <button
-            onClick={() => setAwardFilter("runner_up")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
-              awardFilter === "runner_up" ? "bg-cyber-cyan text-black font-semibold" : "bg-white/5 text-zinc-400 hover:text-white"
+            onClick={() => {
+              playClick();
+              setAwardFilter("runner_up");
+            }}
+            onMouseEnter={playHover}
+            className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
+              awardFilter === "runner_up" ? "bg-purple-500 text-white font-bold shadow-md shadow-purple-500/20" : "bg-white/5 text-zinc-400 hover:text-white"
             }`}
           >
             🥈 Runner-Up & Tracks
@@ -109,8 +122,11 @@ export default function HackathonsPage() {
           {/* Year Filter */}
           <select
             value={yearFilter}
-            onChange={(e) => setYearFilter(e.target.value)}
-            className="bg-[#0E1117] border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white focus:outline-none focus:border-cyber-cyan/50"
+            onChange={(e) => {
+              playClick();
+              setYearFilter(e.target.value);
+            }}
+            className="bg-[#090C12] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-400"
           >
             <option value="all">All Years</option>
             <option value="2025">2025</option>
@@ -123,10 +139,10 @@ export default function HackathonsPage() {
             <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search hackathons..."
+              placeholder="Search challenges..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0E1117] border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-cyber-cyan/50"
+              className="w-full bg-[#090C12] border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400"
             />
           </div>
         </div>
@@ -141,7 +157,7 @@ export default function HackathonsPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-20 border border-dashed border-white/10 rounded-2xl mt-8">
-          <p className="text-zinc-400 font-mono text-sm">No hackathons matching this filter.</p>
+          <p className="text-zinc-400 text-sm">No hackathons matching this query.</p>
         </div>
       )}
     </div>

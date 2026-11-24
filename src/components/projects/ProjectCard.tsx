@@ -11,6 +11,8 @@ import {
   PlayCircle 
 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
+import { HoloCard } from "@/components/ui/HoloCard";
+import { playHover, playClick } from "@/lib/sound";
 
 interface ProjectCardProps {
   project: Project;
@@ -18,32 +20,36 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
-  return (
-    <div className="glass-card glass-card-hover rounded-2xl p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between group">
-      {/* Glow on hover */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-cyber-purple/5 rounded-full blur-3xl group-hover:bg-cyber-purple/15 transition-all duration-300 pointer-events-none" />
+  const getVariant = () => {
+    if (project.category === "AI & Agents") return "violet";
+    if (project.category === "Full-Stack & Cloud") return "cyan";
+    if (project.category === "Web3 & FinTech") return "gold";
+    return "default";
+  };
 
+  return (
+    <HoloCard variant={getVariant()} className="p-6 sm:p-7 flex flex-col justify-between group font-mono">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="px-2.5 py-1 rounded-md text-[11px] font-mono font-medium bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20">
+          <span className="px-2.5 py-1 rounded text-[11px] font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
             {project.category}
           </span>
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 text-zinc-400 border border-white/10">
+          <span className="px-2 py-0.5 rounded text-[10px] bg-white/5 text-zinc-400 border border-white/10">
             {project.status}
           </span>
         </div>
 
         {/* Title & Tagline */}
         <div>
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyber-cyan transition-colors">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
             {project.title}
           </h3>
-          <p className="text-xs text-cyber-cyan font-mono mt-1 font-medium">
+          <p className="text-xs text-cyan-400 mt-1 font-bold">
             {project.hackathonOrigin}
           </p>
-          <p className="text-sm text-zinc-300 mt-2.5 leading-relaxed line-clamp-3">
+          <p className="font-sans text-sm text-zinc-300 mt-2.5 leading-relaxed line-clamp-3">
             {project.description}
           </p>
         </div>
@@ -52,7 +58,7 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
         <div className="space-y-1 pt-1">
           {project.keyFeatures.slice(0, 2).map((feat, idx) => (
             <div key={idx} className="flex items-center gap-2 text-xs text-zinc-400">
-              <span className="text-cyber-cyan text-sm">▹</span>
+              <span className="text-cyan-400 text-sm">▹</span>
               <span className="truncate">{feat}</span>
             </div>
           ))}
@@ -67,13 +73,13 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
             {project.techStack.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 text-zinc-300 border border-white/5"
+                className="px-2 py-0.5 rounded text-[10px] bg-white/5 text-zinc-300 border border-white/5"
               >
                 {tech}
               </span>
             ))}
             {project.techStack.length > 4 && (
-              <span className="px-1.5 py-0.5 rounded-md text-[10px] font-mono text-zinc-400">
+              <span className="px-1.5 py-0.5 rounded text-[10px] text-zinc-400">
                 +{project.techStack.length - 4}
               </span>
             )}
@@ -81,10 +87,10 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
 
           {project.metrics && (
             <div className="text-right">
-              <span className="text-[10px] text-zinc-400 block font-mono">
+              <span className="text-[10px] text-zinc-400 block">
                 {project.metrics.label}
               </span>
-              <span className="text-xs font-mono font-bold text-cyber-cyan">
+              <span className="text-xs font-bold text-cyan-400">
                 {project.metrics.value}
               </span>
             </div>
@@ -95,10 +101,14 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
         <div className="flex items-center justify-between gap-3 pt-2">
           {onOpenDetails ? (
             <button
-              onClick={() => onOpenDetails(project)}
-              className="inline-flex items-center gap-1.5 text-xs text-zinc-300 hover:text-cyber-cyan font-mono transition-colors"
+              onClick={() => {
+                playClick();
+                onOpenDetails(project);
+              }}
+              onMouseEnter={playHover}
+              className="inline-flex items-center gap-1.5 text-xs text-zinc-300 hover:text-cyan-400 transition-colors cursor-pointer"
             >
-              <Cpu className="w-3.5 h-3.5" />
+              <Cpu className="w-3.5 h-3.5 text-cyan-400" />
               <span>Deep Dive Specs</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -112,6 +122,8 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="text-zinc-400 hover:text-white transition-colors"
                 title="View GitHub Source"
               >
@@ -123,7 +135,9 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-semibold text-cyber-cyan hover:underline"
+                onMouseEnter={playHover}
+                onClick={playClick}
+                className="inline-flex items-center gap-1 text-xs font-bold text-cyan-400 hover:underline"
               >
                 <span>Live Demo</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -132,6 +146,6 @@ export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </HoloCard>
   );
 }

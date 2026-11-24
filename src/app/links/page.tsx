@@ -13,14 +13,18 @@ import {
   Mail, 
   Sparkles,
   Award,
-  MessageSquare
+  MessageSquare,
+  Radio
 } from "lucide-react";
 import { Facebook, Linkedin, Github, Twitter } from "@/components/ui/Icons";
+import { HoloCard } from "@/components/ui/HoloCard";
+import { playClick, playHover, playVictory } from "@/lib/sound";
 
 export default function LinksPage() {
   const [copied, setCopied] = useState(false);
 
   const copyPageUrl = () => {
+    playClick();
     if (typeof window !== "undefined") {
       navigator.clipboard.writeText(window.location.href);
       setCopied(true);
@@ -29,26 +33,26 @@ export default function LinksPage() {
   };
 
   return (
-    <div className="pt-32 pb-24 max-w-xl mx-auto px-4 sm:px-6">
+    <div className="pt-32 pb-24 max-w-xl mx-auto px-4 sm:px-6 font-mono">
       
       {/* Profile Header */}
       <div className="text-center space-y-4">
         {/* Monogram Badge */}
         <div className="relative inline-block">
-          <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-cyber-cyan/30 via-[#0E1117] to-cyber-purple/30 border-2 border-cyber-cyan/50 p-1 flex items-center justify-center font-display font-black text-cyber-cyan text-3xl shadow-xl shadow-cyber-cyan/20 mx-auto">
+          <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-[#0B0E14] to-purple-500/20 border-2 border-cyan-400/50 p-1 flex items-center justify-center font-display font-black text-cyan-400 text-3xl shadow-2xl shadow-cyan-400/20 mx-auto">
             &lt;E/&gt;
           </div>
-          <span className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-emerald-500 border-4 border-[#08090C] shadow-sm animate-pulse" />
+          <span className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-emerald-400 border-4 border-[#050608] shadow-sm animate-pulse" />
         </div>
 
         <div>
-          <h1 className="font-display text-2xl sm:text-3xl font-black text-white">
+          <h1 className="font-display text-3xl font-black text-white tracking-wide">
             EXTOKENED
           </h1>
-          <p className="text-xs font-mono text-cyber-cyan mt-1">
+          <p className="text-xs text-cyan-400 mt-1 font-bold">
             {siteConfig.slogan}
           </p>
-          <p className="text-xs text-zinc-400 mt-2 max-w-sm mx-auto leading-relaxed">
+          <p className="font-sans text-xs text-zinc-400 mt-2 max-w-sm mx-auto leading-relaxed">
             Permanent Hackathon Squad & Innovation Collective. 12+ Trophies & Podium Finishes.
           </p>
         </div>
@@ -56,10 +60,11 @@ export default function LinksPage() {
         {/* Copy Link Button */}
         <button
           onClick={copyPageUrl}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-400 hover:text-white transition-colors"
+          onMouseEnter={playHover}
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white transition-colors cursor-pointer"
         >
           {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? "Link Copied!" : "Share Profile"}</span>
+          <span>{copied ? "PROFILE URL COPIED!" : "SHARE MATRIX LINK"}</span>
         </button>
       </div>
 
@@ -67,19 +72,24 @@ export default function LinksPage() {
       <div className="mt-8">
         <Link
           href="/hackathons"
-          className="block p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-[#0E1117] to-amber-500/10 border border-amber-500/30 hover:border-amber-500/60 shadow-lg shadow-amber-500/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={() => {
+            playClick();
+            playVictory();
+          }}
+          className="block p-4 rounded-xl bg-gradient-to-r from-amber-500/15 via-[#0B0E14] to-amber-500/10 border border-amber-500/40 hover:border-amber-400 shadow-xl shadow-amber-500/10 transition-all duration-200 group"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-mono text-amber-400 font-bold block uppercase tracking-wider">
-                  Latest Victory
+                <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">
+                  LATEST CHAMPION TITLE
                 </span>
                 <span className="text-sm font-display font-bold text-white group-hover:text-amber-300 transition-colors">
-                  Grand Champion — AI Horizon 2025
+                  Grand Champion @ AI Horizon 2025
                 </span>
               </div>
             </div>
@@ -95,18 +105,20 @@ export default function LinksPage() {
           href={siteConfig.socials.facebook.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-[#1877F2]/50 hover:bg-[#1877F2]/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-[#1877F2]/60 hover:bg-[#1877F2]/10 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#1877F2]/15 text-[#1877F2] flex items-center justify-center shrink-0">
               <Facebook className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-[#1877F2] transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-[#1877F2] transition-colors block">
                 Official Facebook Page
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
-                {siteConfig.socials.facebook.username} • Team photos & updates
+              <span className="text-xs text-zinc-400">
+                {siteConfig.socials.facebook.username} • Live event stories & photos
               </span>
             </div>
           </div>
@@ -118,18 +130,20 @@ export default function LinksPage() {
           href={siteConfig.socials.linkedin.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-[#0A66C2]/50 hover:bg-[#0A66C2]/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-[#0A66C2]/60 hover:bg-[#0A66C2]/10 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#0A66C2]/15 text-[#0A66C2] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#0A66C2]/15 text-[#0A66C2] flex items-center justify-center shrink-0">
               <Linkedin className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-[#0A66C2] transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-[#0A66C2] transition-colors block">
                 LinkedIn Company Page
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
-                Professional updates & engineering articles
+              <span className="text-xs text-zinc-400">
+                Engineering deep-dives & corporate challenges
               </span>
             </div>
           </div>
@@ -141,17 +155,19 @@ export default function LinksPage() {
           href={siteConfig.socials.github.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-white/40 hover:bg-white/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-white/40 hover:bg-white/5 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0">
               <Github className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-cyber-cyan transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors block">
                 GitHub Collective
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
+              <span className="text-xs text-zinc-400">
                 Open-source boilerplates & hackathon code
               </span>
             </div>
@@ -164,18 +180,20 @@ export default function LinksPage() {
           href={siteConfig.socials.discord.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-[#5865F2]/50 hover:bg-[#5865F2]/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-[#5865F2]/60 hover:bg-[#5865F2]/10 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#5865F2]/15 text-[#5865F2] flex items-center justify-center shrink-0">
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-[#5865F2] transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-[#5865F2] transition-colors block">
                 Discord HQ & War Room
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
-                Community & real-time hackathon chats
+              <span className="text-xs text-zinc-400">
+                Community chat & real-time hackathon sprint updates
               </span>
             </div>
           </div>
@@ -187,18 +205,20 @@ export default function LinksPage() {
           href={siteConfig.socials.devpost.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-[#003E54]/60 hover:bg-[#003E54]/20 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-[#003E54]/60 hover:bg-[#003E54]/20 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#003E54]/30 text-[#38BDF8] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#003E54]/30 text-[#38BDF8] flex items-center justify-center shrink-0">
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-[#38BDF8] transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-[#38BDF8] transition-colors block">
                 Devpost Verified Portfolio
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
-                Verified submissions & judge scores
+              <span className="text-xs text-zinc-400">
+                Verified submissions & judge rubrics
               </span>
             </div>
           </div>
@@ -208,22 +228,24 @@ export default function LinksPage() {
         {/* Main Website Home */}
         <Link
           href="/"
-          className="flex items-center justify-between p-4 rounded-2xl glass-card hover:border-cyber-cyan/50 hover:bg-cyber-cyan/10 transition-all duration-200 group"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="flex items-center justify-between p-4 rounded-xl bg-[#0B0E14] border border-white/10 hover:border-cyan-400/60 hover:bg-cyan-500/10 transition-all duration-200 group"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-cyber-cyan/15 text-cyber-cyan flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-cyan-500/15 text-cyan-400 flex items-center justify-center shrink-0">
               <Layers className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-white group-hover:text-cyber-cyan transition-colors block">
+              <span className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors block">
                 Official Portfolio Website
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
+              <span className="text-xs text-zinc-400">
                 extokened.dev • Full interactive experience
               </span>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-cyber-cyan group-hover:translate-x-0.5 transition-all" />
+          <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
         </Link>
       </div>
 
@@ -231,10 +253,12 @@ export default function LinksPage() {
       <div className="mt-8 text-center">
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold text-black bg-gradient-to-r from-cyber-cyan to-[#38BDF8] hover:from-[#38BDF8] hover:to-cyber-cyan shadow-lg shadow-cyber-cyan/25 transition-all"
+          onMouseEnter={playHover}
+          onClick={playClick}
+          className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-xs font-bold text-black bg-gradient-to-r from-cyan-400 to-[#38BDF8] hover:from-[#38BDF8] hover:to-cyan-400 shadow-xl shadow-cyan-400/25 transition-all"
         >
           <Mail className="w-4 h-4" />
-          <span>Invite Extokened to Your Hackathon</span>
+          <span>INVITE EXTOKENED TO YOUR HACKATHON</span>
         </Link>
       </div>
     </div>

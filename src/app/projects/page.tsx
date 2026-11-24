@@ -5,6 +5,7 @@ import { projects, Project } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { ProjectModal } from "@/components/projects/ProjectModal";
 import { Layers, Search, Cpu, Sparkles } from "lucide-react";
+import { playHover, playClick } from "@/lib/sound";
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -23,31 +24,35 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-mono">
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-purple/10 border border-cyber-purple/20 text-xs font-mono text-cyber-purple">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-purple-500/10 border border-purple-500/30 text-xs text-purple-300">
           <Layers className="w-3.5 h-3.5" />
-          <span>PROJECT CATALOG & CODEBASE DIRECTORY</span>
+          <span>PROJECT CATALOG & CODEBASE DIRECTORY // REF 0xEXT-LAB</span>
         </div>
-        <h1 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
+        <h1 className="font-display text-4xl sm:text-6xl font-black text-white tracking-tight">
           Everything We Have Shipped
         </h1>
-        <p className="text-zinc-400 text-base leading-relaxed">
+        <p className="font-sans text-zinc-400 text-base leading-relaxed">
           From 36-hour hackathon winning prototypes to production systems and open-source tooling. Every build comes with live demos and architecture documentation.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b border-white/5 mt-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-6 border-b border-white/10 mt-8">
         <div className="flex flex-wrap items-center gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
+              onClick={() => {
+                playClick();
+                setActiveCategory(cat);
+              }}
+              onMouseEnter={playHover}
+              className={`px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
                 activeCategory === cat
-                  ? "bg-cyber-cyan text-black font-semibold"
+                  ? "bg-cyan-400 text-black font-bold shadow-md shadow-cyan-400/20"
                   : "bg-white/5 text-zinc-400 hover:text-white"
               }`}
             >
@@ -63,7 +68,7 @@ export default function ProjectsPage() {
             placeholder="Search stack, AI, tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#0E1117] border border-white/10 rounded-lg pl-8 pr-3 py-1.5 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-cyber-cyan/50"
+            className="w-full bg-[#090C12] border border-white/10 rounded-lg pl-8 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-400"
           />
         </div>
       </div>
@@ -81,7 +86,7 @@ export default function ProjectsPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-20 border border-dashed border-white/10 rounded-2xl mt-8">
-          <p className="text-zinc-400 font-mono text-sm">No projects matching your search criteria.</p>
+          <p className="text-zinc-400 text-sm">No projects matching your search criteria.</p>
         </div>
       )}
 

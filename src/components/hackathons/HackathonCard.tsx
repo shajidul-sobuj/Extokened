@@ -10,9 +10,12 @@ import {
   Clock, 
   MapPin, 
   Award,
-  Sparkles 
+  Sparkles,
+  CheckCircle2
 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
+import { HoloCard } from "@/components/ui/HoloCard";
+import { playVictory, playClick, playHover } from "@/lib/sound";
 import confetti from "canvas-confetti";
 
 interface HackathonCardProps {
@@ -23,69 +26,68 @@ interface HackathonCardProps {
 export function HackathonCard({ hackathon, compact = false }: HackathonCardProps) {
   const triggerConfetti = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (hackathon.awardType === "champion" || hackathon.awardType === "runner_up") {
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.7 },
-        colors: ["#00F0FF", "#F59E0B", "#10B981", "#8B5CF6"],
-      });
-    }
+    playVictory();
+    confetti({
+      particleCount: 65,
+      spread: 70,
+      origin: { y: 0.7 },
+      colors: ["#00F5FF", "#FFB800", "#00FF66", "#9945FF"],
+    });
+  };
+
+  const getVariant = (): "gold" | "emerald" | "cyan" | "violet" => {
+    if (hackathon.awardType === "champion") return "gold";
+    if (hackathon.awardType === "special_track") return "emerald";
+    if (hackathon.awardType === "runner_up") return "cyan";
+    return "violet";
   };
 
   const getBadgeStyle = () => {
     switch (hackathon.awardType) {
       case "champion":
-        return "bg-amber-500/15 text-amber-300 border-amber-500/40 shadow-amber-500/10";
+        return "bg-amber-500/15 text-amber-300 border-amber-500/50 shadow-amber-500/20";
       case "runner_up":
-        return "bg-slate-300/15 text-slate-200 border-slate-300/30 shadow-slate-300/10";
+        return "bg-cyan-500/15 text-cyan-300 border-cyan-500/40 shadow-cyan-500/20";
       case "special_track":
-        return "bg-cyber-cyan/15 text-cyber-cyan border-cyber-cyan/40 shadow-cyber-cyan/10";
+        return "bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-emerald-500/20";
       default:
         return "bg-purple-500/15 text-purple-300 border-purple-500/30";
     }
   };
 
   return (
-    <div className="glass-card glass-card-hover rounded-2xl p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between group transition-all duration-300">
-      {/* Subtle background glow */}
-      <div 
-        className={`absolute -top-12 -right-12 w-36 h-36 rounded-full blur-3xl opacity-20 pointer-events-none ${
-          hackathon.awardType === "champion" ? "bg-amber-400" : "bg-cyber-cyan"
-        }`} 
-      />
-
+    <HoloCard variant={getVariant()} className="p-6 sm:p-7 flex flex-col justify-between group font-mono">
       {/* Top Header */}
       <div className="space-y-4">
+        
+        {/* Award & Metric */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          {/* Award Badge */}
           <button
             onClick={triggerConfetti}
-            title="Click for celebration"
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold border shadow-sm transition-transform active:scale-95 ${getBadgeStyle()}`}
+            title="Click to celebrate victory!"
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border transition-transform active:scale-95 cursor-pointer ${getBadgeStyle()}`}
           >
             <Trophy className="w-3.5 h-3.5" />
             <span>{hackathon.badgeLabel}</span>
           </button>
 
-          {/* Metric Badge */}
-          <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-white/5 border border-white/10 text-zinc-300">
+          <span className="px-2.5 py-0.5 rounded text-[11px] bg-white/5 border border-white/10 text-zinc-300">
             {hackathon.standoutMetric}
           </span>
         </div>
 
-        {/* Hackathon Event Info */}
+        {/* Title & Organizer */}
         <div>
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyber-cyan transition-colors">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
             {hackathon.name}
           </h3>
-          <p className="text-xs text-zinc-400 font-mono mt-1">
-            Organized by {hackathon.organizer}
+          <p className="text-xs text-zinc-400 mt-1">
+            Organized by <span className="text-zinc-200">{hackathon.organizer}</span>
           </p>
         </div>
 
-        {/* Metadata pills */}
-        <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-400 font-mono border-y border-white/5 py-2.5">
+        {/* Telemetry metadata row */}
+        <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-400 border-y border-white/5 py-2.5">
           <span className="flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-zinc-500" />
             {hackathon.date}
@@ -100,12 +102,12 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
           </span>
         </div>
 
-        {/* Project built */}
-        <div className="space-y-2 pt-1">
-          <div className="text-xs uppercase tracking-wider font-mono text-cyber-cyan font-bold">
+        {/* Solution Engineered */}
+        <div className="space-y-1.5 pt-1">
+          <div className="text-xs uppercase tracking-wider text-cyan-400 font-bold">
             Project Built: {hackathon.projectTitle}
           </div>
-          <p className="text-sm text-zinc-300 leading-relaxed">
+          <p className="font-sans text-sm text-zinc-300 leading-relaxed">
             {hackathon.description}
           </p>
         </div>
@@ -115,22 +117,22 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
           <div className="space-y-1.5 pt-2">
             {hackathon.highlights.map((h, i) => (
               <div key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <span className="text-cyber-cyan mt-0.5">•</span>
-                <span>{h}</span>
+                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                <span className="font-sans text-zinc-300">{h}</span>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Bottom Section: Tech Stack & Action Links */}
+      {/* Bottom Section: Tech Stack & Actions */}
       <div className="pt-6 mt-6 border-t border-white/5 space-y-4">
         {/* Tech Stack Pills */}
         <div className="flex flex-wrap gap-1.5">
           {hackathon.techStack.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-white/5 text-zinc-300 border border-white/5 hover:border-white/20 transition-colors"
+              className="px-2 py-0.5 rounded text-[11px] bg-white/5 text-zinc-300 border border-white/10 hover:border-cyan-400/30 transition-colors"
             >
               {tech}
             </span>
@@ -145,6 +147,8 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors"
                 title="GitHub Repository"
               >
@@ -157,7 +161,9 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.devpost}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyber-cyan transition-colors"
+                onMouseEnter={playHover}
+                onClick={playClick}
+                className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyan-400 transition-colors"
                 title="Devpost Submission"
               >
                 <Award className="w-3.5 h-3.5" />
@@ -169,11 +175,13 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.demoVideo}
                 target="_blank"
                 rel="noopener noreferrer"
+                onMouseEnter={playHover}
+                onClick={playClick}
                 className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-amber-400 transition-colors"
                 title="Video Pitch"
               >
                 <PlayCircle className="w-3.5 h-3.5" />
-                <span>Demo Pitch</span>
+                <span>Pitch</span>
               </a>
             )}
           </div>
@@ -183,7 +191,9 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
               href={hackathon.links.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyber-cyan hover:underline"
+              onMouseEnter={playHover}
+              onClick={playClick}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:underline"
             >
               <span>Live Prototype</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -191,6 +201,6 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
           )}
         </div>
       </div>
-    </div>
+    </HoloCard>
   );
 }

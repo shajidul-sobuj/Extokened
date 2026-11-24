@@ -1,151 +1,132 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Project } from "@/data/projects";
 import { 
   ExternalLink, 
-  Layers, 
-  Sparkles, 
-  ChevronRight, 
-  Cpu, 
-  PlayCircle 
+  ArrowRight,
+  CheckCircle2
 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
-import { HoloCard } from "@/components/ui/HoloCard";
-import { playHover, playClick } from "@/lib/sound";
 
 interface ProjectCardProps {
   project: Project;
-  onOpenDetails?: (project: Project) => void;
 }
 
-export function ProjectCard({ project, onOpenDetails }: ProjectCardProps) {
-  const getVariant = () => {
-    if (project.category === "AI & Agents") return "violet";
-    if (project.category === "Full-Stack & Cloud") return "cyan";
-    if (project.category === "Web3 & FinTech") return "gold";
-    return "default";
+export function ProjectCard({ project }: ProjectCardProps) {
+  const getStatusBadge = () => {
+    switch (project.status) {
+      case "Shipped":
+        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+      case "Prototype":
+        return "bg-[#22D3C5]/10 text-[#22D3C5] border-[#22D3C5]/30";
+      case "In Progress":
+        return "bg-[#7C5CFF]/10 text-[#A78BFA] border-[#7C5CFF]/30";
+      default:
+        return "bg-zinc-800 text-zinc-400 border-zinc-700";
+    }
   };
 
   return (
-    <HoloCard variant={getVariant()} className="p-6 sm:p-7 flex flex-col justify-between group font-mono">
+    <div className="studio-card p-6 sm:p-7 flex flex-col justify-between group transition-all duration-200 hover:border-zinc-500/50">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="px-2.5 py-1 rounded text-[11px] font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
+          <span className="px-2.5 py-1 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]">
             {project.category}
           </span>
-          <span className="px-2 py-0.5 rounded text-[10px] bg-white/5 text-zinc-400 border border-white/10">
+          <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium border ${getStatusBadge()}`}>
             {project.status}
           </span>
         </div>
 
-        {/* Title & Tagline */}
+        {/* Title & Summary */}
         <div>
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-xs text-cyan-400 mt-1 font-bold">
-            {project.hackathonOrigin}
+          <Link href={`/projects/${project.slug}`} className="group/link block">
+            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover/link:text-[#22D3C5] transition-colors">
+              {project.title}
+            </h3>
+          </Link>
+          <p className="text-xs text-[#A78BFA] mt-1 font-mono">
+            {project.year} • {project.summary}
           </p>
-          <p className="font-sans text-sm text-zinc-300 mt-2.5 leading-relaxed line-clamp-3">
+          <p className="text-sm text-zinc-300 mt-2.5 leading-relaxed font-sans line-clamp-3">
             {project.description}
           </p>
         </div>
 
         {/* Key Features Preview */}
-        <div className="space-y-1 pt-1">
-          {project.keyFeatures.slice(0, 2).map((feat, idx) => (
-            <div key={idx} className="flex items-center gap-2 text-xs text-zinc-400">
-              <span className="text-cyan-400 text-sm">▹</span>
-              <span className="truncate">{feat}</span>
-            </div>
-          ))}
-        </div>
+        {project.keyFeatures.length > 0 && (
+          <div className="space-y-1.5 pt-1">
+            {project.keyFeatures.slice(0, 2).map((feat, idx) => (
+              <div key={idx} className="flex items-start gap-2 text-xs text-zinc-400">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#22D3C5] shrink-0 mt-0.5" />
+                <span className="text-zinc-300 font-sans">{feat}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Bottom Section */}
-      <div className="pt-6 mt-6 border-t border-white/5 space-y-4">
-        {/* Metric & Tech Stack */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex flex-wrap gap-1.5 max-w-[75%]">
-            {project.techStack.slice(0, 4).map((tech) => (
-              <span
-                key={tech}
-                className="px-2 py-0.5 rounded text-[10px] bg-white/5 text-zinc-300 border border-white/5"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.techStack.length > 4 && (
-              <span className="px-1.5 py-0.5 rounded text-[10px] text-zinc-400">
-                +{project.techStack.length - 4}
-              </span>
-            )}
-          </div>
-
-          {project.metrics && (
-            <div className="text-right">
-              <span className="text-[10px] text-zinc-400 block">
-                {project.metrics.label}
-              </span>
-              <span className="text-xs font-bold text-cyan-400">
-                {project.metrics.value}
-              </span>
-            </div>
+      {/* Bottom Section: Technologies & Links */}
+      <div className="pt-6 mt-6 border-t border-[#253044]/60 space-y-4">
+        {/* Tech Stack Pills */}
+        <div className="flex flex-wrap gap-1.5">
+          {project.technologies.slice(0, 5).map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 5 && (
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-400 border border-[#253044]">
+              +{project.technologies.length - 5}
+            </span>
           )}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex items-center justify-between gap-3 pt-2">
-          {onOpenDetails ? (
-            <button
-              onClick={() => {
-                playClick();
-                onOpenDetails(project);
-              }}
-              onMouseEnter={playHover}
-              className="inline-flex items-center gap-1.5 text-xs text-zinc-300 hover:text-cyan-400 transition-colors cursor-pointer"
-            >
-              <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Deep Dive Specs</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          ) : (
-            <span />
-          )}
-
-          <div className="flex items-center gap-3">
-            {project.links.github && (
+        {/* Action Row */}
+        <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-2">
+            {project.sourceUrl && (
               <a
-                href={project.links.github}
+                href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={playHover}
-                onClick={playClick}
-                className="text-zinc-400 hover:text-white transition-colors"
-                title="View GitHub Source"
+                className="p-2 rounded-lg bg-[#151F2E] border border-[#253044] hover:text-white text-zinc-400 transition-colors"
+                title="GitHub Source"
+                aria-label="View Source Code"
               >
                 <Github className="w-4 h-4" />
               </a>
             )}
-            {project.links.live && (
+            {project.liveUrl && (
               <a
-                href={project.links.live}
+                href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={playHover}
-                onClick={playClick}
-                className="inline-flex items-center gap-1 text-xs font-bold text-cyan-400 hover:underline"
+                className="p-2 rounded-lg bg-[#151F2E] border border-[#253044] hover:text-white text-zinc-400 transition-colors"
+                title="Live Deployment"
+                aria-label="View Live Deployment"
               >
-                <span>Live Demo</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-4 h-4" />
               </a>
             )}
           </div>
+
+          <Link
+            href={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-white hover:text-[#22D3C5] transition-colors"
+          >
+            <span>Case Study</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
-    </HoloCard>
+    </div>
   );
 }

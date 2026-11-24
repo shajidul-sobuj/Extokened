@@ -25,7 +25,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — Hackathon Squad & Innovation Collective`,
+  title: {
+    default: "Extokened — Technology & Hackathon Team",
+    template: "%s | Extokened",
+  },
   description: siteConfig.description,
   keywords: [
     "Extokened",
@@ -37,11 +40,12 @@ export const metadata: Metadata = {
     "Google Gemini API",
     "Next.js 15",
     "FastAPI",
+    "Software Engineering Team",
   ],
-  authors: [{ name: "Extokened Squad" }],
+  authors: [{ name: "Extokened Team" }],
   creator: "Extokened",
   openGraph: {
-    title: `${siteConfig.name} — We Hack. We Build. We Ship.`,
+    title: "Extokened — Technology & Hackathon Team",
     description: siteConfig.description,
     url: "https://extokened.dev",
     siteName: siteConfig.name,
@@ -50,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — Hackathon Squad`,
+    title: "Extokened — Technology & Hackathon Team",
     description: siteConfig.description,
     creator: "@extokened",
   },
@@ -65,9 +69,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#08090C] text-[#F3F4F6] min-h-screen flex flex-col selection:bg-cyber-cyan/30 selection:text-cyber-cyan`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#080B12] text-[#F3F4F6] min-h-screen flex flex-col selection:bg-[#7C5CFF]/30 selection:text-white`}
       >
         <InteractiveBackground />
         <Navbar />

@@ -3,12 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #050608;
-  --foreground: #f8fafc;
-  --cyber-cyan: #00f5ff;
-  --hyper-violet: #9945ff;
-  --trophy-gold: #ffb800;
-  --terminal-emerald: #00ff66;
+  --background: #080B12;
+  --foreground: #F4F7FB;
 }
 
 * {
@@ -21,100 +17,83 @@ html {
 }
 
 body {
-  background-color: #050608;
-  color: #f8fafc;
+  background-color: #080B12;
+  color: #F4F7FB;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-/* Custom Cyberpunk Scrollbar */
+/* Custom Sleek Dark Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #050608;
+  background: #080B12;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e2638;
-  border-radius: 2px;
+  background: #253044;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00f5ff;
+  background: #7C5CFF;
 }
 
 /* Selection highlight */
 ::selection {
-  background-color: rgba(0, 245, 255, 0.3);
-  color: #00f5ff;
+  background-color: rgba(124, 92, 255, 0.25);
+  color: #F4F7FB;
 }
 
-/* Cyber Utilities & Precision Chamfers */
+/* Subtle Editorial Grid & Studio Utilities */
 @layer utilities {
-  .cyber-clip-corner {
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-
-  .cyber-clip-btn {
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  }
-
-  .cyber-gradient-text {
-    background: linear-gradient(135deg, #ffffff 0%, #00f5ff 45%, #9945ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .gold-gradient-text {
-    background: linear-gradient(135deg, #fffbeb 0%, #ffb800 50%, #d97706 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .cyber-grid-bg {
-    background-size: 48px 48px;
+  .studio-grid {
+    background-size: 56px 56px;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   }
 
-  .scanlines-overlay {
-    background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%, 
-      rgba(0, 0, 0, 0.25) 50%
-    );
-    background-size: 100% 4px;
-    pointer-events: none;
+  .studio-card {
+    background-color: #101724;
+    border: 1px solid #253044;
+    border-radius: 18px;
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
   }
 
-  .hud-border {
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .studio-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(124, 92, 255, 0.4);
+    box-shadow: 0 12px 30px -10px rgba(8, 11, 18, 0.8), 0 0 20px -5px rgba(124, 92, 255, 0.1);
   }
 
-  .hud-border::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    width: 8px;
-    height: 8px;
-    border-top: 2px solid #00f5ff;
-    border-left: 2px solid #00f5ff;
+  .studio-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-weight: 500;
+    border: 1px solid #253044;
+    background-color: rgba(16, 23, 36, 0.6);
+    color: #A6B1C2;
   }
+}
 
-  .hud-border::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    right: -1px;
-    width: 8px;
-    height: 8px;
-    border-bottom: 2px solid #00f5ff;
-    border-right: 2px solid #00f5ff;
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

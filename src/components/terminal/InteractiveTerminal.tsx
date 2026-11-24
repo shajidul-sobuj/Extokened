@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Terminal as TerminalIcon, Sparkles, CornerDownLeft, Maximize2, Minimize2 } from "lucide-react";
+import { Terminal as TerminalIcon, CornerDownLeft, Sparkles } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { hackathons } from "@/data/hackathons";
 import { projects } from "@/data/projects";
 import { teamMembers } from "@/data/team";
-import { playClick, playHover, playGlitch, playVictory } from "@/lib/sound";
 
 interface HistoryItem {
   command: string;
@@ -17,22 +16,20 @@ export function InteractiveTerminal() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<HistoryItem[]>([
     {
-      command: "init",
+      command: "welcome",
       output: (
         <div className="space-y-1 text-xs">
-          <div className="text-cyan-400 font-bold">
-            ⚡ EXTOKENED PROTOCOL v2.4 // HACKATHON COMBAT OS
+          <div className="text-[#22D3C5] font-semibold">
+            Extokened Interactive Console [Environment: Production]
           </div>
           <div className="text-zinc-400">
-            Type <span className="text-white font-semibold">help</span> to view available system commands or click suggested pills below.
+            Type <span className="text-white font-mono font-medium">help</span> to list commands or click suggested quick tags below.
           </div>
         </div>
       ),
     },
   ]);
-  const [isExpanded, setIsExpanded] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -41,7 +38,6 @@ export function InteractiveTerminal() {
   const executeCommand = (cmdStr: string) => {
     const rawCmd = cmdStr.trim().toLowerCase();
     if (!rawCmd) return;
-    playClick();
 
     let outputNode: React.ReactNode = null;
 
@@ -49,28 +45,26 @@ export function InteractiveTerminal() {
       case "help":
         outputNode = (
           <div className="space-y-1.5 text-xs font-mono text-zinc-300">
-            <div className="text-cyan-400 font-bold">AVAILABLE COMMANDS:</div>
-            <div><span className="text-white font-bold">wins</span> — Display 12+ hackathon trophies & victories</div>
-            <div><span className="text-white font-bold">projects</span> — List flagship prototypes & live links</div>
-            <div><span className="text-white font-bold">squad</span> — Show Extokened core team roster & superpowers</div>
-            <div><span className="text-white font-bold">stack</span> — Print battle-tested tech arsenal</div>
-            <div><span className="text-white font-bold">socials</span> — Facebook, LinkedIn, GitHub & Discord links</div>
-            <div><span className="text-white font-bold">whoami</span> — Identity scanner</div>
-            <div><span className="text-white font-bold">clear</span> — Clear terminal output</div>
+            <div className="text-[#7C5CFF] font-semibold">AVAILABLE COMMANDS:</div>
+            <div><span className="text-white font-semibold">hackathons</span> — List hackathon podiums &amp; achievements</div>
+            <div><span className="text-white font-semibold">projects</span> — List shipped builds &amp; prototypes</div>
+            <div><span className="text-white font-semibold">team</span> — Show core team roster &amp; specialties</div>
+            <div><span className="text-white font-semibold">focus</span> — Display key engineering focus areas</div>
+            <div><span className="text-white font-semibold">socials</span> — View official channels (GitHub, LinkedIn, Facebook)</div>
+            <div><span className="text-white font-semibold">clear</span> — Reset console output</div>
           </div>
         );
         break;
 
+      case "hackathons":
       case "wins":
-      case "trophies":
-        playVictory();
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-amber-400 font-bold">🏆 HALL OF FAME VICTORIES:</div>
+            <div className="text-amber-300 font-semibold">🏆 HACKATHON RECORD:</div>
             {hackathons.map((h, i) => (
               <div key={i} className="pl-2 border-l border-amber-500/30 text-zinc-300">
                 <span className="text-amber-300">[{h.badgeLabel}]</span>{" "}
-                <span className="text-white font-bold">{h.name}</span> ({h.date}) —{" "}
+                <span className="text-white font-semibold">{h.name}</span> ({h.date}) —{" "}
                 <span className="text-zinc-400">{h.projectTitle}</span>
               </div>
             ))}
@@ -81,25 +75,25 @@ export function InteractiveTerminal() {
       case "projects":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-cyan-400 font-bold">🚀 FLAGSHIP PROTOTYPES:</div>
+            <div className="text-[#22D3C5] font-semibold">🚀 CURATED BUILDS:</div>
             {projects.slice(0, 4).map((p, i) => (
-              <div key={i} className="pl-2 border-l border-cyan-500/30 text-zinc-300">
-                <span className="text-white font-bold">{p.title}</span> ({p.category}) —{" "}
-                <span className="text-zinc-400">{p.tagline}</span>
+              <div key={i} className="pl-2 border-l border-[#22D3C5]/30 text-zinc-300">
+                <span className="text-white font-semibold">{p.title}</span> ({p.category} • {p.status}) —{" "}
+                <span className="text-zinc-400">{p.summary}</span>
               </div>
             ))}
           </div>
         );
         break;
 
-      case "squad":
       case "team":
+      case "squad":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-emerald-400 font-bold">⚡ EXTOKENED CORE OPERATIVES:</div>
+            <div className="text-emerald-400 font-semibold">👥 CORE ENGINEERING ROSTER:</div>
             {teamMembers.map((m, i) => (
               <div key={i} className="pl-2 border-l border-emerald-500/30 text-zinc-300">
-                <span className="text-white font-bold">{m.name}</span> —{" "}
+                <span className="text-white font-semibold">{m.name}</span> —{" "}
                 <span className="text-emerald-300">{m.role}</span> ({m.badge})
               </div>
             ))}
@@ -107,14 +101,14 @@ export function InteractiveTerminal() {
         );
         break;
 
+      case "focus":
       case "stack":
-      case "arsenal":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-purple-400 font-bold">🛠️ WEAPONS OF CHOICE:</div>
-            {siteConfig.arsenal.map((cat, i) => (
+            <div className="text-[#A78BFA] font-semibold">🛠️ DEMONSTRATED FOCUS AREAS:</div>
+            {siteConfig.focusAreas.map((cat, i) => (
               <div key={i} className="text-zinc-300">
-                <span className="text-white font-semibold">{cat.category}:</span>{" "}
+                <span className="text-white font-semibold">{cat.title}:</span>{" "}
                 <span className="text-zinc-400">{cat.skills.join(", ")}</span>
               </div>
             ))}
@@ -123,136 +117,113 @@ export function InteractiveTerminal() {
         break;
 
       case "socials":
-      case "links":
+      case "channels":
         outputNode = (
           <div className="space-y-2 text-xs font-mono">
-            <div className="text-blue-400 font-bold">🌐 SOCIAL MATRIX:</div>
-            <div>• Facebook: <span className="text-white">{siteConfig.socials.facebook.url}</span></div>
-            <div>• LinkedIn: <span className="text-white">{siteConfig.socials.linkedin.url}</span></div>
+            <div className="text-[#22D3C5] font-semibold">🌐 OFFICIAL CHANNELS:</div>
             <div>• GitHub: <span className="text-white">{siteConfig.socials.github.url}</span></div>
-            <div>• Discord: <span className="text-white">{siteConfig.socials.discord.url}</span></div>
-          </div>
-        );
-        break;
-
-      case "whoami":
-        outputNode = (
-          <div className="text-xs font-mono text-zinc-300">
-            Guest Operative // IP Verified. Welcome to Extokened HQ. Have a hackathon you want us to enter?
+            <div>• LinkedIn: <span className="text-white">{siteConfig.socials.linkedin.url}</span></div>
+            <div>• Facebook: <span className="text-white">{siteConfig.socials.facebook.url}</span></div>
+            <div>• Email: <span className="text-white">{siteConfig.contactEmail}</span></div>
           </div>
         );
         break;
 
       case "clear":
         setHistory([]);
+        setInput("");
         return;
 
       default:
         outputNode = (
-          <div className="text-xs font-mono text-rose-400">
-            Command not recognized: "{rawCmd}". Type <span className="text-white">help</span> for command list.
+          <div className="text-xs text-rose-400 font-mono">
+            Command not recognized: &quot;{rawCmd}&quot;. Type <span className="text-white underline">help</span> to view commands.
           </div>
         );
         break;
     }
 
-    setHistory((prev) => [...prev, { command: cmdStr, output: outputNode }]);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    executeCommand(input);
+    setHistory((prev) => [...prev, { command: rawCmd, output: outputNode }]);
     setInput("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      executeCommand(input);
+    }
+  };
+
   return (
-    <section className="py-16 relative font-mono">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+    <section className="py-16 relative">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Terminal Frame */}
-        <div className="rounded-2xl bg-[#06080D] border border-white/10 shadow-2xl overflow-hidden hud-border">
-          {/* Top Title Bar */}
-          <div className="bg-[#0B0E14] px-4 py-3 border-b border-white/10 flex items-center justify-between">
+        <div className="studio-card overflow-hidden shadow-2xl">
+          {/* Terminal Title Bar */}
+          <div className="flex items-center justify-between px-4 py-3 bg-[#080B12] border-b border-[#253044]">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="text-xs text-zinc-400 ml-2 flex items-center gap-1.5">
-                <TerminalIcon className="w-3.5 h-3.5 text-cyan-400" />
-                <span>extokened-combat-shell v2.4 ~ guest@war-room</span>
+              <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+              <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              <span className="text-xs font-mono text-zinc-400 ml-2">
+                extokened-console — bash
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300">
-              <button
-                onClick={() => {
-                  playClick();
-                  setIsExpanded(!isExpanded);
-                }}
-                className="p-1 rounded hover:bg-white/5 transition-colors cursor-pointer"
-                title={isExpanded ? "Collapse" : "Expand"}
-              >
-                {isExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-              </button>
+            <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-500">
+              <TerminalIcon className="w-3.5 h-3.5" />
+              <span>Interactive CLI</span>
             </div>
           </div>
 
-          {/* Terminal Output Area */}
-          <div 
-            onClick={() => inputRef.current?.focus()}
-            className={`p-4 sm:p-5 overflow-y-auto space-y-4 cursor-text transition-all duration-300 ${
-              isExpanded ? "max-h-[480px]" : "max-h-[280px]"
-            }`}
-          >
+          {/* Terminal Body */}
+          <div className="p-5 font-mono text-xs bg-[#080B12]/95 min-h-[260px] max-h-[380px] overflow-y-auto space-y-4">
             {history.map((item, idx) => (
-              <div key={idx} className="space-y-1">
-                {item.command !== "init" && (
-                  <div className="flex items-center gap-2 text-xs text-zinc-500">
-                    <span className="text-cyan-400 font-bold">&gt;</span>
-                    <span className="text-white font-bold">{item.command}</span>
-                  </div>
-                )}
-                <div>{item.output}</div>
+              <div key={idx} className="space-y-1.5">
+                <div className="flex items-center gap-2 text-zinc-500">
+                  <span className="text-[#22D3C5] font-semibold">visitor@extokened:~$</span>
+                  <span className="text-white">{item.command}</span>
+                </div>
+                <div className="pl-4">{item.output}</div>
               </div>
             ))}
             <div ref={bottomRef} />
           </div>
 
-          {/* Suggestion Pills */}
-          <div className="px-4 py-2.5 bg-[#090C12] border-t border-white/5 flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-[10px] text-zinc-500 uppercase tracking-wider">COMMANDS:</span>
-            {["wins", "projects", "squad", "stack", "socials", "clear"].map((cmd) => (
+          {/* Interactive Input Row */}
+          <div className="px-4 py-3 bg-[#101724] border-t border-[#253044] flex items-center gap-2">
+            <span className="text-xs font-mono text-[#22D3C5]">visitor@extokened:~$</span>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type 'help', 'hackathons', 'projects', 'team'..."
+              className="flex-1 bg-transparent border-none text-xs font-mono text-white placeholder-zinc-500 focus:outline-none"
+              aria-label="Terminal command input"
+            />
+            <button
+              onClick={() => executeCommand(input)}
+              className="p-1.5 rounded bg-[#151F2E] border border-[#253044] text-zinc-400 hover:text-white transition-colors"
+              title="Run Command"
+              aria-label="Run command"
+            >
+              <CornerDownLeft className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Quick Pill Shortcuts */}
+          <div className="px-4 py-2.5 bg-[#080B12] border-t border-[#253044]/60 flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400">
+            <span className="text-zinc-500">Quick run:</span>
+            {["hackathons", "projects", "team", "focus", "socials", "clear"].map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => executeCommand(cmd)}
-                onMouseEnter={playHover}
-                className="px-2.5 py-1 rounded text-[11px] bg-white/5 hover:bg-cyan-500/20 hover:text-cyan-300 text-zinc-300 border border-white/10 transition-colors cursor-pointer"
+                className="px-2 py-0.5 rounded bg-[#151F2E] hover:bg-[#1f2d42] border border-[#253044] text-zinc-300 hover:text-white transition-colors cursor-pointer"
               >
                 {cmd}
               </button>
             ))}
           </div>
-
-          {/* Interactive Command Input */}
-          <form onSubmit={handleSubmit} className="px-4 py-3 bg-[#080B10] border-t border-white/10 flex items-center gap-3">
-            <span className="text-cyan-400 text-sm font-bold">&gt;</span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="type command (e.g. wins, projects, squad, socials)..."
-              className="w-full bg-transparent text-white text-xs font-mono focus:outline-none placeholder-zinc-600"
-            />
-            <button
-              type="submit"
-              className="p-1.5 rounded bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
-              title="Execute"
-            >
-              <CornerDownLeft className="w-3.5 h-3.5" />
-            </button>
-          </form>
         </div>
 
       </div>

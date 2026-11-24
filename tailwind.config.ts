@@ -10,69 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        obsidian: {
-          DEFAULT: "#08090C",
-          50: "#1A1D24",
-          100: "#14171E",
-          200: "#101319",
-          300: "#0D1015",
-          400: "#0A0C10",
-          500: "#08090C",
-          600: "#060709",
-          700: "#040507",
-          surface: "#0E1117",
-          elevated: "#161B22",
-          border: "rgba(255, 255, 255, 0.08)",
-          borderHover: "rgba(0, 240, 255, 0.3)",
+        studio: {
+          bg: "#080B12",
+          surface: "#101724",
+          elevated: "#151F2E",
+          border: "#253044",
         },
-        cyber: {
-          cyan: "#00F0FF",
-          cyanDim: "rgba(0, 240, 255, 0.15)",
-          purple: "#8B5CF6",
-          purpleDim: "rgba(139, 92, 246, 0.15)",
-          pink: "#F43F5E",
-          green: "#10B981",
-          gold: "#F59E0B",
+        accent: {
+          primary: "#7C5CFF",
+          primaryHover: "#6B46FE",
+          secondary: "#22D3C5",
+          secondaryHover: "#14B8A6",
+        },
+        content: {
+          primary: "#F4F7FB",
+          secondary: "#A6B1C2",
+          muted: "#718096",
+        },
+        status: {
+          success: "#34D399",
+          warning: "#FBBF24",
+          info: "#60A5FA",
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
         display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"],
       },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-        pulseGlow: {
-          "0%, 100%": { opacity: "0.4", transform: "scale(1)" },
-          "50%": { opacity: "0.8", transform: "scale(1.05)" },
-        },
-        shimmer: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
-        marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        scanline: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(1000%)" },
-        },
+      borderRadius: {
+        card: "18px",
+        btn: "10px",
       },
-      animation: {
-        float: "float 6s ease-in-out infinite",
-        "pulse-glow": "pulseGlow 4s ease-in-out infinite",
-        shimmer: "shimmer 2.5s infinite",
-        marquee: "marquee 25s linear infinite",
-        scanline: "scanline 8s linear infinite",
-      },
-      backgroundImage: {
-        "cyber-grid": "linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
-        "radial-fade": "radial-gradient(circle at 50% 20%, rgba(0, 240, 255, 0.12) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%)",
-        "gold-trophy": "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+      maxWidth: {
+        layout: "1280px",
       },
     },
   },

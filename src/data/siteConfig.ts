@@ -1,153 +1,132 @@
 export interface SocialLink {
-  name: string;
+  platform: string;
   url: string;
-  username: string;
-  icon: string;
+  handle: string;
   description: string;
-  badge?: string;
-  color: string;
 }
 
 export interface SiteConfig {
   name: string;
-  shortName: string;
-  slogan: string;
   tagline: string;
+  positioning: string;
   description: string;
-  status: {
-    state: "available" | "hacking" | "mentoring";
-    message: string;
-    targetEvent?: string;
-  };
+  principles: {
+    title: string;
+    description: string;
+  }[];
   contactEmail: string;
   location: string;
-  established: string;
+  establishedYear: number;
   socials: Record<string, SocialLink>;
-  stats: {
+  navLinks: {
+    name: string;
+    href: string;
+  }[];
+  proofMetrics: {
     label: string;
     value: string;
-    prefix?: string;
-    suffix?: string;
-    subtext: string;
+    description: string;
   }[];
-  arsenal: {
-    category: string;
+  focusAreas: {
+    title: string;
+    description: string;
     skills: string[];
   }[];
 }
 
 export const siteConfig: SiteConfig = {
   name: "Extokened",
-  shortName: "EXT",
-  slogan: "We Hack. We Build. We Ship.",
-  tagline: "Engineering the Uncharted — Beyond the Next Token.",
+  tagline: "We build. We compete. We create what's next.",
+  positioning: "A builder-led technology team that learns, competes, collaborates, and ships practical products.",
   description:
-    "Extokened is an elite, permanent hackathon squad and engineering collective. We specialize in prototyping and shipping breakthrough AI, full-stack architectures, and web innovations under intense 24-48 hour hyper-sprints.",
-  status: {
-    state: "available",
-    message: "Ready for Next Hackathon Challenge",
-    targetEvent: "Global Hackathon Season 2025/2026",
-  },
-  contactEmail: "team@extokened.dev",
-  location: "Dhaka & Global Remote",
-  established: "2023",
-  socials: {
-    facebook: {
-      name: "Facebook Page",
-      url: "https://facebook.com/extokened",
-      username: "@extokened",
-      icon: "Facebook",
-      description: "Official team updates, event moments, and hackathon highlights",
-      badge: "Community Hub",
-      color: "#1877F2",
-    },
-    linkedin: {
-      name: "LinkedIn",
-      url: "https://linkedin.com/company/extokened",
-      username: "company/extokened",
-      icon: "Linkedin",
-      description: "Professional milestones, technical articles, and team announcements",
-      badge: "Professional Network",
-      color: "#0A66C2",
-    },
-    github: {
-      name: "GitHub Organization",
-      url: "https://github.com/extokened",
-      username: "extokened",
-      icon: "Github",
-      description: "Open-source hackathon boilerplates, project repos, and micro-tools",
-      badge: "Source Code",
-      color: "#F3F4F6",
-    },
-    discord: {
-      name: "Discord HQ",
-      url: "https://discord.gg/extokened",
-      username: "Extokened HQ",
-      icon: "MessageSquare",
-      description: "Real-time brainstorming, community chats, and war-room sessions",
-      badge: "War Room",
-      color: "#5865F2",
-    },
-    devpost: {
-      name: "Devpost Portfolio",
-      url: "https://devpost.com/teams/extokened",
-      username: "teams/extokened",
-      icon: "Code",
-      description: "Verified submissions, judge scoring, and hackathon awards",
-      badge: "Verified Builds",
-      color: "#003E54",
-    },
-    twitter: {
-      name: "X / Twitter",
-      url: "https://x.com/extokened",
-      username: "@extokened",
-      icon: "Twitter",
-      description: "Live build-in-public threads during 48h hackathons",
-      color: "#1DA1F2",
-    },
-  },
-  stats: [
+    "Extokened is an independent technology and hackathon team. We design, prototype, and ship software solutions under pressure, exploring generative AI, resilient web architectures, and practical developer tools.",
+  principles: [
     {
-      label: "Hackathons Competed",
-      value: "18",
-      suffix: "+",
-      subtext: "National & Global Arenas",
+      title: "Build with purpose",
+      description: "We tackle real, measurable friction points in healthcare, urban infrastructure, and vernacular commerce rather than speculative hype.",
     },
     {
-      label: "Podium Finishes & Wins",
-      value: "12",
-      suffix: " 🏆",
-      subtext: "Championships & Track Wins",
+      title: "Learn by competing",
+      description: "Hackathons are our crucible. The intense 24–48 hour deadline forces clarity, rapid technical compromise, and ruthless prioritization.",
     },
     {
-      label: "Production Prototypes",
-      value: "26",
-      suffix: "+",
-      subtext: "Shipped in 24-48 Hours",
-    },
-    {
-      label: "Lines of Clean Code",
-      value: "150",
-      suffix: "K+",
-      subtext: "TypeScript, Python & Go",
+      title: "Ship as a team",
+      description: "End-to-end ownership: we do not stop at pitch slides. Every project we present has real code, deployed endpoints, and live verified telemetry.",
     },
   ],
-  arsenal: [
+  contactEmail: "team@extokened.dev",
+  location: "Dhaka, Bangladesh & Remote",
+  establishedYear: 2023,
+  socials: {
+    github: {
+      platform: "GitHub",
+      url: "https://github.com/extokened",
+      handle: "extokened",
+      description: "Open-source repositories, project source code, and shared utilities.",
+    },
+    linkedin: {
+      platform: "LinkedIn",
+      url: "https://linkedin.com/company/extokened",
+      handle: "company/extokened",
+      description: "Official team announcements, engineering case studies, and milestones.",
+    },
+    facebook: {
+      platform: "Facebook",
+      url: "https://facebook.com/extokened",
+      handle: "@extokened",
+      description: "Event moments, community updates, and hackathon highlights.",
+    },
+  },
+  navLinks: [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Projects", href: "/projects" },
+    { name: "Hackathons", href: "/hackathons" },
+    { name: "Team", href: "/team" },
+    { name: "Contact", href: "/contact" },
+  ],
+  proofMetrics: [
     {
-      category: "Frontend & UI/UX",
-      skills: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js / WebGL", "shadcn/ui"],
+      label: "Projects Shipped",
+      value: "26+",
+      description: "Prototypes and production builds",
     },
     {
-      category: "AI, LLMs & Agents",
-      skills: ["Google Gemini API", "OpenAI GPT-4o", "LangChain / LangGraph", "RAG Pipelines", "Hugging Face", "Vector DBs (Pinecone, Qdrant)"],
+      label: "Hackathons Joined",
+      value: "18",
+      description: "National and global competitions",
     },
     {
-      category: "Backend & Systems",
-      skills: ["FastAPI", "Node.js / Express", "Go / Gin", "PostgreSQL", "Supabase", "Redis", "Docker & Kubernetes"],
+      label: "Podiums & Awards",
+      value: "12",
+      description: "7 Winners, 5 Finalists & Special Tracks",
     },
     {
-      category: "Hackathon Secret Sauce",
-      skills: ["Rapid 0-to-1 Architecture", "Pitch Deck Crafting", "High-Fidelity Prototyping", "Live Demo Reliability", "Team Chemistry"],
+      label: "Active Contributors",
+      value: "4",
+      description: "Synchronized core engineering roster",
+    },
+  ],
+  focusAreas: [
+    {
+      title: "Modern Web & Distributed Frontends",
+      description: "High-performance Next.js architectures, accessible design systems, and responsive applications that load quickly across devices.",
+      skills: ["Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion", "React 19"],
+    },
+    {
+      title: "Generative AI & Agent Workflows",
+      description: "Connecting multimodal foundation models with real-world sensor streams, deterministic evaluation, and low-latency API pipelines.",
+      skills: ["Google Gemini API", "OpenAI API", "LangGraph", "Vector Databases", "Whisper Audio"],
+    },
+    {
+      title: "Backend Services & Concurrency",
+      description: "Reliable API endpoints, real-time WebSockets, time-series telemetry databases, and containerized microservices.",
+      skills: ["FastAPI", "Go (Golang)", "PostgreSQL", "Supabase", "Redis", "Docker"],
+    },
+    {
+      title: "Applied Computer Vision & Systems",
+      description: "Edge machine learning inference, spatial data mapping, and real-time hardware-software integrations.",
+      skills: ["YOLOv9", "OpenCV", "Mapbox GL", "MQTT", "Python"],
     },
   ],
 };

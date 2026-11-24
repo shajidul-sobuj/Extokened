@@ -1,11 +1,13 @@
 export interface TeamMember {
   id: string;
+  slug: string;
   name: string;
   role: string;
   badge: string;
   bio: string;
   avatar: string;
-  specialties: string[];
+  focusAreas: string[];
+  skills: string[];
   superpower: string;
   hackathonFuel: string;
   stats: {
@@ -25,12 +27,14 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     id: "sobuj",
+    slug: "sobuj",
     name: "Sobuj Ahmed",
     role: "Team Lead & Full-Stack Architect",
-    badge: "Squad Commander",
+    badge: "Lead & Architect",
     bio: "Obsessed with taking high-complexity concepts from 0 to live production in under 36 hours. Bridges AI reasoning layers with resilient full-stack web architectures and seamless UX.",
     avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Sobuj&backgroundColor=0d1117",
-    specialties: ["Next.js 15", "TypeScript", "FastAPI", "Gemini & LLM Pipelines", "System Architecture", "Hackathon Pitch Strategy"],
+    focusAreas: ["System Architecture", "Full-Stack Web", "Hackathon Pitch Strategy"],
+    skills: ["Next.js 15", "TypeScript", "FastAPI", "Gemini & LLM Pipelines", "PostgreSQL", "Docker"],
     superpower: "Architecting entire production DB schemas and API contracts in the first 2 hours of a hackathon.",
     hackathonFuel: "Cold Brew & Dark Chocolate",
     stats: {
@@ -47,13 +51,15 @@ export const teamMembers: TeamMember[] = [
     },
   },
   {
-    id: "ai-engineer",
+    id: "abrar-ai",
+    slug: "abrar-ai",
     name: "Abrar Hasan",
     role: "AI & Machine Learning Specialist",
-    badge: "Model Alchemist",
+    badge: "AI & Neural Systems",
     bio: "Specializes in multimodal neural pipelines, autonomous agents, and fine-tuning lightweight models for edge inference under strict latency budgets.",
     avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Abrar&backgroundColor=0d1117",
-    specialties: ["PyTorch", "Google Gemini API", "LangGraph", "Vector DBs", "Computer Vision (YOLO)", "Whisper Audio"],
+    focusAreas: ["Generative AI", "Computer Vision", "Agentic Workflows"],
+    skills: ["PyTorch", "Google Gemini API", "LangGraph", "Vector DBs", "YOLOv9", "Whisper AI"],
     superpower: "Prompt-engineering and fine-tuning an agent swarm that never hallucinates during the live judge demo.",
     hackathonFuel: "Espresso Shots & Energy Drink",
     stats: {
@@ -69,13 +75,15 @@ export const teamMembers: TeamMember[] = [
     },
   },
   {
-    id: "backend-systems",
+    id: "tanvir-sys",
+    slug: "tanvir-sys",
     name: "Tanvir Rahman",
     role: "Backend & Systems Engineer",
-    badge: "Concurrency Master",
+    badge: "Distributed Systems",
     bio: "Hardens the core infrastructure. High-throughput WebSockets, distributed queues, eBPF telemetry, and sub-10ms query execution across PostgreSQL and Redis.",
     avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Tanvir&backgroundColor=0d1117",
-    specialties: ["Go (Golang)", "PostgreSQL / Timescale", "Redis", "Docker & Kubernetes", "WebSockets", "Linux Internals"],
+    focusAreas: ["Distributed Systems", "Database Optimization", "Real-time Telemetry"],
+    skills: ["Go (Golang)", "PostgreSQL / Timescale", "Redis", "Docker & Kubernetes", "WebSockets", "Linux Internals"],
     superpower: "Fixing race conditions and zero-downtime server scaling 15 minutes before the submission deadline.",
     hackathonFuel: "Black Coffee & Chai",
     stats: {
@@ -91,13 +99,15 @@ export const teamMembers: TeamMember[] = [
     },
   },
   {
-    id: "frontend-designer",
+    id: "nafisa-ui",
+    slug: "nafisa-ui",
     name: "Nafisa Tabassum",
     role: "UI/UX Virtuoso & Creative Technologist",
-    badge: "Interface Sorceress",
+    badge: "Interface & Experience",
     bio: "Transforms complex backend data pipelines into magnetic, intuitive, and award-winning user interfaces. Masters interactive animations, sound design, and micro-interactions.",
     avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Nafisa&backgroundColor=0d1117",
-    specialties: ["Figma to Code", "Tailwind CSS", "Framer Motion", "Three.js / WebGL", "Accessibility (a11y)", "Design Systems"],
+    focusAreas: ["Design Systems", "Accessible Interfaces", "Motion & Interactive Experience"],
+    skills: ["Figma to Code", "Tailwind CSS", "Framer Motion", "Three.js / WebGL", "WCAG a11y", "Design Systems"],
     superpower: "Crafting interfaces so visually striking that hackathon judges stop scrolling and award maximum UX points.",
     hackathonFuel: "Matcha Latte & Bubble Tea",
     stats: {

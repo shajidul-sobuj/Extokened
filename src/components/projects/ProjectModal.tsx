@@ -1,15 +1,17 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { Project } from "@/data/projects";
 import { 
   X, 
   ExternalLink, 
   PlayCircle, 
+  CheckCircle2, 
   Cpu, 
   Layers, 
-  CheckCircle,
-  FileText
+  ArrowRight,
+  ShieldCheck
 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
 
@@ -36,83 +38,79 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10">
-      {/* Backdrop */}
-      <div 
-        onClick={onClose}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200" 
-      />
-
-      {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-3xl max-h-[90vh] bg-[#0E1117] border border-cyber-cyan/30 rounded-2xl shadow-2xl shadow-black/80 overflow-y-auto z-10 animate-in zoom-in-95 duration-200 text-left">
-        {/* Modal Header */}
-        <div className="sticky top-0 bg-[#0E1117]/95 backdrop-blur-md px-6 py-5 border-b border-white/10 flex items-center justify-between z-20">
-          <div className="flex items-center gap-3">
-            <span className="px-2.5 py-1 rounded-md text-xs font-mono font-medium bg-cyber-purple/15 text-cyber-purple border border-cyber-purple/30">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto studio-card bg-[#080B12] shadow-2xl border border-[#253044]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Top Bar */}
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-[#080B12]/95 backdrop-blur-md border-b border-[#253044]">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#151F2E] text-zinc-300 border border-[#253044]">
               {project.category}
             </span>
-            <span className="text-xs font-mono text-zinc-400">
+            <span className="text-xs font-mono text-[#22D3C5]">
               {project.status}
             </span>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-lg bg-[#151F2E] border border-[#253044] text-zinc-400 hover:text-white transition-colors cursor-pointer"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Modal Body */}
         <div className="p-6 sm:p-8 space-y-6">
-          {/* Title & Origin */}
-          <div className="space-y-1">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
+          {/* Title & Summary */}
+          <div className="space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               {project.title}
             </h2>
-            <p className="text-xs font-mono text-cyber-cyan">
-              {project.hackathonOrigin}
-            </p>
-            <p className="text-base text-zinc-300 font-medium pt-1">
-              {project.tagline}
+            <p className="text-sm font-mono text-[#A78BFA]">
+              {project.year} • {project.summary}
             </p>
           </div>
 
-          {/* Overview */}
+          {/* Description */}
           <div className="space-y-2">
-            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400 font-bold">
-              Project Overview
+            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400">
+              Overview
             </h4>
-            <p className="text-sm text-zinc-300 leading-relaxed">
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">
               {project.description}
             </p>
           </div>
 
           {/* Architecture Notes */}
-          <div className="p-4 rounded-xl bg-[#141820] border border-white/10 space-y-2">
-            <div className="flex items-center gap-2 text-xs font-mono text-cyber-cyan font-bold">
+          <div className="p-4 rounded-lg bg-[#101724] border border-[#253044] space-y-2">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#22D3C5] font-semibold">
               <Cpu className="w-4 h-4" />
-              <span>System & Architectural Strategy</span>
+              <span>System &amp; Architectural Strategy</span>
             </div>
-            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
+            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
               {project.architectureNotes}
             </p>
           </div>
 
           {/* Key Features Breakdown */}
           <div className="space-y-2">
-            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400 font-bold">
-              Key Engineering Features
+            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400">
+              Key Capabilities
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {project.keyFeatures.map((feat, idx) => (
                 <div 
                   key={idx}
-                  className="flex items-start gap-2.5 p-3 rounded-lg bg-white/5 border border-white/5 text-xs text-zinc-300"
+                  className="flex items-start gap-2.5 p-3 rounded-lg bg-[#101724] border border-[#253044] text-xs text-zinc-300 font-sans"
                 >
-                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#22D3C5] shrink-0 mt-0.5" />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -121,14 +119,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Full Tech Stack */}
           <div className="space-y-2">
-            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400 font-bold">
-              Technology Stack
+            <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400">
+              Technologies Used
             </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.techStack.map((tech) => (
+            <div className="flex flex-wrap gap-1.5">
+              {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 rounded-lg text-xs font-mono bg-white/5 text-zinc-200 border border-white/10"
+                  className="px-2.5 py-1 rounded text-xs font-mono bg-[#151F2E] text-zinc-200 border border-[#253044]"
                 >
                   {tech}
                 </span>
@@ -138,43 +136,54 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Modal Footer / CTAs */}
-        <div className="px-6 py-4 bg-[#08090C] border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            {project.links.github && (
+        <div className="px-6 py-4 bg-[#080B12] border-t border-[#253044] flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            {project.sourceUrl && (
               <a
-                href={project.links.github}
+                href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#151F2E] hover:bg-[#1f2d42] border border-[#253044] text-white transition-colors"
               >
                 <Github className="w-4 h-4" />
-                <span>View Source Code</span>
+                <span>Source Code</span>
               </a>
             )}
-            {project.links.demoVideo && (
+            {project.demoUrl && (
               <a
-                href={project.links.demoVideo}
+                href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono bg-white/5 hover:bg-white/10 border border-white/10 text-amber-400 transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[#151F2E] hover:bg-[#1f2d42] border border-[#253044] text-amber-300 transition-colors"
               >
                 <PlayCircle className="w-4 h-4" />
-                <span>Watch Pitch Demo</span>
+                <span>Pitch Demo</span>
               </a>
             )}
           </div>
 
-          {project.links.live && (
-            <a
-              href={project.links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-black bg-cyber-cyan hover:bg-[#38BDF8] transition-colors shadow-lg shadow-cyber-cyan/20"
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/projects/${project.slug}`}
+              onClick={onClose}
+              className="inline-flex items-center gap-1.5 text-xs text-[#22D3C5] hover:underline"
             >
-              <span>Launch Live Prototype</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          )}
+              <span>Full Case Study Page</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium text-white bg-[#7C5CFF] hover:bg-[#6847ED] transition-colors shadow-sm"
+              >
+                <span>Launch Prototype</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,342 +1,113 @@
-# 🚀 EXTOKENED — Exhaustive Page-by-Page & Section-by-Section Architectural Plan
-
-> **Extokened** — Elite Hackathon Squad & Innovation Collective  
-> *"We Hack. We Build. We Ship. Beyond the Next Token."*
+# 🏛️ Extokened — Website Product & Experience Plan
+**Document:** Planning / Product Design Brief  
+**Version:** 0.1 — Discovery baseline  
+**Date:** 24 November 2026  
+**Status:** Approved Product Specification  
 
 ---
 
-## 📐 PART 1: GLOBAL DESIGN SYSTEM & FOUNDATIONS
+## 1. Product Vision & Positioning
+**Extokened** is a long-term technology and hackathon team. The website acts as the team's official digital home: a credible brand presence, an evidence-backed record of hackathon participation and achievements, and a curated portfolio of projects.
 
-### 1.1 Color Architecture (Cyber-Kinetic Command Palette)
-| Token Name | Hex Value | Purpose & Psychological Impact |
+**Positioning:** A builder-led technology team that learns, competes, collaborates, and ships practical products.
+
+### Primary Goals
+1. Establish a consistent, recognizable Extokened identity.
+2. Showcase hackathon participation, finalists, winners, awards, and lessons learned.
+3. Present shipped and in-progress projects with clear outcomes and demos.
+4. Introduce team members and their areas of contribution.
+5. Make it easy for organizers, collaborators, sponsors, recruiters, and other teams to contact Extokened.
+6. Connect official social and developer platforms.
+
+### Success Indicators
+- Visitors understand who Extokened is within 5–10 seconds.
+- A visitor can reach a project, achievement, member profile, or contact route in ≤ 2 clicks.
+- Every published achievement and project has verified facts, links, and media.
+- Pages load quickly and remain usable on mobile and low/medium bandwidth connections.
+
+---
+
+## 2. Audience & User Journeys
+| Audience | What They Need | Primary Route |
 | :--- | :--- | :--- |
-| `void-black` | `#050608` | Primary background void; deepest obsidian with subtle blue undertone |
-| `surface-base` | `#0B0E14` | Primary card and panel surface with glassmorphic backing |
-| `surface-elevated` | `#121620` | Modals, active states, and elevated hover cards |
-| `border-subtle` | `rgba(255, 255, 255, 0.08)` | Baseline structural dividers and grid lines |
-| `border-active` | `rgba(0, 245, 255, 0.35)` | Active element boundaries and hover triggers |
-| `cyber-cyan` | `#00F5FF` | Primary signature accent; electric energy, technology, focus |
-| `hyper-violet` | `#9945FF` | Secondary accent; AI layers, neural pipelines, agentic workflows |
-| `trophy-gold` | `#FFB800` | Grand Champion 1st Place badges, podium glow, victory foils |
-| `trophy-emerald` | `#00FF66` | Live status beacon, track wins, clean build indicators |
-| `danger-crimson` | `#FF3366` | Critical alerts, countdown timers, close buttons |
-| `text-primary` | `#F8FAFC` | Maximum legibility headline and key data text |
-| `text-secondary` | `#94A3B8` | Body copy, technical descriptions |
-| `text-muted` | `#64748B` | Monospace coordinate labels, timestamps, metadata |
-
-### 1.2 Typography Architecture
-- **Display Headlines (`Space Grotesk`):** Heavyweight (800/900 Black), uppercase tracking (`-0.03em`), geometric and assertive. Used for main headlines, section titles, and key numbers.
-- **Monospace Telemetry (`JetBrains Mono`):** Clean tabular numbers, coordinate timestamps, clearance tags, and code snippets.
-- **Content Body (`Inter`):** Clean, accessible reading experience with generous line-height (`1.6`) for project explanations and hackathon recaps.
-
-### 1.3 Audio Synthesizer Engine (`src/lib/sound.ts`)
-Zero-dependency Web Audio API synthesizer engine providing tactile cyber feedback:
-1. `playHover()`: Ultra-short 1200Hz frequency sine pulse (25ms) when hovering interactive cards.
-2. `playClick()`: Mechanical key-switch click sound on button engagement.
-3. `playVictory()`: 3-tone arpeggio (C5 -> E5 -> G5) celebrating hackathon trophy cards.
-4. `playGlitch()`: Micro white-noise burst during text decryption.
-5. Global Mute/Equalizer state stored in `localStorage` and synchronized across all pages.
+| **Hackathon Organizers** | Team identity, past participation, verified results, contact | Home → Achievements → Contact |
+| **Recruiters / Mentors** | Real work, skills, member contributions | Home → Projects → Team |
+| **Potential Collaborators** | Team interests, active work, contact | Home → About → Contact |
+| **General Visitors** | What Extokened does and why it matters | Home → Projects / About |
+| **Existing Members** | Shareable profile and project links | Team / Project detail |
 
 ---
 
-## 🖥️ PART 2: GLOBAL SHELL COMPONENTS (Every Page)
+## 3. Information Architecture & Routes
+### Primary Navigation
+- **Home** (`/`)
+- **About** (`/about`)
+- **Projects** (`/projects`)
+- **Hackathons** (`/hackathons`)
+- **Team** (`/team`)
+- **Contact** (`/contact`)
+- **Header CTA:** `Let's Collaborate`
+- **Utility Links:** GitHub, LinkedIn, Facebook
 
-### 2.1 HUD Command Header (`src/components/layout/Navbar.tsx`)
-
-#### A. Content & Elements
-- **Left Wing:**
-  - Monogram bracket icon `[EXT//01]` with glowing cyan core.
-  - Squad name `EXTOKENED` in bold geometric typography.
-  - Pulsing radar beacon: `● SYSTEM_STATUS: BATTLE_READY`.
-- **Center Wing (Floating Nav Capsule):**
-  - Navigation links with monospaced index prefixes:
-    - `01 // OVERVIEW` (`/`)
-    - `02 // VICTORIES` (`/hackathons` with `12🏆` badge)
-    - `03 // BUILDS` (`/projects`)
-    - `04 // SQUAD` (`/team`)
-    - `05 // MATRIX` (`/links`)
-    - `06 // DISPATCH` (`/contact`)
-- **Right Wing:**
-  - Live UTC Epoch / Clock counter: `UTC 21:40:12`.
-  - Sound Synthesizer Equalizer Toggle button: Animated 4-bar equalizer that toggles `AUDIO: ON / MUTED`.
-  - Tactical Action Button: `[ INVITE_TO_HACK ]` with cyber clip corner.
-
-#### B. Visual Wireframe Layout
-```
-+----------------------------------------------------------------------------------------------------------+
-| [EXT//01] EXTOKENED  ● READY  |  01//HOME  02//WINS[12🏆]  03//BUILDS  04//SQUAD  05//LINKS  |  UTC 21:40  🔊 [INVITE]  |
-+----------------------------------------------------------------------------------------------------------+
-```
-
-#### C. Animation & Styling
-- **Sticky Glass:** Translucent backdrop filter (`blur(16px)`), `#050608/80` background, subtle bottom border (`rgba(255,255,255,0.08)`).
-- **Active Page Glow:** The active route features a glowing cyan underbar and soft background wash.
-- **Sound Effect:** Hovering links triggers `playHover()`, clicking triggers `playClick()`.
+### Complete Route Map
+- `/` — Home: Fast overview, verified stats, curated projects, hackathon highlights, team preview, collaboration CTA.
+- `/about` — About Extokened: Origin story, mission, vision, principles, demonstrated focus areas, how we work.
+- `/projects` — Project Directory: Search & filter by category, technology, status (Shipped, Prototype, In Progress, Archived), and year.
+- `/projects/[slug]` — Project Case Study Detail: Problem context, solution, key features, technical overview & architecture, challenges & learnings, outcomes, contributors.
+- `/hackathons` — Hackathon Timeline & Archive: Chronological record, distinct categorization of Winners vs Finalists vs Participants, featured achievement, filters.
+- `/hackathons/[slug]` — Hackathon Event Detail: Event challenge, team solution, official result evidence, media, team roles, lessons learned.
+- `/team` — Team Directory: Approved member profiles, collective capabilities grouped by area, team build culture.
+- `/contact` — Contact & Collaboration: Direct team email, LinkedIn, GitHub, Facebook, verified inquiry form.
+- `/privacy` — Privacy Policy: Data collection disclosure for forms and communications.
+- `/404` / `not-found` — Custom not-found page with clear routes back to projects/home.
 
 ---
 
-### 2.2 Industrial Telemetry Footer (`src/components/layout/Footer.tsx`)
+## 4. Global Design System (Dark Editorial-Tech / Modern Digital Studio)
 
-#### A. Content & Elements
-- **Top Row (Brand Marquee):** Stylized giant ASCII/geometric marquee text reading `E X T O K E N E D — W E  H A C K .  W E  B U I L D .  W E  S H I P .`
-- **Middle Grid (4 Columns):**
-  - Column 1 (Manifesto & Direct Socials): Mission summary + direct branded buttons for Facebook, LinkedIn, GitHub, Discord, Twitter, Devpost.
-  - Column 2 (System Nav): Deep links to Overview, Victories Archive, Projects Catalog, Squad Dossiers, Links Hub.
-  - Column 3 (Battle Stations): Direct email (`team@extokened.dev`), Base location (`Dhaka, Bangladesh // Global Remote`), Response SLA (`< 12 Hours`).
-  - Column 4 (War-Room Status Card): Real-time hackathon season indicator, open invitations status, and quick consultation link.
-- **Bottom Bar:**
-  - Real-time Git Commit SHA indicator: `BUILD: e8f41a9 // KERNEL: NEXT.JS 15 TURBO`.
-  - Latency ticker: `PING: 14ms // STATUS: ALL NODES GREEN`.
-  - Copyright statement: `© 2026 EXTOKENED SQUAD. ALL RIGHTS RESERVED.`
+### 4.1 Aesthetic Archetype
+**Direction:** Dark editorial-tech / modern digital studio. Premium, precise, confident, **not an overused neon cyberpunk template**.
 
----
+**Core Principles:**
+- Strong typography and generous spacing.
+- Dark neutral canvas with one primary accent and one restrained secondary accent.
+- Real team, event, and product visuals dominate over generic stock imagery.
+- Subtle grids, thin borders (`#253044`), restrained gradients.
+- High readability; animations never obstruct navigation or text.
+- WCAG AA contrast compliance across all body text and controls.
 
-## 📄 PART 3: PAGE 1 — HOME PAGE (`/`)
+### 4.2 Exact Color Tokens
+| Token | Hex Value | Usage |
+| :--- | :--- | :--- |
+| `background` | `#080B12` | Main page background |
+| `surface` | `#101724` | Cards / panels |
+| `surface-elevated` | `#151F2E` | Hover / modal surfaces |
+| `text-primary` | `#F4F7FB` | Headings & high-emphasis body |
+| `text-secondary` | `#A6B1C2` | Descriptions & readable copy |
+| `text-muted` | `#718096` | Metadata, timestamps, labels |
+| `primary-accent` | `#7C5CFF` | Primary CTA, focus rings, key links |
+| `secondary-accent` | `#22D3C5` | Small highlights, status indicators |
+| `border` | `#253044` | Dividers, structural outlines |
+| `success` | `#34D399` | Verified wins, live status |
+| `warning` | `#FBBF24` | In-progress / pending status |
 
-### Section 1: The "War Room" Hero Section (`src/components/hero/HeroSection.tsx`)
+### 4.3 Typography Scale
+- **Display / Headings:** `Space Grotesk` (clean, geometric, tight tracking `-0.02em`).
+- **Body / UI:** `Inter` (optimal legibility, 150–160% line height).
+- **Code / Technical Metadata:** `JetBrains Mono` (tabular numbers, tags, timestamps).
 
-#### A. Content & Elements
-- **Eyebrow Telemetry:** `[COORD: 23.8103° N, 90.4125° E] // SQUAD_ID: EXT-ALPHA // HACKATHON COMBAT READY`
-- **Main Headline (Dynamic Glitch Decrypt):**
-  - Line 1: `WE HACK. WE BUILD.` (Solid White, Space Grotesk 900)
-  - Line 2: `WE SHIP BEYOND LIMITS.` (Illuminated Cyan-to-Violet Cyber Gradient)
-- **Manifesto Copy:**
-  - "Extokened is an elite, permanent hackathon collective. We turn high-complexity AI models, distributed architectures, and bold ideas into championship-winning production prototypes in 24–48 hours."
-- **Action Buttons:**
-  - Primary CTA: `[ EXPLORE 12+ TROPHIES 🏆 ]` (Gradient cyan button with victory sound trigger on click).
-  - Secondary CTA: `[ INSPECT ARSENAL & BUILDS ]` (Cyber-bordered translucent button).
-- **Interactive 48-Hour Sprint Simulator Widget (Right Wing):**
-  - A live interactive mini-game/simulation!
-  - Button: `[ ▶ LAUNCH 48H SPRINT SIMULATION ]`
-  - When clicked, a live progress sequence runs with audio feedback:
-    - *00:00:00* -> Phase 1: Problem Framing & DB Schema Locked (Check!)
-    - *12:00:00* -> Phase 2: Multimodal Gemini AI Fine-Tuned & Backend Containerized (Check!)
-    - *30:00:00* -> Phase 3: All-Nighter Coding Assault & WebSockets Live (Check!)
-    - *48:00:00* -> Phase 4: Stage Live Demo & Grand Champion Victory! (Confetti explodes + victory fanfare!).
-- **Bottom Telemetry Strip:**
-  - 4 Combat Gauges:
-    - `18+` Hackathons Battled (`100% Live Demo Rate`)
-    - `12 🏆` Podium Trophies Claimed (`7x Grand Champions`)
-    - `26+` Prototypes Shipped (`Sub-48h Builds`)
-    - `150K+` Lines of Clean Code (`TypeScript & Python`)
-
-#### B. Visual Wireframe Layout
-```
-+----------------------------------------------------------------------------------------------------------+
-| [COORD: 23.81° N, 90.41° E] // SQUAD_ID: EXT-ALPHA // SYSTEM: OPERATIONAL                                |
-|                                                                                                          |
-|   LEFT WING: TYPOGRAPHIC ASSAULT                 RIGHT WING: 48H SPRINT SIMULATOR WIDGET                 |
-|   ==============================                 =======================================                 |
-|   WE HACK. WE BUILD.                             +-----------------------------------------------------+ |
-|   WE SHIP BEYOND LIMITS.                         | [EXT-SIMULATOR v2.4]              STATUS: ARMED     | |
-|                                                  | > Target: AI Horizon 48h Global Sprint              | |
-|   Extokened is a permanent hackathon squad...    | [=================>                     ] 45%       | |
-|                                                  | Log: Ingesting sensor telemetry...                  | |
-|   [ 🏆 VIEW 12 WINS ]  [ ⚡ CODE LAB ]            | [ ▶ SIMULATE 48H COMBAT SPRINT ]                    | |
-|                                                  +-----------------------------------------------------+ |
-|                                                                                                          |
-|   +-------------------+  +-------------------+  +-------------------+  +-------------------+             |
-|   | 18+ BATTLES       |  | 12 🏆 PODIUMS     |  | 26+ PROTOTYPES    |  | 150K+ CODE LINES  |             |
-|   +-------------------+  +-------------------+  +-------------------+  +-------------------+             |
-+----------------------------------------------------------------------------------------------------------+
-```
+### 4.4 Motion System (Purposeful & Accessible)
+- **Section Reveal:** Opacity + 12–16px vertical drift, 450–600ms ease-out.
+- **Card Hover:** Subtle 2–4px lift, border shift (`#253044` → `#7C5CFF/40`), 180–240ms.
+- **Button Hover:** Smooth color transition, subtle arrow drift, 150–200ms.
+- **Hero Ambient:** Very slow, subtle gradient/grid drift. No high-frequency movement.
+- **Counters:** Animate once on viewport entry for substantiated metrics only.
+- **Respects `prefers-reduced-motion`:** All animations gracefully disable under reduced motion settings. Zero scroll-jacking, zero flashing, zero audio auto-play.
 
 ---
 
-### Section 2: Hackathon Hall of Fame (Podium Spotlight) (`src/components/hackathons/HackathonHallOfFame.tsx`)
-
-#### A. Content & Elements
-- **Header:**
-  - Tag: `[ PODIUM CABINET // ARCHIVE REF 0xEXT-WIN ]`
-  - Title: `Championship Victories & Track Records`
-  - Subtitle: "Every hackathon is a trial by fire. Here are our top podium victories across national and global arenas."
-  - Filter Switcher: `[ ALL RECORDS ]` | `[ 🏆 GRAND CHAMPIONS ]` | `[ 🥈 RUNNER-UP & TRACKS ]`
-- **Holographic 3D Cards (`HoloCard.tsx`):**
-  - **Card 1: AI Horizon Global Hackathon 2025**
-    - Badge: `🏆 GRAND CHAMPION (1st Place)` in metallic gold foil with celebration confetti.
-    - Metric: `Ranked #1 of 220+ Global Teams`
-    - Solution: *PulseAI* — Autonomous ICU Triage & Telemetry Anomaly Detection using Gemini 2.0.
-    - Tags: `Next.js 15`, `Google Gemini API`, `FastAPI`, `WebSockets`.
-    - Links: GitHub Repo, Live Demo, Devpost, Pitch Deck.
-  - **Card 2: National CodeStorm Championship 2024**
-    - Badge: `🏆 1st Place Smart City Track` in emerald foil.
-    - Metric: `41% Emergency Transit Cut`
-    - Solution: *GridSync* — Edge Computer Vision Dynamic Traffic Grid with Ambulance Corridors.
-    - Tags: `YOLOv9`, `FastAPI`, `React 19`, `Mapbox GL`.
-  - **Card 3: FinTech Disrupt Sprint 2024**
-    - Badge: `🥈 1st Runner Up` in titanium silver foil.
-    - Metric: `Top 2 of 85 Teams`
-    - Solution: *Khashra* — Vernacular Bangla Voice Ledger & Credit Scoring for Micro-Merchants.
-    - Tags: `Whisper AI`, `FastAPI`, `Supabase`, `IndexedDB PWA`.
-  - **Card 4: Agentic AI Frontier Hackathon**
-    - Badge: `⚡ Best Autonomous Agent Architecture`
-    - Metric: `Zero-Hallucination Web Navigation`
-    - Solution: *OmniScrape Swarm* — Self-healing recursive DOM scraping swarm.
-- **Action:** `[ VIEW FULL HACKATHON ARCHIVE & TIMELINE -> ]`
-
----
-
-### Section 3: Featured Innovation Lab (Projects Showcase) (`src/components/projects/ProjectGallery.tsx`)
-
-#### A. Content & Elements
-- **Header:**
-  - Tag: `[ THE ARSENAL // CODEBASE & REPOS ]`
-  - Title: `Flagship Software Prototypes`
-  - Subtitle: "Inspected and battle-tested under live demo conditions. Every build features live deployments and open architecture notes."
-  - Category Pills: `[ ALL ]`, `[ AI & AGENTS ]`, `[ FULL-STACK ]`, `[ DEVTOOLS ]`, `[ FINTECH ]`
-  - Live Search Box: Instant fuzzy query for tech tags (`Gemini`, `FastAPI`, `Go`, `Next.js`).
-- **Cards Grid:**
-  - Responsive 3-column asymmetric grid.
-  - Each card features:
-    - Domain badge (`AI & Agents`, etc.)
-    - Status pill (`Shipped & Live`, `Open Source`)
-    - Project Title & Hackathon Origin
-    - System Architectural Strategy snippet
-    - Tech badges
-    - Direct actions: `[ ⚡ DEEP DIVE SPECS ]` (triggers `ProjectModal.tsx`), `[ GITHUB ]`, `[ LIVE DEMO ]`.
-
----
-
-### Section 4: The Squad Operatives (Dossier Roster) (`src/components/team/SquadSection.tsx`)
-
-#### A. Content & Elements
-- **Header:**
-  - Tag: `[ SQUADRON CORE // CLEARANCE: ALPHA ]`
-  - Title: `The Operatives of Extokened`
-  - Subtitle: "Four synchronized specialists across AI engineering, full-stack architecture, distributed systems, and interface craft."
-- **Classified Operator Cards:**
-  - **Operative 01: Sobuj Ahmed**
-    - Callsign: `LEAD_ARCHITECT` // Clearance: `ALPHA-01`
-    - Role: Team Lead & Full-Stack Architect
-    - Superpower: Architecting entire production schemas and API contracts in the first 2 hours of a hackathon.
-    - Fuel: `Cold Brew & Dark Chocolate`
-    - Stats: 18 Hackathons, 12 Trophies, 65K LOC.
-  - **Operative 02: Abrar Hasan**
-    - Callsign: `MODEL_ALCHEMIST` // Clearance: `ALPHA-02`
-    - Role: AI & Machine Learning Specialist
-    - Superpower: Fine-tuning Gemini and agent swarms that never hallucinate during the live judge pitch.
-    - Fuel: `Double Espresso`
-    - Stats: 15 Hackathons, 10 Trophies, 45K LOC.
-  - **Operative 03: Tanvir Rahman**
-    - Callsign: `CONCURRENCY_OVERLORD` // Clearance: `ALPHA-03`
-    - Role: Backend & Systems Engineer
-    - Superpower: Eradicating race conditions and WebSocket lag 15 minutes before the submission deadline.
-    - Fuel: `Black Coffee & Spiced Chai`
-    - Stats: 16 Hackathons, 11 Trophies, 50K LOC.
-  - **Operative 04: Nafisa Tabassum**
-    - Callsign: `INTERFACE_SORCERESS` // Clearance: `ALPHA-04`
-    - Role: UI/UX Virtuoso & Creative Technologist
-    - Superpower: Crafting interfaces so visually striking that hackathon judges stop scrolling and award maximum UX points.
-    - Fuel: `Matcha Latte`
-    - Stats: 14 Hackathons, 9 Trophies, 38K LOC.
-
----
-
-### Section 5: Interactive Combat CLI Terminal (`src/components/terminal/InteractiveTerminal.tsx`)
-
-#### A. Content & Elements
-- **Terminal Window Frame:**
-  - Mac/Linux dot controls (Close, Minimize, Maximize) + Title: `extokened-combat-shell v2.4 ~ guest@war-room`.
-  - Terminal body with responsive height toggle.
-  - Command list: `help`, `wins`, `projects`, `squad`, `stack`, `socials`, `whoami`, `clear`.
-  - Interactive clickable prompt pills for quick execution on mobile and desktop.
-  - Form input with cyan cursor blinking prompt: `extokened@war-room:~$`.
-
----
-
-### Section 6: Official Social Matrix (`src/components/socials/SocialHub.tsx`)
-
-#### A. Content & Elements
-- **Header:**
-  - Tag: `[ OFFICIAL CHANNELS & COMMUNITY MATRIX ]`
-  - Title: `Connect Across Our Official Presence`
-  - Subtitle: "Follow our live builds, join our Discord war-room, explore GitHub repos, and connect on Facebook & LinkedIn."
-- **Bento Grid Architecture:**
-  - **Card 1: Official Facebook Page (Prominent 2-column card)**
-    - Facebook Blue styling (`#1877F2`), verified badge, community updates, photo galleries from award stages. Direct CTA `[ FOLLOW ON FACEBOOK -> ]`.
-  - **Card 2: LinkedIn Company Page (Prominent 2-column card)**
-    - LinkedIn Blue styling (`#0A66C2`), engineering writeups, post-mortems, professional collaboration channel. Direct CTA `[ CONNECT ON LINKEDIN -> ]`.
-  - **Card 3: GitHub Organization Card**
-    - Open source templates, hackathon starter kits, project repos.
-  - **Card 4: Discord HQ War Room Card**
-    - Live voice channels during hackathons, collaborative ideation.
-  - **Card 5: Devpost Verified Showcase**
-    - Verified submissions and judge rubrics.
-  - **Card 6: X / Twitter Feed**
-    - 2 AM caffeine updates and build-in-public threads.
-
----
-
-### Section 7: Collaboration & Invitation Dispatch (`src/components/contact/CollabSection.tsx`)
-
-#### A. Content & Elements
-- **Left Column:**
-  - Reason to connect: Hackathon invites, rapid MVP prototyping, team sponsorship.
-  - Response time guarantee: Sub-12h response time.
-  - Direct email: `team@extokened.dev`
-- **Right Column (Interactive Form):**
-  - Name / Organization input.
-  - Email address input.
-  - Purpose of contact dropdown (`🏆 Invite Extokened to a Hackathon`, `⚡ Rapid MVP Build`, `🤝 Sponsorship`, `💬 General`).
-  - Message details textarea.
-  - Submit button with live dispatch state and celebratory confirmation panel.
-
----
-
-## 📄 PART 4: SUBPAGES SPECIFICATION
-
-### 4.1 Page 2: Hackathons Archive (`/hackathons`)
-- **Hero & Ticker:** Complete trophy cabinet with live summary KPIs (18+ Competitions, 7 Champions, 5 Runners-up, 100% Live Demo Rate).
-- **Interactive Multi-Axis Filter:**
-  - Award Filter: All, Grand Champions, Special Tracks.
-  - Year Filter: All Years, 2025, 2024, 2023.
-  - Search Input: Instant filter across hackathon name, organizer, technology, or problem statement.
-- **Card Grid:** Detailed cards with full problem description, architecture solution, judge scoring highlights, and links to Devpost, GitHub, and video demos.
-
-### 4.2 Page 3: Projects Catalog (`/projects`)
-- **Hero & Search:** Comprehensive innovation lab catalog.
-- **Category Matrix:** Filterable by AI & Agents, Full-Stack & Cloud, DevTools & Systems, Web3 & FinTech.
-- **Deep Dive Modal (`ProjectModal.tsx`):**
-  - Displays full architectural breakdown, system diagrams, feature checklists, and live links.
-
-### 4.3 Page 4: The Squad (`/team`)
-- **Squad Command Header:** Detailed mission philosophy.
-- **Operative Dossiers:** 4 in-depth operative profiles with expanded bios, superpowers, battle records, and social handles.
-- **The Origin Story:** Comprehensive explanation of why the team is named **"Extokened"** (*"Beyond the next token"*).
-- **The 48-Hour Hackathon Playbook:**
-  - Hours 00–04: Architecture & Schema Lock
-  - Hours 04–24: The Engineering Blitz
-  - Hours 24–38: Integration & Edge Cases
-  - Hours 38–48: The Live Pitch Polish
-
-### 4.4 Page 5: Bento Link-in-Bio (`/links`)
-- Specifically tailored for placement in Facebook Page bio, LinkedIn company link, and GitHub profile.
-- Monogram avatar with online beacon.
-- 1-Click "Copy Profile Link" button with toast.
-- Spotlight banner for latest championship win (AI Horizon 2025).
-- Direct high-contrast cards to Facebook, LinkedIn, GitHub, Discord, Devpost, and Website Home.
-
-### 4.5 Page 6: Contact & Dispatch Portal (`/contact`)
-- Standalone dedicated dispatch portal combining the interactive collaboration form with direct communication channels.
-
----
-
-## 🛠️ PART 5: EXECUTION CHECKLIST & PHASES
-
-- [ ] **Phase 1: Audio Synthesizer & Kinetic FX**
-  - Implement `src/lib/sound.ts` with Web Audio API.
-  - Implement `src/components/ui/GlitchText.tsx` for dynamic text scramble.
-  - Implement `src/components/ui/HoloCard.tsx` for 3D holographic tilt foil.
-  - Refine `src/app/globals.css` with precision grid lines, crosshairs, and brutalist borders.
-- [ ] **Phase 2: HUD Header & War Room Hero**
-  - Overhaul `Navbar.tsx` with equalizer sound toggle and HUD telemetry.
-  - Overhaul `HeroSection.tsx` with asymmetric layout, **Interactive 48h Sprint Simulator widget**, and combat gauges.
-- [ ] **Phase 3: Hall of Fame & Projects Overhaul**
-  - Update `HackathonCard.tsx` and `HackathonHallOfFame.tsx` with holographic foils and audio celebration.
-  - Update `ProjectCard.tsx` and `ProjectGallery.tsx` with deep-dive modal triggers and live demos.
-- [ ] **Phase 4: Operative Dossiers & Social Matrix**
-  - Update `MemberCard.tsx` and `SquadSection.tsx` to classified operative dossier format.
-  - Update `SocialHub.tsx` and `/links/page.tsx` with high-density Bento grid.
-- [ ] **Phase 5: Subpages & Verification**
-  - Verify `/hackathons`, `/projects`, `/team`, `/links`, `/contact`.
-  - Run `npx tsc --noEmit` (0 errors) and `npm run build` (Clean compile).
+## 5. Structured Data Model (`src/data/`)
+- `projects.ts`: Full project records including `slug`, `title`, `summary`, `description`, `category`, `status`, `technologies`, `liveUrl`, `sourceUrl`, `problem`, `solution`, `keyFeatures`, `architectureNotes`, `challenges`, `learnings`, `outcome`, `contributors`.
+- `hackathons.ts`: Verified event records including `slug`, `eventName`, `organizer`, `date`, `year`, `resultType` (`winner`, `runner_up`, `finalist`, `participant`), `resultLabel`, `challengeSummary`, `solutionSummary`, `techStack`, `evidenceLinks`, `teamMembers`.
+- `team.ts`: Approved member profiles including `slug`, `name`, `role`, `bio`, `focusAreas`, `skills`, `socials`, `avatar`.
+- `siteConfig.ts`: Central brand identity, confirmed social links, official email, vision statement, navigation configuration.

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { siteConfig } from "@/data/siteConfig";
 import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Github, Linkedin, Facebook } from "@/components/ui/Icons";
@@ -231,8 +230,8 @@ export function Footer() {
 
         </div>
 
-        {/* Part 4: Reaching Marble Hands & Giant Sunken EXTOKENED Wordmark */}
-        <div className="relative pt-12 sm:pt-16 pb-0 flex flex-col items-center justify-end overflow-hidden min-h-[220px] sm:min-h-[260px] md:min-h-[300px]">
+        {/* Part 4: Copyright & Giant Sunken EXTOKENED Wordmark */}
+        <div className="relative pt-12 sm:pt-16 pb-0 flex flex-col items-center justify-end overflow-hidden min-h-[160px] sm:min-h-[200px] md:min-h-[220px]">
           
           {/* Centered Copyright Statement */}
           <div className="relative z-20 text-center space-y-1 mb-6 sm:mb-8">
@@ -242,28 +241,6 @@ export function Footer() {
             <div className="text-xs font-mono text-[#7D7D7D]">
               Build real software, fast.
             </div>
-          </div>
-
-          {/* Left Hand: Marble sculpture reaching right with warm amber rim light */}
-          <div className="absolute left-0 bottom-4 sm:bottom-6 md:bottom-8 w-44 sm:w-64 md:w-80 lg:w-[420px] pointer-events-none select-none z-10 opacity-90 transition-transform duration-700 hover:translate-x-2">
-            <Image
-              src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4c029f38-d0a0-46d1-9ebc-3edcdaa11fc1.png"
-              alt="Carrara marble left hand reaching right with amber rim light"
-              width={582}
-              height={290}
-              className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(240,162,76,0.2)]"
-            />
-          </div>
-
-          {/* Right Hand: Marble sculpture reaching left with warm amber rim light */}
-          <div className="absolute right-0 bottom-4 sm:bottom-6 md:bottom-8 w-44 sm:w-64 md:w-80 lg:w-[420px] pointer-events-none select-none z-10 opacity-90 transition-transform duration-700 hover:-translate-x-2">
-            <Image
-              src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7eba3f06-a99e-44b8-bd46-7ccfaf6b2363.png"
-              alt="Carrara marble right hand reaching left with amber rim light"
-              width={558}
-              height={328}
-              className="w-full h-auto object-contain drop-shadow-[0_0_35px_rgba(240,162,76,0.2)]"
-            />
           </div>
 
           {/* Giant Thin Amber-Brown EXTOKENED Wordmark Sinking Off Bottom */}

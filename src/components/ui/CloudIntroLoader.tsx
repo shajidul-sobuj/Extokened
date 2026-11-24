@@ -2,248 +2,211 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, Sparkles } from "lucide-react";
+import { Sparkles, Terminal } from "lucide-react";
 
 export function CloudIntroLoader() {
   const [isVisible, setIsVisible] = useState(false);
-  const [displayText, setDisplayText] = useState("");
-  const [isTypingDone, setIsTypingDone] = useState(false);
-  const [isParting, setIsParting] = useState(false);
-
-  const fullText = "HELLO WORLD";
+  const [progress, setProgress] = useState(0);
+  const [statusText, setStatusText] = useState("INITIALIZING CORE");
+  const [isReady, setIsReady] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    // Check if intro has already played in this browser session
-    const hasSeenIntro = typeof window !== "undefined" ? sessionStorage.getItem("extokened_intro_played") : null;
-    if (hasSeenIntro) {
+    // Check if intro has already been seen in this session
+    const hasSeen = typeof window !== "undefined" ? sessionStorage.getItem("extokened_welcome_seen") : null;
+    if (hasSeen) {
       return;
     }
 
     setIsVisible(true);
-
-    // Lock body scroll during intro
     document.body.style.overflow = "hidden";
 
-    // 1. Typewriter animation for "HELLO WORLD"
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayText(fullText.slice(0, currentIndex));
-        currentIndex++;
+    // Progress counter animation from 0% to 100%
+    const startTime = Date.now();
+    const duration = 1400; // 1.4 seconds smooth sequence
+
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const rawProgress = Math.min(100, Math.floor((elapsed / duration) * 100));
+      setProgress(rawProgress);
+
+      if (rawProgress < 30) {
+        setStatusText("ESTABLISHING ENVIRONMENT");
+      } else if (rawProgress < 75) {
+        setStatusText("LOADING TELEMETRY & WORK");
+      } else if (rawProgress < 100) {
+        setStatusText("CONNECTING TO DHAKA SQUAD");
       } else {
-        clearInterval(typingInterval);
-        setIsTypingDone(true);
+        clearInterval(interval);
+        setStatusText("ALL SYSTEMS OPERATIONAL");
+        setIsReady(true);
 
-        // 2. Pause briefly on completed text, then part the clouds
-        const partTimeout = setTimeout(() => {
-          triggerParting();
-        }, 650);
-
-        return () => clearTimeout(partTimeout);
+        // Hold completed state briefly, then trigger cinematic exit
+        setTimeout(() => {
+          triggerExit();
+        }, 400);
       }
-    }, 95);
+    }, 28);
 
-    // Allow user to skip anytime via Escape or Space
+    // Keyboard skip handler
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
-        triggerParting();
+        triggerExit();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      clearInterval(typingInterval);
+      clearInterval(interval);
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
   }, []);
 
-  const triggerParting = () => {
-    setIsParting(true);
-    // Mark as played in sessionStorage
+  const triggerExit = () => {
+    setIsExiting(true);
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("extokened_intro_played", "true");
+      sessionStorage.setItem("extokened_welcome_seen", "true");
     }
 
-    // Complete exit and unlock scroll after curtain animation finishes
     setTimeout(() => {
       setIsVisible(false);
       document.body.style.overflow = "unset";
-    }, 1100);
+    }, 750);
   };
 
   if (!isVisible) return null;
 
   return (
     <AnimatePresence>
-      <div
-        onClick={triggerParting}
-        className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#08090E] cursor-pointer select-none"
-        aria-label="Extokened Welcome Intro — Click or press Esc to enter"
+      <motion.div
+        key="welcome-loader"
+        initial={{ opacity: 1 }}
+        animate={
+          isExiting
+            ? { opacity: 0, scale: 1.05, filter: "blur(20px)" }
+            : { opacity: 1, scale: 1, filter: "blur(0px)" }
+        }
+        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        onClick={triggerExit}
+        className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-10 bg-[#08090E] select-none cursor-pointer overflow-hidden"
+        aria-label="Welcome to Extokened — Click anywhere or press ESC to enter"
       >
-        {/* ======================================================== */}
-        {/* UPPER CLOUD DECK (Slides up on reveal: "megh sore giye") */}
-        {/* ======================================================== */}
-        <motion.div
-          initial={{ y: 0, opacity: 1 }}
-          animate={isParting ? { y: "-115%", opacity: 0 } : { y: 0, opacity: 1 }}
-          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-x-0 top-0 h-[62vh] pointer-events-none z-10 will-change-transform"
-        >
-          {/* Deep Twilight Fog Base */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, #08090E 0%, #0D101C 45%, rgba(13, 16, 28, 0.95) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Upper Billowing Cloud Bank 1 (Lavender Mist) */}
-          <div
-            className="absolute -top-24 -left-1/4 w-[150%] h-[480px] rounded-[50%] blur-[70px] opacity-60 animate-cloud-drift"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 50%, rgba(184, 192, 236, 0.5) 0%, rgba(139, 155, 247, 0.3) 45%, rgba(13, 16, 28, 0.8) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Upper Billowing Cloud Bank 2 (Periwinkle & Deep Indigo) */}
-          <div
-            className="absolute -top-10 -right-1/4 w-[140%] h-[440px] rounded-[50%] blur-[80px] opacity-50 animate-cloud-drift-reverse"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 40%, rgba(139, 155, 247, 0.45) 0%, rgba(196, 131, 169, 0.25) 40%, rgba(8, 9, 14, 0.9) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Upper Billowing Cloud Wave SVG */}
-          <svg
-            className="absolute bottom-0 left-0 w-full h-44 text-[#0D101C] fill-current opacity-90 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
-            viewBox="0 0 1440 320"
-            preserveAspectRatio="none"
-          >
-            <path d="M0,96L48,112C96,128,192,160,288,154.7C384,149,480,107,576,106.7C672,107,768,149,864,170.7C960,192,1056,192,1152,170.7C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z" />
-          </svg>
-        </motion.div>
-
-        {/* ========================================================== */}
-        {/* LOWER CLOUD DECK (Slides down on reveal: "megh sore giye") */}
-        {/* ========================================================== */}
-        <motion.div
-          initial={{ y: 0, opacity: 1 }}
-          animate={isParting ? { y: "115%", opacity: 0 } : { y: 0, opacity: 1 }}
-          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-x-0 bottom-0 h-[62vh] pointer-events-none z-10 will-change-transform"
-        >
-          {/* Lower Twilight Meadow Fog Base */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, #08090E 0%, #0D101C 50%, rgba(13, 16, 28, 0.95) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Lower Billowing Cloud Bank 1 (Amber & Meadow Mist) */}
-          <div
-            className="absolute -bottom-24 -right-1/4 w-[150%] h-[480px] rounded-[50%] blur-[80px] opacity-45 animate-cloud-drift"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 50%, rgba(255, 200, 87, 0.25) 0%, rgba(139, 155, 247, 0.35) 40%, rgba(8, 9, 14, 0.9) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Lower Billowing Cloud Bank 2 (Dusk Lavender) */}
-          <div
-            className="absolute -bottom-10 -left-1/4 w-[140%] h-[420px] rounded-[50%] blur-[75px] opacity-50 animate-cloud-drift-reverse"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 60%, rgba(184, 192, 236, 0.4) 0%, rgba(139, 155, 247, 0.25) 45%, rgba(8, 9, 14, 0.9) 75%, transparent 100%)",
-            }}
-          />
-
-          {/* Lower Billowing Cloud Wave SVG */}
-          <svg
-            className="absolute top-0 left-0 w-full h-44 text-[#0D101C] fill-current opacity-90 drop-shadow-[0_-15px_30px_rgba(0,0,0,0.8)]"
-            viewBox="0 0 1440 320"
-            preserveAspectRatio="none"
-          >
-            <path d="M0,192L48,181.3C96,171,192,149,288,160C384,171,480,213,576,218.7C672,224,768,192,864,176C960,160,1056,160,1152,176C1248,192,1344,224,1392,240L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
-          </svg>
-        </motion.div>
-
-        {/* Ambient Twinkling Atmosphere in Center */}
+        {/* Background Atmospheric Glows (Smooth, No Harsh Wave Cuts) */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] bg-[#8B9BF7]/[0.08]" />
-          <div className="absolute inset-0 meadow-grid opacity-15" />
+          {/* Central Blue-Hour Meadow Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[160px] bg-[#8B9BF7]/[0.10] animate-pulse" />
+          
+          {/* Soft Amber Accent in Lower Corner */}
+          <div className="absolute bottom-10 right-1/4 w-[500px] h-[400px] rounded-full blur-[150px] bg-[#FFC857]/[0.04]" />
+          
+          {/* Architectural Twilight Grid */}
+          <div className="absolute inset-0 meadow-grid opacity-20" />
         </div>
 
-        {/* ======================================================== */}
-        {/* CENTER TYPEWRITER HERO ("HELLO WORLD" in Cloud Shroud) */}
-        {/* ======================================================== */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={
-            isParting
-              ? { opacity: 0, scale: 1.1, filter: "blur(12px)" }
-              : { opacity: 1, scale: 1, filter: "blur(0px)" }
-          }
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-20 text-center px-4 max-w-lg mx-auto flex flex-col items-center pointer-events-none"
-        >
-          {/* Official Emblem */}
-          <div className="w-14 h-14 rounded-2xl glass-panel-inset p-2 mb-6 flex items-center justify-center border border-[#8B9BF7]/40 shadow-[0_0_36px_rgba(139,155,247,0.35)] animate-pulse">
+        {/* Top Header Row */}
+        <div className="relative z-10 w-full max-w-4xl flex items-center justify-between text-xs font-mono text-[#727896]">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#2FB36A] animate-ping" />
+            <span className="text-[#B8C0EC] font-semibold tracking-wider">EXTOKENED // SQUAD OS</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-4 text-[#8E96B8]">
+            <span>UTC+6 DHAKA</span>
+            <span>•</span>
+            <span>18 COMPETITIONS</span>
+          </div>
+        </div>
+
+        {/* Central Welcome Card */}
+        <div className="relative z-10 flex flex-col items-center text-center max-w-lg mx-auto space-y-6 my-auto">
+          {/* Floating Logo Emblem */}
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl glass-panel-inset p-3 flex items-center justify-center border border-[#8B9BF7]/40 shadow-[0_0_40px_rgba(139,155,247,0.35)] relative group"
+          >
             <img
               src="/images/extokened-logo-glow.png"
-              alt="Extokened Emblem"
-              className="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(139,155,247,0.6)]"
+              alt="Extokened Logo"
+              className="w-full h-full object-contain filter drop-shadow-[0_0_12px_rgba(139,155,247,0.6)]"
             />
+            {/* Ambient halo glow */}
+            <div className="absolute inset-0 rounded-2xl bg-[#8B9BF7]/20 blur-xl -z-10 animate-pulse" />
+          </motion.div>
+
+          {/* Typography: HELLO, WORLD & Welcome */}
+          <div className="space-y-3">
+            <motion.div
+              initial={{ y: 12, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase bg-[#121524]/90 border border-[#8B9BF7]/30 text-[#BAC0DC]"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#FFC857]" />
+              <span>Welcome to Extokened</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.25, duration: 0.6 }}
+              className="text-4xl sm:text-6xl font-bold tracking-tight text-white font-display"
+            >
+              HELLO,{" "}
+              <span className="bg-gradient-to-r from-white via-[#D5DBFF] to-[#8B9BF7] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(139,155,247,0.4)]">
+                WORLD.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ y: 16, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
+              className="text-xs sm:text-sm text-[#BAC0DC] font-sans max-w-sm mx-auto leading-relaxed"
+            >
+              The calm engineering squad for high-velocity software, AI systems, and competitive hackathons.
+            </motion.p>
           </div>
 
-          {/* Subtitle Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono tracking-widest uppercase bg-[#121626]/80 border border-[#8B9BF7]/30 text-[#B8C0EC] mb-5 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2FB36A] animate-ping" />
-            <span>EXTOKENED // DISPATCH ENGINE</span>
-          </div>
+          {/* Precision High-Tech Progress Bar */}
+          <div className="w-full max-w-xs space-y-2 pt-2">
+            <div className="flex items-center justify-between text-[11px] font-mono">
+              <span className="text-[#8B9BF7] flex items-center gap-1.5 font-medium">
+                <Terminal className="w-3 h-3 text-[#8B9BF7]" />
+                {statusText}
+              </span>
+              <span className="text-white font-bold">{progress}%</span>
+            </div>
 
-          {/* TYPEWRITER TEXT */}
-          <div className="relative font-mono font-bold text-4xl sm:text-5xl md:text-6xl tracking-wider text-white drop-shadow-[0_0_24px_rgba(139,155,247,0.45)]">
-            <span className="text-[#8B9BF7]">&gt;&nbsp;</span>
-            <span className="bg-gradient-to-r from-white via-[#E8EAFA] to-[#B8C0EC] bg-clip-text text-transparent">
-              {displayText}
-            </span>
-
-            {/* Blinking Terminal Cursor */}
-            <span
-              className={`inline-block w-[3px] h-9 sm:h-12 ml-1 align-middle bg-[#8B9BF7] shadow-[0_0_12px_rgba(139,155,247,0.9)] ${
-                isTypingDone ? "animate-pulse" : "animate-bounce"
-              }`}
-            />
-          </div>
-
-          {/* Status Message below typing */}
-          <div className="h-6 mt-4">
-            {isTypingDone && (
+            {/* Glowing Track */}
+            <div className="w-full h-1.5 bg-[#121522] border border-[#1E2337] rounded-full overflow-hidden p-[1px]">
               <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-xs font-mono text-[#BAC0DC] flex items-center gap-1.5"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-[#FFC857]" />
-                <span>Clearing atmospheric clouds...</span>
-              </motion.div>
-            )}
+                className="h-full bg-gradient-to-r from-[#8B9BF7] via-[#B8C0EC] to-[#FFC857] rounded-full shadow-[0_0_12px_rgba(139,155,247,0.8)]"
+                style={{ width: `${progress}%` }}
+                transition={{ ease: "easeOut" }}
+              />
+            </div>
           </div>
-        </motion.div>
-
-        {/* Skip Prompt at Bottom */}
-        <div className="absolute bottom-6 inset-x-0 z-20 text-center pointer-events-none">
-          <span className="text-[11px] font-mono text-[#727896] bg-[#08090E]/80 px-3 py-1 rounded-full border border-[#1E2337]/60">
-            Click anywhere or press <kbd className="text-[#B8C0EC]">ESC</kbd> to enter
-          </span>
         </div>
-      </div>
+
+        {/* Bottom Status & Skip Prompt */}
+        <div className="relative z-10 w-full max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-[#727896]">
+          <div className="flex items-center gap-2">
+            <span className="text-[#8E96B8]">DISPATCH READY</span>
+            <span>•</span>
+            <span className="text-[#2FB36A]">100% SHIPPED CODE</span>
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] bg-[#121522]/80 px-3.5 py-1 rounded-full border border-[#1E2337]">
+            <span>Click anywhere or press</span>
+            <kbd className="px-1.5 py-0.5 rounded bg-[#1C2033] text-[#B8C0EC] border border-[#2B324E] text-[10px]">
+              ESC
+            </kbd>
+            <span>to enter</span>
+          </div>
+        </div>
+      </motion.div>
     </AnimatePresence>
   );
 }

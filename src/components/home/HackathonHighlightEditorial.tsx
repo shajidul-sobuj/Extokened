@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { hackathons } from "@/data/hackathons";
-import { Trophy, ArrowRight, ArrowUpRight, Award, Calendar } from "lucide-react";
+import { Trophy, ArrowRight, Award, Calendar } from "lucide-react";
+import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function HackathonHighlightEditorial() {
   const featuredWin = hackathons.find((h) => h.resultType === "winner") || hackathons[0];
@@ -21,14 +24,14 @@ export function HackathonHighlightEditorial() {
   };
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E2337]">
+    <section className="py-20 md:py-28 border-b border-[#1E2337] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Split Editorial Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
           {/* Left Column: Intro & Navigation */}
-          <div className="lg:col-span-5 space-y-6">
+          <MotionReveal direction="left" className="lg:col-span-5 space-y-6">
             <span className="pill-lavender">Competitive Crucible</span>
             
             <h2 className="font-section-title font-semibold text-white leading-tight">
@@ -48,16 +51,17 @@ export function HackathonHighlightEditorial() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </MotionReveal>
 
           {/* Right Column: Featured Event Story & Chronological Timeline */}
-          <div className="lg:col-span-7 space-y-6">
+          <MotionReveal direction="right" delay={0.15} className="lg:col-span-7 space-y-6">
             
             {/* Featured Event Story Card */}
-            <div className="meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] space-y-4 shadow-[0_12px_36px_rgba(0,0,0,0.6)]">
+            <div className="meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] space-y-4 shadow-[0_12px_36px_rgba(0,0,0,0.6)] hover:border-[#2B324E] transition-all duration-300">
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-                <span className={`px-2.5 py-0.5 rounded-full border text-[11px] font-semibold ${getResultBadge(featuredWin.resultType)}`}>
-                  {featuredWin.badgeLabel}
+                <span className={`px-2.5 py-0.5 rounded-full border text-[11px] font-semibold flex items-center gap-1.5 ${getResultBadge(featuredWin.resultType)}`}>
+                  <Trophy className="w-3.5 h-3.5 text-[#FFC857]" />
+                  <span>{featuredWin.badgeLabel}</span>
                 </span>
                 <span className="text-[#727896]">
                   {featuredWin.date} • {featuredWin.duration}
@@ -70,7 +74,7 @@ export function HackathonHighlightEditorial() {
                     {featuredWin.name}
                   </h3>
                 </Link>
-                <p className="text-xs text-[#727896] mt-1">
+                <p className="text-xs text-[#727896] mt-1 font-mono">
                   Organized by {featuredWin.organizer} • {featuredWin.location}
                 </p>
               </div>
@@ -106,9 +110,9 @@ export function HackathonHighlightEditorial() {
               
               <div className="divide-y divide-[#1E2337]">
                 {timelineEvents.map((evt) => (
-                  <div key={evt.slug} className="py-3 first:pt-1 last:pb-1 flex items-center justify-between gap-4">
+                  <div key={evt.slug} className="py-3 first:pt-1 last:pb-1 flex items-center justify-between gap-4 group hover:bg-[#151824]/30 px-2 -mx-2 rounded transition-colors">
                     <div className="space-y-0.5">
-                      <div className="text-xs font-semibold text-white">
+                      <div className="text-xs font-semibold text-white group-hover:text-[#8B9BF7] transition-colors">
                         {evt.name}
                       </div>
                       <div className="text-[11px] text-[#727896] font-mono">
@@ -133,7 +137,7 @@ export function HackathonHighlightEditorial() {
               </div>
             </div>
 
-          </div>
+          </MotionReveal>
 
         </div>
 

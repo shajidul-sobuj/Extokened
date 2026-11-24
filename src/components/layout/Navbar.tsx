@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 
@@ -15,7 +16,7 @@ export function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -36,7 +37,6 @@ export function Navbar() {
     }
   }, [mobileMenuOpen]);
 
-  // Primary navigation links as defined in design spec
   const navItems = [
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
@@ -45,8 +45,11 @@ export function Navbar() {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-240 ${
+    <motion.header
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         scrolled
           ? "bg-[#08090E]/90 backdrop-blur-md border-b border-[#1E2337]"
           : "bg-transparent border-b border-transparent"
@@ -73,24 +76,28 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Center/Right Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Center Desktop Navigation with Animated Indicator */}
+          <nav className="hidden md:flex items-center gap-2">
             {navItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium transition-colors relative py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
+                  className={`text-xs font-mono uppercase tracking-wider transition-colors relative px-4 py-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
                     isActive
-                      ? "text-[#8B9BF7]"
+                      ? "text-[#8B9BF7] font-semibold"
                       : "text-[#BAC0DC] hover:text-white"
                   }`}
                 >
-                  {item.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#8B9BF7] rounded-full shadow-[0_0_8px_rgba(139,155,247,0.6)]" />
+                    <motion.span
+                      layoutId="activeNavIndicator"
+                      className="absolute inset-0 bg-[#151824] border border-[#1E2337] rounded-full -z-10 shadow-[0_0_12px_rgba(139,155,247,0.15)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
                   )}
+                  {item.name}
                 </Link>
               );
             })}
@@ -119,72 +126,80 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-20 bottom-0 bg-[#08090E] border-t border-[#1E2337] p-6 flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
-          <div className="space-y-4">
-            <div className="text-[11px] font-mono text-[#727896] uppercase tracking-wider pb-2 border-b border-[#1E2337]">
-              Navigation
+      {/* Mobile Navigation Drawer with AnimatePresence */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "calc(100vh - 5rem)" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden fixed inset-x-0 top-20 bg-[#08090E]/98 backdrop-blur-xl border-t border-[#1E2337] p-6 flex flex-col justify-between overflow-y-auto"
+          >
+            <div className="space-y-4">
+              <div className="text-[11px] font-mono text-[#727896] uppercase tracking-wider pb-2 border-b border-[#1E2337]">
+                Navigation
+              </div>
+              {navItems.map((item) => {
+                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between py-3 text-lg font-medium border-b border-[#1E2337]/60 transition-colors ${
+                      isActive ? "text-[#8B9BF7]" : "text-[#FFFFFF] hover:text-[#8B9BF7]"
+                    }`}
+                  >
+                    <span>{item.name}</span>
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#8B9BF7] shadow-[0_0_8px_rgba(139,155,247,0.8)]" />}
+                  </Link>
+                );
+              })}
             </div>
-            {navItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between py-3 text-lg font-medium border-b border-[#1E2337]/60 transition-colors ${
-                    isActive ? "text-[#8B9BF7]" : "text-[#FFFFFF] hover:text-[#8B9BF7]"
-                  }`}
+
+            <div className="pt-8 space-y-4">
+              <Link
+                href="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn-meadow-dark w-full py-3 text-sm justify-center"
+              >
+                <span>Contact the Team</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+
+              <div className="flex items-center justify-center gap-6 pt-2 text-xs font-mono text-[#727896]">
+                <a
+                  href={siteConfig.socials.github.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
                 >
-                  <span>{item.name}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#8B9BF7] shadow-[0_0_8px_rgba(139,155,247,0.8)]" />}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="pt-8 space-y-4">
-            <Link
-              href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="btn-meadow-dark w-full py-3 text-sm justify-center"
-            >
-              <span>Contact the Team</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-
-            <div className="flex items-center justify-center gap-6 pt-2 text-xs font-mono text-[#727896]">
-              <a
-                href={siteConfig.socials.github.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-              <span>•</span>
-              <a
-                href={siteConfig.socials.linkedin.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                LinkedIn
-              </a>
-              <span>•</span>
-              <a
-                href={siteConfig.socials.facebook.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                Facebook
-              </a>
+                  GitHub
+                </a>
+                <span>•</span>
+                <a
+                  href={siteConfig.socials.linkedin.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  LinkedIn
+                </a>
+                <span>•</span>
+                <a
+                  href={siteConfig.socials.facebook.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Facebook
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 }

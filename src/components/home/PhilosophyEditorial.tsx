@@ -1,26 +1,29 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { ArrowRight } from "lucide-react";
+import { MotionReveal, MotionStagger, MotionItem } from "@/components/ui/MotionReveal";
 
 export function PhilosophyEditorial() {
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E2337]">
+    <section className="py-20 md:py-28 border-b border-[#1E2337] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Two-Column Editorial Statement Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left 5 Columns: Large Statement */}
-          <div className="lg:col-span-5 space-y-4">
+          <MotionReveal direction="left" className="lg:col-span-5 space-y-4">
             <span className="pill-lavender">Operating Philosophy</span>
             <h2 className="font-section-title font-semibold text-white leading-tight">
               We reject speculative slides. We ship verifiable software.
             </h2>
-          </div>
+          </MotionReveal>
 
           {/* Right 7 Columns: Supporting Explanation */}
-          <div className="lg:col-span-7 space-y-6 text-[#BAC0DC] text-sm sm:text-base leading-relaxed font-sans">
+          <MotionReveal direction="right" delay={0.15} className="lg:col-span-7 space-y-6 text-[#BAC0DC] text-sm sm:text-base leading-relaxed font-sans">
             <p>
               In competitive technology sprints, teams often optimize for flashy pitch decks. Extokened was founded on the opposite premise: deep engineering rigor, clean schema contracts, and genuine working software that holds up under scrutiny.
             </p>
@@ -36,26 +39,28 @@ export function PhilosophyEditorial() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </MotionReveal>
 
         </div>
 
-        {/* 3 Core Principles List with Fine Rules */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[#1E2337]">
+        {/* 3 Core Principles List with MotionStagger */}
+        <MotionStagger stagger={0.12} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[#1E2337]">
           {siteConfig.principles.map((principle, idx) => (
-            <div key={idx} className="space-y-3">
-              <div className="text-xs font-mono font-bold text-[#8B9BF7]">
-                0{idx + 1} // PRINCIPLE
+            <MotionItem key={idx}>
+              <div className="meadow-card p-6 bg-[#0F1118]/60 border border-[#1E2337] rounded-xl space-y-3 h-full hover:border-[#2B324E] hover:-translate-y-1 transition-all duration-300">
+                <div className="text-xs font-mono font-bold text-[#8B9BF7]">
+                  0{idx + 1} // PRINCIPLE
+                </div>
+                <h3 className="text-lg font-bold text-white">
+                  {principle.title}
+                </h3>
+                <p className="text-xs text-[#BAC0DC] leading-relaxed">
+                  {principle.description}
+                </p>
               </div>
-              <h3 className="text-lg font-bold text-white">
-                {principle.title}
-              </h3>
-              <p className="text-xs text-[#BAC0DC] leading-relaxed">
-                {principle.description}
-              </p>
-            </div>
+            </MotionItem>
           ))}
-        </div>
+        </MotionStagger>
 
       </div>
     </section>

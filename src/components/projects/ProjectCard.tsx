@@ -12,7 +12,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#2B324E] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(139,155,247,0.1)] h-full">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
@@ -77,7 +77,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
                 title="GitHub Source"
                 aria-label="View Source Code"
               >
@@ -89,7 +89,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
                 title="Live Deployment"
                 aria-label="View Live Deployment"
               >
@@ -103,7 +103,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#8B9BF7] transition-colors"
           >
             <span>Read case study</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>

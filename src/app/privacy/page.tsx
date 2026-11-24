@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { siteConfig } from "@/data/siteConfig";
 import { ArrowLeft, ShieldCheck, Mail } from "lucide-react";
+import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | Extokened",
@@ -25,7 +26,7 @@ export default function PrivacyPage() {
       </div>
 
       {/* Header */}
-      <div className="space-y-4 border-b border-[#1E2337] pb-8">
+      <MotionReveal className="space-y-4 border-b border-[#1E2337] pb-8">
         <div className="pill-lavender inline-flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-[#8B9BF7]" />
           <span>Data Handling &amp; Privacy Statement</span>
@@ -36,10 +37,10 @@ export default function PrivacyPage() {
         <p className="text-xs font-mono text-[#727896]">
           Last updated: November 24, 2026
         </p>
-      </div>
+      </MotionReveal>
 
       {/* Content Sections */}
-      <div className="space-y-8 text-sm text-[#BAC0DC] leading-relaxed font-sans">
+      <MotionReveal delay={0.1} className="space-y-8 text-sm text-[#BAC0DC] leading-relaxed font-sans">
         
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-[#FFFFFF]">
@@ -106,7 +107,7 @@ export default function PrivacyPage() {
           <p>
             If you have questions regarding this privacy statement or wish to request the deletion of any communication history you have shared with us, please reach out directly:
           </p>
-          <div className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl inline-flex items-center gap-3 mt-2">
+          <div className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl inline-flex items-center gap-3 mt-2 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
             <Mail className="w-4 h-4 text-[#8B9BF7]" />
             <a
               href={`mailto:${siteConfig.contactEmail}`}
@@ -117,7 +118,7 @@ export default function PrivacyPage() {
           </div>
         </section>
 
-      </div>
+      </MotionReveal>
 
     </div>
   );

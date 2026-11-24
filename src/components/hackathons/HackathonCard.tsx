@@ -34,7 +34,7 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
   };
 
   return (
-    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all duration-300 shadow-[0_8px_24px_rgba(0,0,0,0.4)] hover:border-[#2B324E] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(139,155,247,0.1)] h-full">
       {/* Top Header */}
       <div className="space-y-4">
         
@@ -125,7 +125,7 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
                 title="GitHub Repo"
                 aria-label="GitHub Repository"
               >
@@ -137,7 +137,7 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
                 title="Live Demo"
                 aria-label="Live Demo"
               >
@@ -151,7 +151,7 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#8B9BF7] transition-colors"
           >
             <span>Case breakdown</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>

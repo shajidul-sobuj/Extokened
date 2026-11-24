@@ -12,15 +12,15 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <div className="editorial-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] flex flex-col justify-between group transition-all shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
       {/* Top Section */}
       <div className="space-y-4">
         {/* Category & Status */}
         <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-          <span className="text-[#7D7D7D]">
+          <span className="text-[#727896]">
             {project.category}
           </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border border-[#74C69D]/30 text-[#74C69D] bg-[#74C69D]/10">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium border border-[#2FB36A]/30 text-[#2FB36A] bg-[#2FB36A]/10">
             {project.status}
           </span>
         </div>
@@ -28,14 +28,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Title & Summary */}
         <div>
           <Link href={`/projects/${project.slug}`} className="group/link block">
-            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover/link:text-[#F0A24C] transition-colors">
+            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover/link:text-[#8B9BF7] transition-colors">
               {project.title}
             </h3>
           </Link>
-          <p className="text-xs text-[#ADADAD] mt-1 font-mono">
+          <p className="text-xs text-[#BAC0DC] mt-1 font-mono">
             {project.year} • {project.summary}
           </p>
-          <p className="text-sm text-[#7D7D7D] mt-2.5 leading-relaxed font-sans line-clamp-3">
+          <p className="text-sm text-[#727896] mt-2.5 leading-relaxed font-sans line-clamp-3">
             {project.description}
           </p>
         </div>
@@ -44,8 +44,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.keyFeatures.length > 0 && (
           <div className="space-y-1.5 pt-1">
             {project.keyFeatures.slice(0, 2).map((feat, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-xs text-[#ADADAD]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#F0A24C] shrink-0 mt-0.5" />
+              <div key={idx} className="flex items-start gap-2 text-xs text-[#BAC0DC]">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#8B9BF7] shrink-0 mt-0.5" />
                 <span className="font-sans">{feat}</span>
               </div>
             ))}
@@ -54,7 +54,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Bottom Section: Technologies & Links */}
-      <div className="pt-6 mt-6 border-t border-[#2D221A] space-y-4">
+      <div className="pt-6 mt-6 border-t border-[#1E2337] space-y-4">
         {/* Tech Stack Pills */}
         <div className="flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 4).map((tech) => (
@@ -63,7 +63,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           ))}
           {project.technologies.length > 4 && (
-            <span className="tech-tag text-[#7D7D7D]">
+            <span className="tech-tag text-[#727896]">
               +{project.technologies.length - 4}
             </span>
           )}
@@ -77,7 +77,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#1D1814] border border-[#2D221A] hover:text-white text-[#ADADAD] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
                 title="GitHub Source"
                 aria-label="View Source Code"
               >
@@ -89,7 +89,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#1D1814] border border-[#2D221A] hover:text-white text-[#ADADAD] transition-colors"
+                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] transition-colors"
                 title="Live Deployment"
                 aria-label="View Live Deployment"
               >
@@ -100,7 +100,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#F0A24C] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#8B9BF7] transition-colors"
           >
             <span>Read case study</span>
             <ArrowRight className="w-3.5 h-3.5" />

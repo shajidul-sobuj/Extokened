@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <div>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-mono text-[#ADADAD] hover:text-[#FFFFFF] transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-[#BAC0DC] hover:text-[#FFFFFF] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Home</span>
@@ -25,21 +25,21 @@ export default function PrivacyPage() {
       </div>
 
       {/* Header */}
-      <div className="space-y-4 border-b border-[#2D221A] pb-8">
-        <div className="pill-amber inline-flex items-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#F0A24C]" />
+      <div className="space-y-4 border-b border-[#1E2337] pb-8">
+        <div className="pill-lavender inline-flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-[#8B9BF7]" />
           <span>Data Handling &amp; Privacy Statement</span>
         </div>
         <h1 className="font-page-title font-semibold text-[#FFFFFF] tracking-tight">
           Privacy Policy
         </h1>
-        <p className="text-xs font-mono text-[#7D7D7D]">
+        <p className="text-xs font-mono text-[#727896]">
           Last updated: November 24, 2026
         </p>
       </div>
 
       {/* Content Sections */}
-      <div className="space-y-8 text-sm text-[#ADADAD] leading-relaxed font-sans">
+      <div className="space-y-8 text-sm text-[#BAC0DC] leading-relaxed font-sans">
         
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-[#FFFFFF]">
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
           <p>
             We collect personal information solely when you voluntarily submit it via our contact or collaboration inquiry forms, or when you email us directly at <span className="text-[#FFFFFF] font-mono">{siteConfig.contactEmail}</span>. This information includes:
           </p>
-          <ul className="list-disc pl-5 space-y-1.5 text-[#ADADAD]">
+          <ul className="list-disc pl-5 space-y-1.5 text-[#BAC0DC]">
             <li>Your name and organizational affiliation (if provided)</li>
             <li>Your email address</li>
             <li>Inquiry type (hackathon invitation, engineering collaboration, sponsorship, general inquiry)</li>
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
           <p>
             Any information submitted is used exclusively to:
           </p>
-          <ul className="list-disc pl-5 space-y-1.5 text-[#ADADAD]">
+          <ul className="list-disc pl-5 space-y-1.5 text-[#BAC0DC]">
             <li>Respond directly to your hackathon invitation, partnership request, or inquiry</li>
             <li>Coordinate technical requirements or scheduling for hackathons and prototype sprints</li>
           </ul>
@@ -106,11 +106,11 @@ export default function PrivacyPage() {
           <p>
             If you have questions regarding this privacy statement or wish to request the deletion of any communication history you have shared with us, please reach out directly:
           </p>
-          <div className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl inline-flex items-center gap-3 mt-2">
-            <Mail className="w-4 h-4 text-[#F0A24C]" />
+          <div className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl inline-flex items-center gap-3 mt-2">
+            <Mail className="w-4 h-4 text-[#8B9BF7]" />
             <a
               href={`mailto:${siteConfig.contactEmail}`}
-              className="text-[#FFFFFF] font-mono hover:text-[#F0A24C] hover:underline"
+              className="text-[#FFFFFF] font-mono hover:text-[#8B9BF7] hover:underline"
             >
               {siteConfig.contactEmail}
             </a>

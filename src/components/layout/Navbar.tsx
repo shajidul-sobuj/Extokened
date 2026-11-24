@@ -48,7 +48,7 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-240 ${
         scrolled
-          ? "bg-[#0D0D0D]/90 backdrop-blur-md border-b border-[#2D221A]"
+          ? "bg-[#08090E]/90 backdrop-blur-md border-b border-[#1E2337]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -58,16 +58,16 @@ export function Navbar() {
           {/* Left: Extokened Symbol + Wordmark */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0A24C]"
+            className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
           >
-            <div className="w-8 h-8 rounded-md bg-[#1D1510] border border-[#F0A24C]/40 flex items-center justify-center font-mono font-bold text-[#F0A24C] text-xs group-hover:border-[#F0A24C] group-hover:shadow-[0_0_12px_rgba(240,162,76,0.3)] transition-all">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-b from-[#252B44] to-[#0F1118] border border-[#8B9BF7]/35 flex items-center justify-center font-mono font-bold text-[#8B9BF7] text-xs group-hover:border-[#8B9BF7] group-hover:shadow-[0_0_14px_rgba(139,155,247,0.35)] transition-all">
               &lt;E/&gt;
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-semibold text-base tracking-tight text-white">
+              <span className="font-display font-semibold text-base tracking-tight text-white group-hover:text-[#B8C0EC] transition-colors">
                 Extokened
               </span>
-              <span className="text-[10px] font-mono text-[#7D7D7D] uppercase tracking-wider">
+              <span className="text-[10px] font-mono text-[#727896] uppercase tracking-wider">
                 Tech Team
               </span>
             </div>
@@ -81,15 +81,15 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium transition-colors relative py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0A24C] ${
+                  className={`text-sm font-medium transition-colors relative py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
                     isActive
-                      ? "text-[#F0A24C]"
-                      : "text-[#ADADAD] hover:text-white"
+                      ? "text-[#8B9BF7]"
+                      : "text-[#BAC0DC] hover:text-white"
                   }`}
                 >
                   {item.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#F0A24C] rounded-full shadow-[0_0_8px_rgba(240,162,76,0.6)]" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#8B9BF7] rounded-full shadow-[0_0_8px_rgba(139,155,247,0.6)]" />
                   )}
                 </Link>
               );
@@ -100,7 +100,7 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               href="/contact"
-              className="hidden sm:inline-flex btn-amber-glass text-xs py-2 px-4 shadow-[0_0_20px_rgba(240,162,76,0.25)]"
+              className="hidden sm:inline-flex btn-meadow-dark text-xs py-2 px-4 shadow-[0_0_20px_rgba(139,155,247,0.2)]"
             >
               <span>Contact the Team</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -109,7 +109,7 @@ export function Navbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md bg-[#1D1510] border border-[#2D221A] text-[#ADADAD] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0A24C]"
+              className="md:hidden p-2 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -121,9 +121,9 @@ export function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-20 bottom-0 bg-[#0D0D0D] border-t border-[#2D221A] p-6 flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
+        <div className="md:hidden fixed inset-x-0 top-20 bottom-0 bg-[#08090E] border-t border-[#1E2337] p-6 flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
           <div className="space-y-4">
-            <div className="text-[11px] font-mono text-[#7D7D7D] uppercase tracking-wider pb-2 border-b border-[#2D221A]">
+            <div className="text-[11px] font-mono text-[#727896] uppercase tracking-wider pb-2 border-b border-[#1E2337]">
               Navigation
             </div>
             {navItems.map((item) => {
@@ -133,12 +133,12 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between py-3 text-lg font-medium border-b border-[#2D221A]/60 transition-colors ${
-                    isActive ? "text-[#F0A24C]" : "text-[#FFFFFF] hover:text-[#F0A24C]"
+                  className={`flex items-center justify-between py-3 text-lg font-medium border-b border-[#1E2337]/60 transition-colors ${
+                    isActive ? "text-[#8B9BF7]" : "text-[#FFFFFF] hover:text-[#8B9BF7]"
                   }`}
                 >
                   <span>{item.name}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#F0A24C] shadow-[0_0_8px_rgba(240,162,76,0.8)]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#8B9BF7] shadow-[0_0_8px_rgba(139,155,247,0.8)]" />}
                 </Link>
               );
             })}
@@ -148,13 +148,13 @@ export function Navbar() {
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="btn-amber-glass w-full py-3 text-sm justify-center"
+              className="btn-meadow-dark w-full py-3 text-sm justify-center"
             >
               <span>Contact the Team</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
 
-            <div className="flex items-center justify-center gap-6 pt-2 text-xs font-mono text-[#7D7D7D]">
+            <div className="flex items-center justify-center gap-6 pt-2 text-xs font-mono text-[#727896]">
               <a
                 href={siteConfig.socials.github.url}
                 target="_blank"

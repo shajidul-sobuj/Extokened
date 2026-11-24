@@ -30,7 +30,7 @@ export default function LinksPage() {
       
       {/* Profile Header */}
       <div className="text-center space-y-4">
-        <div className="w-16 h-16 rounded-xl bg-[#141210] border border-[#2D221A] flex items-center justify-center font-mono font-bold text-[#FFFFFF] text-2xl mx-auto shadow-inner">
+        <div className="w-16 h-16 rounded-xl bg-[#0F1118] border border-[#1E2337] flex items-center justify-center font-mono font-bold text-[#FFFFFF] text-2xl mx-auto shadow-inner">
           &lt;E/&gt;
         </div>
 
@@ -38,10 +38,10 @@ export default function LinksPage() {
           <h1 className="text-2xl font-bold text-[#FFFFFF] tracking-tight">
             Extokened
           </h1>
-          <p className="text-xs font-mono text-[#F0A24C] mt-1">
+          <p className="text-xs font-mono text-[#8B9BF7] mt-1">
             {siteConfig.tagline}
           </p>
-          <p className="text-xs text-[#ADADAD] mt-2 max-w-sm mx-auto leading-relaxed font-sans">
+          <p className="text-xs text-[#BAC0DC] mt-2 max-w-sm mx-auto leading-relaxed font-sans">
             {siteConfig.positioning}
           </p>
         </div>
@@ -50,12 +50,12 @@ export default function LinksPage() {
         <div>
           <button
             onClick={copyPageUrl}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono bg-[#141210] border border-[#2D221A] text-[#ADADAD] hover:text-[#FFFFFF] hover:border-[#F0A24C]/40 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono bg-[#0F1118] border border-[#1E2337] text-[#BAC0DC] hover:text-[#FFFFFF] hover:border-[#8B9BF7]/40 transition-colors cursor-pointer"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-[#F0A24C]" />
-                <span className="text-[#F0A24C]">Link Copied</span>
+                <Check className="w-3.5 h-3.5 text-[#8B9BF7]" />
+                <span className="text-[#8B9BF7]">Link Copied</span>
               </>
             ) : (
               <>
@@ -72,64 +72,64 @@ export default function LinksPage() {
         {/* Main Website Home */}
         <Link
           href="/"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#F0A24C]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#8B9BF7]">
               <Globe className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 Official Digital Home
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 Explore our full portfolio, team, and story
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </Link>
 
         {/* Projects Arsenal */}
         <Link
           href="/projects"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#FFFFFF]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#FFFFFF]">
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 Projects &amp; Case Studies
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 26+ prototypes, architectures, and outcomes
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </Link>
 
         {/* Hackathon Victories */}
         <Link
           href="/hackathons"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#F0A24C]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#FFC857]">
               <Trophy className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 Hackathon Archive &amp; Podiums
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 12 podium trophies, 7 grand championships
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </Link>
 
         {/* GitHub Organization */}
@@ -137,22 +137,22 @@ export default function LinksPage() {
           href={siteConfig.socials.github.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#E0A165]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#8B9BF7]">
               <Github className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 GitHub Organization
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 Open-source repositories and codebases
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </a>
 
         {/* LinkedIn Node */}
@@ -160,22 +160,22 @@ export default function LinksPage() {
           href={siteConfig.socials.linkedin.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#E0A165]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#8B9BF7]">
               <Linkedin className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 LinkedIn Company Page
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 Official announcements &amp; milestones
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </a>
 
         {/* Facebook Page */}
@@ -183,48 +183,48 @@ export default function LinksPage() {
           href={siteConfig.socials.facebook.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#E0A165]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#8B9BF7]">
               <Facebook className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 Facebook Official Page
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 Event moments, highlights, and community updates
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </a>
 
         {/* Contact Dispatch */}
         <Link
           href="/contact"
-          className="warm-card p-4 bg-[#141210] border border-[#2D221A] rounded-xl flex items-center justify-between group hover:border-[#F0A24C]/40 transition-all"
+          className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] rounded-xl flex items-center justify-between group hover:border-[#8B9BF7]/40 transition-all"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-md bg-[#1D1814] border border-[#2D221A] flex items-center justify-center text-[#F0A24C]">
+            <div className="w-9 h-9 rounded-md bg-[#151824] border border-[#1E2337] flex items-center justify-center text-[#8B9BF7]">
               <Mail className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#F0A24C] transition-colors">
+              <div className="text-sm font-semibold text-[#FFFFFF] group-hover:text-[#8B9BF7] transition-colors">
                 Contact &amp; Hackathon Invites
               </div>
-              <div className="text-[11px] text-[#7D7D7D]">
+              <div className="text-[11px] text-[#727896]">
                 Inquiries typically answered within 24–48 hours
               </div>
             </div>
           </div>
-          <ArrowUpRight className="w-4 h-4 text-[#7D7D7D] group-hover:text-[#FFFFFF] transition-colors" />
+          <ArrowUpRight className="w-4 h-4 text-[#727896] group-hover:text-[#FFFFFF] transition-colors" />
         </Link>
       </div>
 
       {/* Footer */}
-      <div className="text-center text-xs text-[#7D7D7D] pt-6 font-mono">
+      <div className="text-center text-xs text-[#727896] pt-6 font-mono">
         © 2026 Extokened. Built with purpose.
       </div>
 

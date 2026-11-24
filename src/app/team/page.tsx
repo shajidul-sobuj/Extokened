@@ -51,14 +51,14 @@ export default function TeamPage() {
       
       {/* 11.1 Page Hero */}
       <div className="space-y-4 max-w-3xl">
-        <div className="pill-amber inline-flex items-center gap-2">
+        <div className="pill-lavender inline-flex items-center gap-2">
           <span>✦</span>
           <span>TEAM / OPERATIONAL ROSTER</span>
         </div>
         <h1 className="font-page-title font-semibold text-[#FFFFFF] leading-tight">
           The People Behind the Work
         </h1>
-        <p className="text-base sm:text-lg text-[#ADADAD] leading-relaxed font-sans">
+        <p className="text-base sm:text-lg text-[#BAC0DC] leading-relaxed font-sans">
           Extokened operates as a permanent squad. Four builders combining deep technical specialization with an established collaboration shorthand honed across 18 competitions.
         </p>
       </div>
@@ -71,16 +71,16 @@ export default function TeamPage() {
       </div>
 
       {/* 11.3 Skills and Capabilities Grouped by Discipline (No percentage bars) */}
-      <section className="border-t border-[#2D221A] pt-16 space-y-10">
+      <section className="border-t border-[#1E2337] pt-16 space-y-10">
         <div className="space-y-2 max-w-xl">
-          <div className="pill-amber inline-flex items-center gap-1.5">
+          <div className="pill-lavender inline-flex items-center gap-1.5">
             <span>✦</span>
             <span>Competency Matrix</span>
           </div>
           <h2 className="font-section-title font-semibold text-[#FFFFFF]">
             Collective Discipline Mastery
           </h2>
-          <p className="text-sm text-[#ADADAD]">
+          <p className="text-sm text-[#BAC0DC]">
             Grouped technical competencies backed by shipped software and competitive validation.
           </p>
         </div>
@@ -89,9 +89,9 @@ export default function TeamPage() {
           {capabilitiesByDiscipline.map((cap, idx) => {
             const Icon = cap.icon;
             return (
-              <div key={idx} className="warm-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] rounded-xl space-y-4">
+              <div key={idx} className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] rounded-xl space-y-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-md flex items-center justify-center bg-[#1D1814] border border-[#2D221A] text-[#F0A24C]">
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center bg-[#151824] border border-[#1E2337] text-[#8B9BF7]">
                     <Icon className="w-4 h-4" />
                   </div>
                   <h3 className="text-base font-bold text-[#FFFFFF]">
@@ -99,7 +99,7 @@ export default function TeamPage() {
                   </h3>
                 </div>
 
-                <p className="text-xs sm:text-sm text-[#ADADAD] leading-relaxed font-sans">
+                <p className="text-xs sm:text-sm text-[#BAC0DC] leading-relaxed font-sans">
                   {cap.summary}
                 </p>
 
@@ -117,44 +117,44 @@ export default function TeamPage() {
       </section>
 
       {/* 11.4 Culture & Dynamics of a Permanent Unit */}
-      <section className="border-t border-[#2D221A] pt-16 space-y-10">
+      <section className="border-t border-[#1E2337] pt-16 space-y-10">
         <div className="space-y-2 max-w-xl">
-          <div className="pill-amber inline-flex items-center gap-1.5">
+          <div className="pill-lavender inline-flex items-center gap-1.5">
             <span>✦</span>
             <span>Team Culture</span>
           </div>
           <h2 className="font-section-title font-semibold text-[#FFFFFF]">
             Why a Permanent Squad Wins
           </h2>
-          <p className="text-sm text-[#ADADAD]">
+          <p className="text-sm text-[#BAC0DC]">
             Ad-hoc hackathon teams spend the first 8 hours figuring out personalities. We spend those hours building schemas.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="warm-card p-6 bg-[#141210] border border-[#2D221A] rounded-xl space-y-3">
+          <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] rounded-xl space-y-3">
             <h3 className="text-base font-bold text-[#FFFFFF]">
               Immediate Shorthand
             </h3>
-            <p className="text-xs text-[#ADADAD] leading-relaxed font-sans">
+            <p className="text-xs text-[#BAC0DC] leading-relaxed font-sans">
               TypeScript interfaces and API schemas are agreed upon within minutes. Frontend and backend developers work in tandem without blocking one another.
             </p>
           </div>
 
-          <div className="warm-card p-6 bg-[#141210] border border-[#2D221A] rounded-xl space-y-3">
+          <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] rounded-xl space-y-3">
             <h3 className="text-base font-bold text-[#FFFFFF]">
               Ruthless Scope Discipline
             </h3>
-            <p className="text-xs text-[#ADADAD] leading-relaxed font-sans">
+            <p className="text-xs text-[#BAC0DC] leading-relaxed font-sans">
               Knowing what not to build is our biggest competitive advantage. We cut extraneous features early to guarantee zero bugs on stage.
             </p>
           </div>
 
-          <div className="warm-card p-6 bg-[#141210] border border-[#2D221A] rounded-xl space-y-3">
+          <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] rounded-xl space-y-3">
             <h3 className="text-base font-bold text-[#FFFFFF]">
               Shared Accountability
             </h3>
-            <p className="text-xs text-[#ADADAD] leading-relaxed font-sans">
+            <p className="text-xs text-[#BAC0DC] leading-relaxed font-sans">
               Deep familiarity across 18 sprints means setbacks during deep-night coding hours are debugged constructively without friction.
             </p>
           </div>
@@ -162,17 +162,17 @@ export default function TeamPage() {
       </section>
 
       {/* Collaboration CTA */}
-      <div className="warm-card p-8 sm:p-12 rounded-xl bg-[#141210] border border-[#2D221A] text-center space-y-4">
+      <div className="editorial-card meadow-card p-8 sm:p-12 rounded-xl bg-[#0F1118] border border-[#1E2337] text-center space-y-4">
         <h2 className="text-xl sm:text-2xl font-bold text-[#FFFFFF]">
           Want to collaborate with our engineering squad?
         </h2>
-        <p className="text-sm text-[#ADADAD] max-w-md mx-auto">
+        <p className="text-sm text-[#BAC0DC] max-w-md mx-auto">
           We are available for technical hackathon invitations, engineering partnerships, and prototype development sprints.
         </p>
         <div className="pt-2">
           <Link
             href="/contact"
-            className="btn-amber-glass inline-flex items-center gap-2"
+            className="btn-meadow-dark inline-flex items-center gap-2"
           >
             <span>Contact the team</span>
             <ArrowRight className="w-4 h-4" />

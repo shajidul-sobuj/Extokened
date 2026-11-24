@@ -6,24 +6,24 @@ import { Github, Linkedin } from "@/components/ui/Icons";
 
 export function TeamPreviewEditorial() {
   return (
-    <section className="py-20 md:py-28 border-b border-[#2D221A]">
+    <section className="py-20 md:py-28 border-b border-[#1E2337]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#2D221A]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#1E2337]">
           <div className="space-y-2 max-w-xl">
-            <span className="pill-amber">Squad Roster</span>
+            <span className="pill-lavender">Squad Roster</span>
             <h2 className="font-section-title font-semibold text-white">
               The Builders Behind Extokened
             </h2>
-            <p className="text-sm text-[#ADADAD] leading-relaxed">
+            <p className="text-sm text-[#BAC0DC] leading-relaxed">
               A synchronized permanent unit. Complementary domain mastery, shared accountability, and zero role confusion.
             </p>
           </div>
 
           <Link
             href="/team"
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-white hover:text-[#F0A24C] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-white hover:text-[#8B9BF7] transition-colors"
           >
             <span>Full team capabilities</span>
             <ArrowRight className="w-4 h-4" />
@@ -35,11 +35,11 @@ export function TeamPreviewEditorial() {
           {teamMembers.map((member) => (
             <div 
               key={member.slug}
-              className="editorial-card p-6 bg-[#141210] border border-[#2D221A] flex flex-col justify-between space-y-5 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+              className="meadow-card p-6 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between space-y-5 shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
             >
               <div className="space-y-4">
                 {/* Avatar with consistent crop */}
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#1D1814] border border-[#2D221A]">
+                <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#151824] border border-[#1E2337]">
                   <img
                     src={member.avatar}
                     alt={member.name}
@@ -53,14 +53,14 @@ export function TeamPreviewEditorial() {
                   <h3 className="text-base font-bold text-white">
                     {member.name}
                   </h3>
-                  <p className="text-xs text-[#F0A24C] font-mono mt-0.5 font-medium">
+                  <p className="text-xs text-[#8B9BF7] font-mono mt-0.5 font-medium">
                     {member.role}
                   </p>
                 </div>
 
                 {/* Focus Areas (Always visible) */}
                 <div className="space-y-1 pt-1">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#7D7D7D]">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#727896]">
                     Focus
                   </div>
                   <div className="flex flex-wrap gap-1">
@@ -74,7 +74,7 @@ export function TeamPreviewEditorial() {
               </div>
 
               {/* Bottom Social Links & Podiums */}
-              <div className="pt-4 border-t border-[#2D221A] flex items-center justify-between text-xs font-mono text-[#7D7D7D]">
+              <div className="pt-4 border-t border-[#1E2337] flex items-center justify-between text-xs font-mono text-[#727896]">
                 <span>{member.stats.trophies} Podiums</span>
                 <div className="flex items-center gap-2">
                   {member.socials.github && (
@@ -82,7 +82,7 @@ export function TeamPreviewEditorial() {
                       href={member.socials.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[#F0A24C] transition-colors"
+                      className="hover:text-[#8B9BF7] transition-colors"
                       aria-label={`${member.name} GitHub`}
                     >
                       <Github className="w-3.5 h-3.5" />
@@ -93,7 +93,7 @@ export function TeamPreviewEditorial() {
                       href={member.socials.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:text-[#F0A24C] transition-colors"
+                      className="hover:text-[#8B9BF7] transition-colors"
                       aria-label={`${member.name} LinkedIn`}
                     >
                       <Linkedin className="w-3.5 h-3.5" />

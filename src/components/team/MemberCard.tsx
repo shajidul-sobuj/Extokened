@@ -10,23 +10,23 @@ interface MemberCardProps {
 
 export function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="editorial-card p-6 bg-[#141210] border border-[#2D221A] flex flex-col justify-between group transition-all space-y-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] flex flex-col justify-between group transition-all space-y-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
       {/* Top Header */}
       <div className="space-y-4">
         
         {/* Identifier & Badge */}
-        <div className="flex items-center justify-between text-xs pb-3 border-b border-[#2D221A]">
-          <span className="text-[11px] font-mono text-[#7D7D7D]">
+        <div className="flex items-center justify-between text-xs pb-3 border-b border-[#1E2337]">
+          <span className="text-[11px] font-mono text-[#727896]">
             @{member.slug}
           </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#1D1510] text-[#F0A24C] border border-[#F0A24C]/40">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#8B9BF7]/10 text-[#8B9BF7] border border-[#8B9BF7]/30">
             {member.badge}
           </span>
         </div>
 
         {/* Portrait & Identity */}
         <div className="space-y-3">
-          <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#1D1814] border border-[#2D221A] shrink-0">
+          <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#151824] border border-[#1E2337] shrink-0">
             <img
               src={member.avatar}
               alt={member.name}
@@ -35,23 +35,23 @@ export function MemberCard({ member }: MemberCardProps) {
             />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white group-hover:text-[#F0A24C] transition-colors">
+            <h3 className="text-base font-bold text-white group-hover:text-[#8B9BF7] transition-colors">
               {member.name}
             </h3>
-            <p className="text-xs text-[#F0A24C] mt-0.5 font-mono font-medium">
+            <p className="text-xs text-[#8B9BF7] mt-0.5 font-mono font-medium">
               {member.role}
             </p>
           </div>
         </div>
 
         {/* Bio */}
-        <p className="text-xs text-[#ADADAD] leading-relaxed font-sans line-clamp-3">
+        <p className="text-xs text-[#BAC0DC] leading-relaxed font-sans line-clamp-3">
           {member.bio}
         </p>
 
         {/* Focus Areas */}
         <div className="space-y-1 pt-1">
-          <div className="text-[10px] font-mono uppercase tracking-wider text-[#7D7D7D]">
+          <div className="text-[10px] font-mono uppercase tracking-wider text-[#727896]">
             Focus Areas
           </div>
           <div className="flex flex-wrap gap-1">
@@ -65,8 +65,8 @@ export function MemberCard({ member }: MemberCardProps) {
       </div>
 
       {/* Bottom Section: Stats & Socials */}
-      <div className="pt-4 border-t border-[#2D221A] flex items-center justify-between">
-        <div className="text-xs font-mono text-[#7D7D7D]">
+      <div className="pt-4 border-t border-[#1E2337] flex items-center justify-between">
+        <div className="text-xs font-mono text-[#727896]">
           <span className="text-white font-semibold">{member.stats.trophies}</span> Podiums
         </div>
 
@@ -77,7 +77,7 @@ export function MemberCard({ member }: MemberCardProps) {
               href={member.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-md bg-[#1D1814] border border-[#2D221A] text-[#ADADAD] hover:text-[#F0A24C] transition-colors"
+              className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-[#8B9BF7] transition-colors"
               title="GitHub"
               aria-label={`${member.name} GitHub`}
             >
@@ -89,7 +89,7 @@ export function MemberCard({ member }: MemberCardProps) {
               href={member.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-md bg-[#1D1814] border border-[#2D221A] text-[#ADADAD] hover:text-[#F0A24C] transition-colors"
+              className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-[#8B9BF7] transition-colors"
               title="LinkedIn"
               aria-label={`${member.name} LinkedIn`}
             >

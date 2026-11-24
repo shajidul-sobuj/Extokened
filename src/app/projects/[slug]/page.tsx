@@ -60,30 +60,30 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     <div className="pt-32 pb-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
       
       {/* 9.1 Project Masthead & Breadcrumb */}
-      <div className="space-y-6 border-b border-[#2D221A] pb-10">
-        <div className="flex items-center gap-2 text-xs font-mono text-[#777873]">
-          <Link href="/projects" className="hover:text-[#F3F1EC] transition-colors">
+      <div className="space-y-6 border-b border-[#1E2337] pb-10">
+        <div className="flex items-center gap-2 text-xs font-mono text-[#727896]">
+          <Link href="/projects" className="hover:text-white transition-colors">
             Projects
           </Link>
           <span>/</span>
-          <span className="text-[#F3F1EC]">{project.title}</span>
+          <span className="text-white">{project.title}</span>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
-          <span className="text-[#AAA9A3]">{project.category}</span>
+          <span className="text-[#BAC0DC]">{project.category}</span>
           <span>•</span>
-          <span className="text-[#AAA9A3]">Year {project.year}</span>
+          <span className="text-[#BAC0DC]">Year {project.year}</span>
           <span>•</span>
-          <span className="px-2 py-0.5 rounded text-[10px] border border-[#74C69D]/40 text-[#74C69D] bg-[#74C69D]/10">
+          <span className="px-2 py-0.5 rounded text-[10px] border border-[#2FB36A]/40 text-[#2FB36A] bg-[#2FB36A]/10">
             {project.status}
           </span>
         </div>
 
-        <h1 className="font-page-title font-bold text-[#F3F1EC] tracking-tight leading-tight">
+        <h1 className="font-page-title font-bold text-white tracking-tight leading-tight">
           {project.title}
         </h1>
 
-        <p className="text-lg sm:text-xl text-[#AAA9A3] leading-relaxed font-sans max-w-3xl">
+        <p className="text-lg sm:text-xl text-[#BAC0DC] leading-relaxed font-sans max-w-3xl">
           {project.summary}
         </p>
 
@@ -94,7 +94,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-amber-glass"
+              className="btn-meadow-dark"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Launch live prototype</span>
@@ -105,7 +105,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               href={project.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary"
+              className="btn-meadow-secondary"
             >
               <Github className="w-4 h-4" />
               <span>View source repository</span>
@@ -115,61 +115,61 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       </div>
 
       {/* 9.2 Hero Media */}
-      <div className="relative overflow-hidden rounded-xl border border-[#2D221A] bg-[#141210] aspect-video shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+      <div className="relative overflow-hidden rounded-xl border border-[#1E2337] bg-[#0F1118] aspect-video shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
         <img
           src={project.coverImage}
           alt={project.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute bottom-3 left-4 text-[11px] font-mono text-[#ADADAD] bg-[#0D0D0D]/90 px-2.5 py-1 rounded-md border border-[#2D221A]">
+        <div className="absolute bottom-3 left-4 text-[11px] font-mono text-[#BAC0DC] bg-[#08090E]/90 px-2.5 py-1 rounded-md border border-[#1E2337]">
           Figure: Primary system interface overview ({project.title})
         </div>
       </div>
 
       {/* 9.3 Project Facts Metadata Rail */}
-      <div className="editorial-card p-6 bg-[#141210] border border-[#2D221A] grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs font-mono shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+      <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs font-mono shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
         <div>
-          <span className="text-[#7D7D7D] block uppercase text-[10px]">Category</span>
+          <span className="text-[#727896] block uppercase text-[10px]">Category</span>
           <span className="text-white font-semibold mt-1 block">{project.category}</span>
         </div>
         <div>
-          <span className="text-[#7D7D7D] block uppercase text-[10px]">Status</span>
-          <span className="text-[#74C69D] font-semibold mt-1 block">{project.status}</span>
+          <span className="text-[#727896] block uppercase text-[10px]">Status</span>
+          <span className="text-[#2FB36A] font-semibold mt-1 block">{project.status}</span>
         </div>
         <div>
-          <span className="text-[#7D7D7D] block uppercase text-[10px]">Year</span>
+          <span className="text-[#727896] block uppercase text-[10px]">Year</span>
           <span className="text-white font-semibold mt-1 block">{project.year}</span>
         </div>
         <div>
-          <span className="text-[#7D7D7D] block uppercase text-[10px]">Sprint Base</span>
+          <span className="text-[#727896] block uppercase text-[10px]">Sprint Base</span>
           <span className="text-white font-semibold mt-1 block">48 Hours</span>
         </div>
       </div>
 
       {/* 9.4 Problem and Solution: Two-Column Editorial */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="editorial-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-2 text-[#F0A24C] text-xs font-mono uppercase tracking-wider">
+        <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+          <div className="flex items-center gap-2 text-[#8B9BF7] text-xs font-mono uppercase tracking-wider">
             <AlertTriangle className="w-4 h-4" />
             <span>The Problem</span>
           </div>
           <h3 className="text-xl font-bold text-white">
             Operational Friction
           </h3>
-          <p className="text-sm text-[#ADADAD] leading-relaxed font-sans">
+          <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans">
             {project.problem}
           </p>
         </div>
 
-        <div className="editorial-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-          <div className="flex items-center gap-2 text-[#74C69D] text-xs font-mono uppercase tracking-wider">
+        <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+          <div className="flex items-center gap-2 text-[#2FB36A] text-xs font-mono uppercase tracking-wider">
             <CheckCircle2 className="w-4 h-4" />
             <span>The Engineered Solution</span>
           </div>
           <h3 className="text-xl font-bold text-white">
             Technical Approach
           </h3>
-          <p className="text-sm text-[#ADADAD] leading-relaxed font-sans">
+          <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans">
             {project.solution}
           </p>
         </div>
@@ -182,9 +182,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {project.keyFeatures.map((feat, idx) => (
-            <div key={idx} className="editorial-card p-5 bg-[#141210] border border-[#2D221A] flex items-start gap-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-              <CheckCircle2 className="w-4 h-4 text-[#F0A24C] shrink-0 mt-0.5" />
-              <span className="text-sm text-[#ADADAD] font-sans leading-relaxed">
+            <div key={idx} className="editorial-card meadow-card p-5 bg-[#0F1118] border border-[#1E2337] flex items-start gap-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+              <CheckCircle2 className="w-4 h-4 text-[#8B9BF7] shrink-0 mt-0.5" />
+              <span className="text-sm text-[#BAC0DC] font-sans leading-relaxed">
                 {feat}
               </span>
             </div>
@@ -193,19 +193,19 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       </div>
 
       {/* 9.6 Technical Architecture Notes */}
-      <div className="editorial-card p-6 sm:p-8 bg-[#141210] border border-[#2D221A] space-y-4 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-        <div className="flex items-center gap-2 text-[#F0A24C] text-xs font-mono uppercase tracking-wider">
+      <div className="editorial-card meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] space-y-4 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-2 text-[#8B9BF7] text-xs font-mono uppercase tracking-wider">
           <Cpu className="w-4 h-4" />
           <span>System Architecture &amp; Dataflow Strategy</span>
         </div>
         <h2 className="text-2xl font-bold text-white">
           Under the Hood
         </h2>
-        <p className="text-sm sm:text-base text-[#ADADAD] leading-relaxed font-sans whitespace-pre-line">
+        <p className="text-sm sm:text-base text-[#BAC0DC] leading-relaxed font-sans whitespace-pre-line">
           {project.architectureNotes}
         </p>
 
-        <div className="pt-4 border-t border-[#2D221A] flex flex-wrap gap-1.5">
+        <div className="pt-4 border-t border-[#1E2337] flex flex-wrap gap-1.5">
           {project.technologies.map((t) => (
             <span key={t} className="tech-tag">
               {t}
@@ -216,64 +216,64 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
       {/* 9.7 Challenges and Learnings: Two-Column Post-Mortem */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="editorial-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#F0A24C]">
+        <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#8B9BF7]">
             Sprint Bottlenecks
           </span>
           <h3 className="text-xl font-bold text-white">
             Engineering Challenges
           </h3>
-          <p className="text-sm text-[#ADADAD] leading-relaxed font-sans">
+          <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans">
             {project.challenges}
           </p>
         </div>
 
-        <div className="editorial-card p-6 sm:p-7 bg-[#141210] border border-[#2D221A] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#74C69D]">
+        <div className="editorial-card meadow-card p-6 sm:p-7 bg-[#0F1118] border border-[#1E2337] space-y-3 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#2FB36A]">
             Retrospective
           </span>
           <h3 className="text-xl font-bold text-white">
             Key Learnings
           </h3>
-          <p className="text-sm text-[#ADADAD] leading-relaxed font-sans">
+          <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans">
             {project.learnings}
           </p>
         </div>
       </div>
 
       {/* 9.8 Validated Outcome */}
-      <div className="editorial-card p-6 sm:p-8 bg-[#141210] border border-[#2D221A] space-y-3 border-l-4 border-l-[#F0A24C] shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
-        <div className="flex items-center gap-2 text-[#F0A24C] text-xs font-mono uppercase tracking-wider">
+      <div className="editorial-card meadow-card p-6 sm:p-8 bg-[#0F1118] border border-[#1E2337] space-y-3 border-l-4 border-l-[#8B9BF7] shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-2 text-[#8B9BF7] text-xs font-mono uppercase tracking-wider">
           <Award className="w-4 h-4" />
           <span>Measured Outcome</span>
         </div>
         <h3 className="text-xl font-bold text-white">
           Impact &amp; Validation
         </h3>
-        <p className="text-sm sm:text-base text-[#ADADAD] leading-relaxed font-sans">
+        <p className="text-sm sm:text-base text-[#BAC0DC] leading-relaxed font-sans">
           {project.outcome}
         </p>
       </div>
 
       {/* 9.9 Contributor Attribution */}
       {project.contributors && project.contributors.length > 0 && (
-        <div className="space-y-6 border-t border-[#2D221A] pt-12">
+        <div className="space-y-6 border-t border-[#1E2337] pt-12">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-[#7D7D7D]" />
+            <Users className="w-4 h-4 text-[#727896]" />
             <h2 className="text-xl font-bold text-white">
               Squad Contributors
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {project.contributors.map((contrib, idx) => (
-              <div key={idx} className="editorial-card p-4 bg-[#141210] border border-[#2D221A] space-y-1">
+              <div key={idx} className="editorial-card meadow-card p-4 bg-[#0F1118] border border-[#1E2337] space-y-1">
                 <div className="text-sm font-bold text-white">
                   {contrib.name}
                 </div>
-                <div className="text-xs text-[#F0A24C] font-mono">
+                <div className="text-xs text-[#8B9BF7] font-mono">
                   {contrib.role}
                 </div>
-                <div className="text-xs text-[#7D7D7D] pt-1">
+                <div className="text-xs text-[#727896] pt-1">
                   {contrib.contribution}
                 </div>
               </div>
@@ -283,10 +283,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       )}
 
       {/* 9.10 Next Project Feature & Back Link */}
-      <div className="border-t border-[#2D221A] pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div className="border-t border-[#1E2337] pt-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-xs font-mono text-[#ADADAD] hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono text-[#BAC0DC] hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to all projects</span>
@@ -295,7 +295,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         {nextProject && (
           <Link
             href={`/projects/${nextProject.slug}`}
-            className="inline-flex items-center gap-2 text-xs font-mono text-[#F0A24C] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[#8B9BF7] hover:underline"
           >
             <span>Next Case Study: {nextProject.title}</span>
             <ArrowRight className="w-4 h-4" />

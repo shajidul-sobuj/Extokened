@@ -51,19 +51,19 @@ export default function ProjectsPage() {
       
       {/* 8.1 Page Hero */}
       <div className="space-y-4 max-w-3xl">
-        <div className="pill-amber">
+        <div className="pill-lavender">
           PORTFOLIO / SELECTED WORK
         </div>
         <h1 className="font-page-title font-semibold text-white leading-tight">
           Everything We Have Shipped
         </h1>
-        <p className="text-base sm:text-lg text-[#ADADAD] leading-relaxed font-sans">
+        <p className="text-base sm:text-lg text-[#BAC0DC] leading-relaxed font-sans">
           From 36-hour hackathon winning prototypes to production systems and open-source tooling ({projects.length} documented records). Every build includes real architecture notes, verified code, and live outcomes.
         </p>
       </div>
 
       {/* 8.3 Filter Toolbar */}
-      <div className="editorial-card p-6 bg-[#141210] border border-[#2D221A] space-y-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+      <div className="editorial-card meadow-card p-6 bg-[#0F1118] border border-[#1E2337] space-y-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           
           {/* Category Filter Chips */}
@@ -74,8 +74,8 @@ export default function ProjectsPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
                   activeCategory === cat
-                    ? "bg-[#F0A24C] text-[#1D1510] font-semibold shadow-[0_0_12px_rgba(240,162,76,0.3)]"
-                    : "bg-[#1D1814] text-[#ADADAD] hover:text-white border border-[#2D221A]"
+                    ? "bg-[#8B9BF7] text-[#08090E] font-semibold shadow-[0_0_12px_rgba(139,155,247,0.3)]"
+                    : "bg-[#151824] text-[#BAC0DC] hover:text-white border border-[#1E2337]"
                 }`}
               >
                 {cat}
@@ -86,20 +86,20 @@ export default function ProjectsPage() {
           {/* Search Field & Sort */}
           <div className="flex items-center gap-3 w-full lg:w-auto">
             <div className="relative flex-1 lg:w-64">
-              <Search className="w-4 h-4 text-[#7D7D7D] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#727896] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search stack, AI, keyword..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#0D0D0D] border border-[#2D221A] rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-[#7D7D7D] focus:outline-none focus:border-[#F0A24C]/60 transition-colors"
+                className="w-full bg-[#08090E] border border-[#1E2337] rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-[#727896] focus:outline-none focus:border-[#8B9BF7]/60 transition-colors"
               />
             </div>
 
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "newest" | "featured")}
-              className="bg-[#0D0D0D] border border-[#2D221A] rounded-lg px-3 py-2 text-xs text-[#ADADAD] focus:outline-none focus:border-[#F0A24C]/60"
+              className="bg-[#08090E] border border-[#1E2337] rounded-lg px-3 py-2 text-xs text-[#BAC0DC] focus:outline-none focus:border-[#8B9BF7]/60"
             >
               <option value="featured">Featured First</option>
               <option value="newest">Newest First</option>
@@ -108,9 +108,9 @@ export default function ProjectsPage() {
         </div>
 
         {/* Secondary Status Filter & Active Chips */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#2D221A] text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#1E2337] text-xs">
           <div className="flex items-center gap-2">
-            <span className="text-[#7D7D7D] font-mono">Status:</span>
+            <span className="text-[#727896] font-mono">Status:</span>
             <div className="flex items-center gap-1.5">
               {statuses.map((status) => (
                 <button
@@ -118,8 +118,8 @@ export default function ProjectsPage() {
                   onClick={() => setActiveStatus(status)}
                   className={`px-2.5 py-1 rounded-full text-[11px] font-mono transition-colors cursor-pointer ${
                     activeStatus === status
-                      ? "bg-[#1D1814] text-white border border-[#F0A24C]/40"
-                      : "text-[#7D7D7D] hover:text-[#ADADAD]"
+                      ? "bg-[#151824] text-white border border-[#8B9BF7]/40"
+                      : "text-[#727896] hover:text-[#BAC0DC]"
                   }`}
                 >
                   {status}
@@ -131,9 +131,9 @@ export default function ProjectsPage() {
           {/* Removable Active Filter Chips */}
           {hasActiveFilters && (
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#7D7D7D]">Active filters:</span>
+              <span className="text-[11px] text-[#727896]">Active filters:</span>
               {activeCategory !== "All" && (
-                <span className="tech-tag text-[#F0A24C] flex items-center gap-1">
+                <span className="tech-tag text-[#8B9BF7] flex items-center gap-1">
                   {activeCategory}
                   <button onClick={() => setActiveCategory("All")}>
                     <X className="w-3 h-3 hover:text-white" />
@@ -141,7 +141,7 @@ export default function ProjectsPage() {
                 </span>
               )}
               {activeStatus !== "All" && (
-                <span className="tech-tag text-[#F0A24C] flex items-center gap-1">
+                <span className="tech-tag text-[#8B9BF7] flex items-center gap-1">
                   {activeStatus}
                   <button onClick={() => setActiveStatus("All")}>
                     <X className="w-3 h-3 hover:text-white" />
@@ -149,7 +149,7 @@ export default function ProjectsPage() {
                 </span>
               )}
               {searchQuery && (
-                <span className="tech-tag text-[#F0A24C] flex items-center gap-1">
+                <span className="tech-tag text-[#8B9BF7] flex items-center gap-1">
                   &quot;{searchQuery}&quot;
                   <button onClick={() => setSearchQuery("")}>
                     <X className="w-3 h-3 hover:text-white" />
@@ -158,7 +158,7 @@ export default function ProjectsPage() {
               )}
               <button
                 onClick={clearFilters}
-                className="text-[11px] text-[#F0A24C] hover:underline ml-1"
+                className="text-[11px] text-[#8B9BF7] hover:underline ml-1"
               >
                 Clear all
               </button>
@@ -169,11 +169,11 @@ export default function ProjectsPage() {
 
       {/* 8.4 Project Listing: Deliberate Mixed Grid */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20 editorial-card bg-[#141210] border border-[#2D221A] space-y-3">
-          <p className="text-[#ADADAD] text-sm">No projects match the selected criteria.</p>
+        <div className="text-center py-20 editorial-card meadow-card bg-[#0F1118] border border-[#1E2337] space-y-3">
+          <p className="text-[#BAC0DC] text-sm">No projects match the selected criteria.</p>
           <button
             onClick={clearFilters}
-            className="text-xs text-[#F0A24C] hover:underline cursor-pointer"
+            className="text-xs text-[#8B9BF7] hover:underline cursor-pointer"
           >
             Clear all filters
           </button>
@@ -183,8 +183,8 @@ export default function ProjectsPage() {
           
           {/* Top Wide Feature (when no search query is active and items exist) */}
           {featuredWide && (
-            <div className="editorial-card p-6 sm:p-10 bg-[#141210] border border-[#2D221A] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
-              <div className="lg:col-span-7 relative overflow-hidden rounded-lg border border-[#2D221A] bg-[#0D0D0D] aspect-video">
+            <div className="editorial-card meadow-card p-6 sm:p-10 bg-[#0F1118] border border-[#1E2337] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+              <div className="lg:col-span-7 relative overflow-hidden rounded-lg border border-[#1E2337] bg-[#08090E] aspect-video">
                 <img
                   src={featuredWide.coverImage}
                   alt={featuredWide.title}
@@ -192,17 +192,17 @@ export default function ProjectsPage() {
                 />
               </div>
               <div className="lg:col-span-5 space-y-4">
-                <div className="flex items-center gap-2 text-xs font-mono text-[#7D7D7D]">
+                <div className="flex items-center gap-2 text-xs font-mono text-[#727896]">
                   <span>{featuredWide.category}</span>
                   <span>•</span>
                   <span>{featuredWide.year}</span>
                   <span>•</span>
-                  <span className="text-[#74C69D]">{featuredWide.status}</span>
+                  <span className="text-[#2FB36A]">{featuredWide.status}</span>
                 </div>
                 <h3 className="font-card-title font-bold text-white">
                   {featuredWide.title}
                 </h3>
-                <p className="text-sm text-[#ADADAD] leading-relaxed">
+                <p className="text-sm text-[#BAC0DC] leading-relaxed">
                   {featuredWide.summary}
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
@@ -215,7 +215,7 @@ export default function ProjectsPage() {
                 <div className="pt-2">
                   <Link
                     href={`/projects/${featuredWide.slug}`}
-                    className="btn-amber-glass"
+                    className="btn-meadow-dark"
                   >
                     <span>Read case study</span>
                     <ArrowRight className="w-4 h-4" />
@@ -238,17 +238,17 @@ export default function ProjectsPage() {
       )}
 
       {/* 8.5 End CTA */}
-      <div className="p-8 sm:p-12 rounded-xl bg-[#141210] border border-[#2D221A] text-center space-y-4 shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
+      <div className="editorial-card meadow-card p-8 sm:p-12 rounded-xl bg-[#0F1118] border border-[#1E2337] text-center space-y-4 shadow-[0_12px_36px_rgba(0,0,0,0.5)]">
         <h2 className="text-xl sm:text-2xl font-bold text-white">
           Have a problem worth solving?
         </h2>
-        <p className="text-sm text-[#ADADAD] max-w-md mx-auto">
+        <p className="text-sm text-[#BAC0DC] max-w-md mx-auto">
           We partner with organizations and teams on rapid prototype execution and technical sprints.
         </p>
         <div className="pt-2">
           <Link
             href="/contact"
-            className="btn-amber-glass"
+            className="btn-meadow-dark"
           >
             <span>Contact the team</span>
             <ArrowRight className="w-4 h-4" />

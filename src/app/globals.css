@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --background: #0D0D0D;
+  --background: #08090E;
   --foreground: #FFFFFF;
+  --mist: #161928;
 }
 
 * {
@@ -14,38 +15,40 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: #0D0D0D;
+  background-color: #08090E;
   color: #FFFFFF;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Editorial Dark Scrollbar */
+/* Custom Editorial Dark Twilight Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0D0D0D;
+  background: #08090E;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2D221A;
+  background: #1E2337;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3D2E24;
+  background: #2B324E;
 }
 
-/* Selection highlight using Warm Amber */
+/* Selection highlight using Twilight Periwinkle */
 ::selection {
-  background-color: rgba(240, 162, 76, 0.35);
+  background-color: rgba(139, 155, 247, 0.35);
   color: #FFFFFF;
 }
 
@@ -54,56 +57,60 @@ body {
   .font-hero-display {
     font-size: clamp(2.75rem, 6.5vw, 5.75rem);
     line-height: 1.05;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
   }
 
   .font-page-title {
     font-size: clamp(2.25rem, 4.5vw, 4.25rem);
     line-height: 1.1;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
   }
 
   .font-section-title {
     font-size: clamp(1.85rem, 3.5vw, 3rem);
     line-height: 1.15;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   .font-card-title {
     font-size: clamp(1.25rem, 2vw, 1.65rem);
     line-height: 1.25;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
 
-  /* Architectural Warm Grid */
+  /* Architectural Twilight Meadow Grid */
+  .meadow-grid,
   .editorial-grid,
   .studio-grid,
   .warm-grid {
     background-size: 64px 64px;
     background-image: 
-      linear-gradient(to right, rgba(240, 162, 76, 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(240, 162, 76, 0.025) 1px, transparent 1px);
+      linear-gradient(to right, rgba(139, 155, 247, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(139, 155, 247, 0.03) 1px, transparent 1px);
   }
 
-  /* Warm Card Surfaces */
+  /* Dark Meadow Glass Cards */
+  .meadow-card,
   .editorial-card,
   .studio-card,
   .warm-card {
-    background-color: #141210;
-    border: 1px solid #2D221A;
+    background-color: #0F1118;
+    border: 1px solid #1E2337;
     border-radius: 12px;
     transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease, box-shadow 240ms ease;
   }
 
+  .meadow-card:hover,
   .editorial-card:hover,
   .studio-card:hover,
   .warm-card:hover {
     transform: translateY(-2px);
-    border-color: #3D2E24;
-    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(240, 162, 76, 0.04);
+    border-color: #2B324E;
+    box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.7), 0 0 24px rgba(139, 155, 247, 0.06);
   }
 
-  /* Glossy Amber-Glass Button (Signature CTA) */
+  /* Sleek Dark Button (Signature Meadow CTA) */
+  .btn-meadow-dark,
   .btn-amber-glass,
   .btn-primary {
     display: inline-flex;
@@ -111,92 +118,144 @@ body {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.65rem 1.4rem;
-    background: linear-gradient(135deg, #2C241D 0%, #7A5832 100%);
+    background: linear-gradient(135deg, #121522 0%, #1D2236 100%);
     color: #FFFFFF;
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 500;
+    letter-spacing: -0.01em;
     border-radius: 9999px;
-    border: 1px solid rgba(240, 162, 76, 0.45);
-    box-shadow: 0 0 24px rgba(240, 162, 76, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(139, 155, 247, 0.35);
+    box-shadow: 0 0 20px rgba(139, 155, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.22);
     transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
+  .btn-meadow-dark:hover,
   .btn-amber-glass:hover,
   .btn-primary:hover {
-    background: linear-gradient(135deg, #382E25 0%, #8E673B 100%);
-    border-color: rgba(240, 162, 76, 0.7);
-    box-shadow: 0 0 32px rgba(240, 162, 76, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, #181C2E 0%, #262D47 100%);
+    border-color: rgba(139, 155, 247, 0.6);
+    box-shadow: 0 0 28px rgba(139, 155, 247, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     transform: translateY(-1px);
     color: #FFFFFF;
   }
 
+  .btn-meadow-dark:active,
   .btn-amber-glass:active,
   .btn-primary:active {
     transform: scale(0.98);
   }
 
   /* Secondary Button */
-  .btn-secondary {
+  .btn-secondary,
+  .btn-meadow-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.65rem 1.25rem;
-    background-color: #141210;
-    color: #ADADAD;
+    background-color: #0F1118;
+    color: #BAC0DC;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid #2D221A;
+    letter-spacing: -0.01em;
+    border: 1px solid #1E2337;
     border-radius: 9999px;
     transition: all 180ms ease;
   }
 
-  .btn-secondary:hover {
-    background-color: #1D1814;
-    border-color: #3D2E24;
+  .btn-secondary:hover,
+  .btn-meadow-secondary:hover {
+    background-color: #151824;
+    border-color: #2B324E;
     color: #FFFFFF;
     transform: translateY(-1px);
   }
 
-  .btn-secondary:active {
+  .btn-secondary:active,
+  .btn-meadow-secondary:active {
     transform: scale(0.98);
   }
 
-  /* Warm Metal Button (Newsletter Submit Key) */
+  /* Dark Metal Key / Quick Action Button */
   .btn-metal {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #4A3525 0%, #8C5E32 100%);
+    background: linear-gradient(135deg, #161928 0%, #252B44 100%);
     color: #FFFFFF;
-    border: 1px solid rgba(240, 162, 76, 0.45);
+    border: 1px solid rgba(139, 155, 247, 0.3);
     border-radius: 8px;
     transition: all 180ms ease;
   }
 
   .btn-metal:hover {
-    background: linear-gradient(135deg, #5C422F 0%, #A26D3A 100%);
-    border-color: rgba(240, 162, 76, 0.7);
-    box-shadow: 0 0 18px rgba(240, 162, 76, 0.35);
+    background: linear-gradient(135deg, #1C2033 0%, #303756 100%);
+    border-color: rgba(139, 155, 247, 0.6);
+    box-shadow: 0 0 18px rgba(139, 155, 247, 0.25);
   }
 
-  /* Dark Amber Pill Badge */
+  /* Driftbar Spec: Status Chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 10px;
+    border: 1px solid rgba(139, 155, 247, 0.18);
+    border-radius: 9999px;
+    background: rgba(21, 24, 36, 0.65);
+    backdrop-filter: blur(8px);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: #BAC0DC;
+    transition: all 180ms ease;
+  }
+
+  .chip:hover {
+    border-color: rgba(139, 155, 247, 0.4);
+    color: #FFFFFF;
+    background: rgba(27, 31, 48, 0.75);
+  }
+
+  .chip svg {
+    width: 11px;
+    height: 11px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .chip__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: #2FB36A;
+    box-shadow: 0 0 0 2.5px rgba(47, 179, 106, 0.25);
+    display: inline-block;
+  }
+
+  /* Twilight Pill Badge */
+  .pill-lavender,
   .pill-amber,
   .eyebrow-label {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.35rem 0.85rem;
-    background-color: #1D1510;
-    border: 1px solid rgba(240, 162, 76, 0.4);
+    background-color: #151824;
+    border: 1px solid rgba(139, 155, 247, 0.28);
     border-radius: 9999px;
     font-family: var(--font-jetbrains-mono), monospace;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #F0A24C;
-    box-shadow: 0 0 14px rgba(240, 162, 76, 0.1);
+    color: #B8C0EC;
+    box-shadow: 0 0 14px rgba(139, 155, 247, 0.08);
   }
 
   /* Compact Tech & Result Tags */
@@ -208,18 +267,40 @@ body {
     font-size: 0.6875rem;
     font-family: var(--font-jetbrains-mono), monospace;
     font-weight: 500;
-    border: 1px solid #2D221A;
-    background-color: #1D1814;
-    color: #ADADAD;
+    border: 1px solid #1E2337;
+    background-color: #151824;
+    color: #BAC0DC;
   }
 
-  /* Giant Sunken Wordmark */
+  /* Giant Frosted Glass Wordmark (Driftbar Spec Exact Styling) */
+  .footer__wordmark-glass {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -15px;
+    z-index: 10;
+    margin: 0;
+    font-size: clamp(5.5rem, 19vw, 24rem);
+    font-weight: 600;
+    line-height: 0.74;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    color: rgba(232, 234, 250, 0.4);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(184, 192, 236, 0.45) 48%, rgba(255, 255, 255, 0.68));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.55)) drop-shadow(0 0 24px rgba(139, 155, 247, 0.45));
+  }
+
   .wordmark-sunken {
     font-size: clamp(4.5rem, 15vw, 15rem);
     font-weight: 200;
     letter-spacing: 0.05em;
     line-height: 0.75;
-    color: #5A3418;
+    color: #252B44;
     user-select: none;
     pointer-events: none;
     text-align: center;

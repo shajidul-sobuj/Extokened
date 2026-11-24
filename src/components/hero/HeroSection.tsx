@@ -6,9 +6,9 @@ import { ArrowRight, Trophy, Sparkles } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 border-b border-[#2D221A] overflow-hidden">
-      {/* Background warm amber glow */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-[#F0A24C]/[0.035] rounded-full blur-[160px] pointer-events-none" />
+    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 border-b border-[#1E2337] overflow-hidden">
+      {/* Background twilight periwinkle glow */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-[#8B9BF7]/[0.03] rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -18,20 +18,20 @@ export function HeroSection() {
           {/* Left 7 Columns */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Pill */}
-            <div className="pill-amber">
-              <Sparkles className="w-3.5 h-3.5 text-[#F0A24C]" />
-              <span>Independent Technology Team</span>
+            {/* Pill with Live Signal Dot */}
+            <div className="chip py-1 px-3.5 h-auto text-xs font-mono inline-flex items-center gap-2">
+              <span className="chip__dot" />
+              <span>Independent Engineering Squad</span>
             </div>
 
             {/* Headline */}
             <h1 className="font-hero-display font-semibold text-white">
               We build what we{" "}
-              <span className="text-[#F0A24C]">imagine.</span>
+              <span className="text-[#8B9BF7] drop-shadow-[0_0_25px_rgba(139,155,247,0.35)]">imagine.</span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="text-base sm:text-lg text-[#ADADAD] leading-relaxed max-w-2xl font-sans">
+            <p className="text-base sm:text-lg text-[#BAC0DC] leading-relaxed max-w-2xl font-sans">
               Extokened is a team of builders exploring ideas, competing in hackathons, and turning practical problems into working products.
             </p>
 
@@ -39,7 +39,7 @@ export function HeroSection() {
             <div className="pt-4 flex flex-wrap items-center gap-4">
               <Link
                 href="/projects"
-                className="btn-amber-glass"
+                className="btn-meadow-dark"
               >
                 <span>Explore our work</span>
                 <ArrowRight className="w-4 h-4" />
@@ -47,9 +47,9 @@ export function HeroSection() {
 
               <Link
                 href="/hackathons"
-                className="btn-secondary"
+                className="btn-meadow-secondary"
               >
-                <Trophy className="w-4 h-4 text-[#F0A24C]" />
+                <Trophy className="w-4 h-4 text-[#FFC857]" />
                 <span>Our hackathon journey</span>
               </Link>
             </div>
@@ -57,38 +57,38 @@ export function HeroSection() {
 
           {/* Right 5 Columns: Art-directed Typographic / Technical Composition */}
           <div className="lg:col-span-5">
-            <div className="editorial-card p-8 bg-[#141210] border border-[#2D221A] relative overflow-hidden space-y-6 shadow-[0_16px_40px_rgba(0,0,0,0.5)]">
+            <div className="meadow-card p-8 bg-[#0F1118] border border-[#1E2337] relative overflow-hidden space-y-6 shadow-[0_16px_40px_rgba(0,0,0,0.6)]">
               
               {/* Card Header Stamp */}
-              <div className="flex items-center justify-between pb-4 border-b border-[#2D221A] text-xs font-mono">
-                <span className="text-[#7D7D7D]">EXTOKENED / SPEC 0.1</span>
-                <span className="text-[#F0A24C] font-semibold">EST. 2023</span>
+              <div className="flex items-center justify-between pb-4 border-b border-[#1E2337] text-xs font-mono">
+                <span className="text-[#727896]">EXTOKENED / SPEC 0.1</span>
+                <span className="text-[#8B9BF7] font-semibold">EST. 2023</span>
               </div>
 
               {/* Large Typographic Monogram */}
-              <div className="py-6 text-center border-y border-[#2D221A]/60">
-                <div className="font-mono text-5xl sm:text-6xl font-bold tracking-tight text-white drop-shadow-[0_0_25px_rgba(240,162,76,0.2)]">
+              <div className="py-6 text-center border-y border-[#1E2337]/60">
+                <div className="font-mono text-5xl sm:text-6xl font-bold tracking-tight text-white drop-shadow-[0_0_25px_rgba(139,155,247,0.25)]">
                   &lt;EXT/&gt;
                 </div>
-                <div className="text-xs font-mono text-[#7D7D7D] mt-2 uppercase tracking-widest">
+                <div className="text-xs font-mono text-[#727896] mt-2 uppercase tracking-widest">
                   Autonomous AI • Resilient Web • Systems
                 </div>
               </div>
 
               {/* Engineering Blueprint Summary */}
               <div className="space-y-3 text-xs font-mono">
-                <div className="flex justify-between items-center text-[#ADADAD]">
-                  <span className="text-[#7D7D7D]">Core Focus:</span>
+                <div className="flex justify-between items-center text-[#BAC0DC]">
+                  <span className="text-[#727896]">Core Focus:</span>
                   <span className="text-white">Multimodal Systems &amp; Web</span>
                 </div>
-                <div className="flex justify-between items-center text-[#ADADAD]">
-                  <span className="text-[#7D7D7D]">Sprint Cadence:</span>
+                <div className="flex justify-between items-center text-[#BAC0DC]">
+                  <span className="text-[#727896]">Sprint Cadence:</span>
                   <span className="text-white">24–48h Rapid Prototyping</span>
                 </div>
-                <div className="flex justify-between items-center text-[#ADADAD]">
-                  <span className="text-[#7D7D7D]">Verification:</span>
-                  <span className="text-[#74C69D] flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#74C69D]" />
+                <div className="flex justify-between items-center text-[#BAC0DC]">
+                  <span className="text-[#727896]">Verification:</span>
+                  <span className="text-[#2FB36A] flex items-center gap-1.5 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2FB36A]" />
                     Live Deployed Code Only
                   </span>
                 </div>

@@ -9,10 +9,12 @@ export function HeroSection() {
   const [activeTab, setActiveTab] = useState<"console" | "telemetry" | "stack">("console");
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 border-b border-[#1E2337] overflow-hidden">
+    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 border-b border-[#1E2337]/60 overflow-hidden bg-transparent">
       {/* Background twilight periwinkle glow */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-[#8B9BF7]/[0.035] rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-[#FFC857]/[0.02] rounded-full blur-[140px] pointer-events-none" />
+      {/* Soft bottom atmospheric mist gradient */}
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#08090E]/50 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

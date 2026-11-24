@@ -305,6 +305,44 @@ body {
     pointer-events: none;
     text-align: center;
   }
+  /* Atmospheric Content Scrim */
+  .atmospheric-veil {
+    background-color: rgba(8, 9, 14, 0.72);
+    backdrop-filter: blur(1px);
+  }
+
+  /* Drifting Cloud Layers ("Megh") */
+  @keyframes cloudDriftSlow {
+    0% {
+      transform: translateX(-4%) translateY(0px) scale(1);
+    }
+    50% {
+      transform: translateX(4%) translateY(-8px) scale(1.04);
+    }
+    100% {
+      transform: translateX(-4%) translateY(0px) scale(1);
+    }
+  }
+
+  @keyframes cloudDriftReverse {
+    0% {
+      transform: translateX(5%) translateY(0px) scale(1.02);
+    }
+    50% {
+      transform: translateX(-5%) translateY(6px) scale(0.97);
+    }
+    100% {
+      transform: translateX(5%) translateY(0px) scale(1.02);
+    }
+  }
+
+  .animate-cloud-drift {
+    animation: cloudDriftSlow 36s ease-in-out infinite;
+  }
+
+  .animate-cloud-drift-reverse {
+    animation: cloudDriftReverse 48s ease-in-out infinite;
+  }
 }
 
 /* Reduced motion preference */
@@ -318,4 +356,5 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
 

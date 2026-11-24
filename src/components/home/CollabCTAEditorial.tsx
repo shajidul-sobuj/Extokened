@@ -8,10 +8,10 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function CollabCTAEditorial() {
   return (
-    <section className="relative py-24 lg:py-32 bg-[#08090E] border-b border-[#1E2337] overflow-hidden">
+    <section className="relative py-24 lg:py-32 bg-transparent border-b border-[#1E2337]/60 overflow-hidden">
       {/* Background Twilight Atmospheric Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-[#8B9BF7]/[0.05] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-20 right-1/4 w-[350px] h-[350px] bg-[#FFC857]/[0.025] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute -bottom-20 right-1/4 w-[350px] h-[350px] bg-[#FFC857]/[0.035] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <MotionReveal duration={0.6} distance={20} className="space-y-6">

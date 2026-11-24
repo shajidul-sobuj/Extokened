@@ -9,28 +9,16 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer relative bg-[#08090E] overflow-hidden isolate border-t border-[#1E2337] min-h-[680px] lg:min-h-[760px] flex flex-col justify-between pt-16 sm:pt-20 pb-0">
+    <footer className="footer relative bg-transparent overflow-hidden isolate border-t border-[#1E2337]/60 min-h-[680px] lg:min-h-[760px] flex flex-col justify-between pt-16 sm:pt-20 pb-0">
       
-      {/* 1. Media: Blue-Hour Meadow Looping Video Stage */}
-      <div className="footer__stage absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <video
-          className="footer__video w-full h-full object-cover object-[50%_100%] translate-y-[9%]"
-          src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
-          poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-        {/* Dark Haze so the brand block and link columns remain razor-sharp */}
-        <div 
-          className="absolute inset-0 pointer-events-none" 
-          style={{
-            background: "linear-gradient(to bottom, #08090E 0%, rgba(8, 9, 14, 0.96) 28%, rgba(8, 9, 14, 0.72) 48%, rgba(8, 9, 14, 0) 72%)"
-          }} 
-        />
-      </div>
+      {/* 1. Atmospheric Scrim so the brand block and link columns remain razor-sharp while the meadow shines through */}
+      <div 
+        className="footer__stage absolute inset-0 -z-10 pointer-events-none overflow-hidden" 
+        aria-hidden="true"
+        style={{
+          background: "linear-gradient(to bottom, rgba(8, 9, 14, 0.85) 0%, rgba(8, 9, 14, 0.45) 35%, transparent 70%)"
+        }} 
+      />
 
       {/* 2. Giant Frosted-Glass EXTOKENED Wordmark Sinking into Fog */}
       <p className="footer__wordmark-glass" aria-hidden="true">
@@ -41,7 +29,7 @@ export function Footer() {
       <div 
         className="footer__fog absolute inset-x-0 bottom-0 z-[15] h-[18%] pointer-events-none"
         style={{
-          background: "linear-gradient(to top, rgba(184, 192, 236, 0.22) 0%, rgba(184, 192, 236, 0.1) 40%, rgba(184, 192, 236, 0) 100%)"
+          background: "linear-gradient(to top, rgba(184, 192, 236, 0.25) 0%, rgba(184, 192, 236, 0.12) 40%, rgba(184, 192, 236, 0) 100%)"
         }}
         aria-hidden="true" 
       />

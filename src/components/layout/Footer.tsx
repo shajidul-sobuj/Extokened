@@ -27,12 +27,12 @@ export function Footer() {
           preload="auto"
         />
 
-        {/* Smooth Atmospheric Gradient Veil: razor-sharp top text + luminous misty hills below */}
+        {/* Smooth Atmospheric Gradient Veil: seamlessly continues the page's twilight meadow mood */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(7, 8, 13, 0.96) 0%, rgba(7, 8, 13, 0.88) 28%, rgba(7, 8, 13, 0.52) 56%, rgba(7, 8, 13, 0.24) 78%, rgba(7, 8, 13, 0.74) 100%)",
+              "linear-gradient(to bottom, rgba(7, 8, 13, 0.88) 0%, rgba(7, 8, 13, 0.78) 28%, rgba(7, 8, 13, 0.45) 56%, rgba(7, 8, 13, 0.22) 78%, rgba(7, 8, 13, 0.72) 100%)",
           }}
         />
       </div>

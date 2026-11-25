@@ -3,17 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
-interface StarParticle {
-  x: number;
-  y: number;
-  r: number;
-  baseAlpha: number;
-  phase: number;
-  speed: number;
-  tint: string;
-}
-
-interface FireflyParticle {
+interface Firefly {
   x: number;
   y: number;
   vx: number;
@@ -21,17 +11,18 @@ interface FireflyParticle {
   r: number;
   phase: number;
   pulseSpeed: number;
-  hue: "gold" | "periwinkle";
+  swayAmp: number;
+  swaySpeed: number;
+  kind: "gold" | "amber" | "mist";
 }
 
-interface ShootingStar {
+interface DistantStar {
   x: number;
   y: number;
-  vx: number;
-  vy: number;
-  length: number;
-  life: number;
-  maxLife: number;
+  r: number;
+  alpha: number;
+  phase: number;
+  speed: number;
 }
 
 export function InteractiveBackground() {
@@ -45,15 +36,13 @@ export function InteractiveBackground() {
 
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 85,
-    damping: 26,
+    stiffness: 65,
+    damping: 28,
     restDelta: 0.001,
   });
 
-  // Smooth vertical scroll journey across sky -> dusk horizon -> firefly meadow
-  const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-42%"]);
-  const auroraY = useTransform(smoothProgress, [0, 0.5, 1], ["0%", "-18%", "-42%"]);
-  const auroraOpacity = useTransform(smoothProgress, [0, 0.5, 1], [0.85, 0.55, 0.2]);
+  // Gentle, unhurried scroll parallax keeping the moody twilight hills & mist in frame
+  const videoY = useTransform(smoothProgress, [0, 1], ["-6%", "-34%"]);
 
   useEffect(() => {
     setMounted(true);
@@ -82,33 +71,32 @@ export function InteractiveBackground() {
     };
     resize();
 
-    // Generate crisp celestial stars (upper 58% of viewport)
-    const starCount = width < 768 ? 42 : 76;
-    const stars: StarParticle[] = Array.from({ length: starCount }, () => ({
+    // Minimal distant night stars strictly in the upper dark twilight sky (top 30%)
+    const starCount = width < 768 ? 22 : 38;
+    const stars: DistantStar[] = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
-      y: Math.random() * height * 0.58,
-      r: Math.random() * 1.35 + 0.45,
-      baseAlpha: Math.random() * 0.55 + 0.2,
+      y: Math.random() * height * 0.3,
+      r: Math.random() * 1.0 + 0.35,
+      alpha: Math.random() * 0.36 + 0.12,
       phase: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.018 + 0.006,
-      tint: Math.random() > 0.72 ? "186, 198, 255" : "255, 255, 255",
+      speed: Math.random() * 0.01 + 0.004,
     }));
 
-    // Generate living organically drifting fireflies
-    const fireflyCount = width < 768 ? 18 : 34;
-    const fireflies: FireflyParticle[] = Array.from({ length: fireflyCount }, (_, idx) => ({
+    // Calm, footer-style warm golden fireflies & soft twilight mist embers
+    const fireflyCount = width < 768 ? 16 : 26;
+    const fireflies: Firefly[] = Array.from({ length: fireflyCount }, (_, idx) => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: -(Math.random() * 0.22 + 0.08),
-      r: Math.random() * 2.1 + 1.1,
+      vx: (Math.random() - 0.5) * 0.14,
+      vy: -(Math.random() * 0.18 + 0.06),
+      r: Math.random() * 1.8 + 0.9,
       phase: Math.random() * Math.PI * 2,
-      pulseSpeed: Math.random() * 0.024 + 0.01,
-      hue: idx % 3 === 0 ? "periwinkle" : "gold",
+      pulseSpeed: Math.random() * 0.015 + 0.007,
+      swayAmp: Math.random() * 0.22 + 0.08,
+      swaySpeed: Math.random() * 0.008 + 0.004,
+      kind: idx % 5 === 0 ? "mist" : idx % 2 === 0 ? "gold" : "amber",
     }));
 
-    let shootingStar: ShootingStar | null = null;
-    let nextMeteorTimer = 260; // ~4.3s at 60fps
     let tick = 0;
     let rafId = 0;
     let isVisible = true;
@@ -138,138 +126,96 @@ export function InteractiveBackground() {
         ctx.clearRect(0, 0, width, height);
         tick += 1;
 
-        // 1. Subtle Interactive Cursor Twilight Halo
+        // 1. Whisper-subtle cursor twilight warmth (never overpowering)
         if (mouseRef.current.active && isFinePointer) {
           const { x: mx, y: my } = mouseRef.current;
-          const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 240);
-          halo.addColorStop(0, "rgba(139, 155, 247, 0.095)");
-          halo.addColorStop(0.45, "rgba(245, 196, 81, 0.025)");
+          const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 210);
+          halo.addColorStop(0, "rgba(139, 155, 247, 0.055)");
+          halo.addColorStop(0.5, "rgba(245, 196, 81, 0.018)");
           halo.addColorStop(1, "rgba(0, 0, 0, 0)");
           ctx.fillStyle = halo;
           ctx.beginPath();
-          ctx.arc(mx, my, 240, 0, Math.PI * 2);
+          ctx.arc(mx, my, 210, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // 2. Twinkling Celestial Starfield
+        // 2. Subtle Distant Upper-Sky Pinpoint Stars
         for (let i = 0; i < stars.length; i++) {
           const s = stars[i];
           const twinkle = prefersReducedMotion
-            ? 1
-            : 0.55 + 0.45 * Math.sin(tick * s.speed + s.phase);
-          const alpha = s.baseAlpha * twinkle;
-
-          ctx.fillStyle = `rgba(${s.tint}, ${alpha.toFixed(3)})`;
+            ? 0.85
+            : 0.6 + 0.4 * Math.sin(tick * s.speed + s.phase);
+          ctx.fillStyle = `rgba(226, 232, 255, ${(s.alpha * twinkle).toFixed(3)})`;
           ctx.beginPath();
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // 3. Occasional Graceful Shooting Star in Upper Sky
-        if (!prefersReducedMotion) {
-          nextMeteorTimer -= 1;
-          if (nextMeteorTimer <= 0 && !shootingStar) {
-            const startX = width * (0.2 + Math.random() * 0.65);
-            const startY = height * (0.04 + Math.random() * 0.22);
-            const speed = 10 + Math.random() * 4;
-            const angle = Math.PI * 0.78; // graceful diagonal streak
-            shootingStar = {
-              x: startX,
-              y: startY,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed,
-              length: 85 + Math.random() * 45,
-              life: 0,
-              maxLife: 34,
-            };
-            nextMeteorTimer = 420 + Math.floor(Math.random() * 340);
-          }
-
-          if (shootingStar) {
-            shootingStar.x += shootingStar.vx;
-            shootingStar.y += shootingStar.vy;
-            shootingStar.life += 1;
-
-            const progress = shootingStar.life / shootingStar.maxLife;
-            const opacity = Math.sin(progress * Math.PI) * 0.85;
-            const norm = Math.hypot(shootingStar.vx, shootingStar.vy);
-            const tailX = shootingStar.x - (shootingStar.vx / norm) * shootingStar.length;
-            const tailY = shootingStar.y - (shootingStar.vy / norm) * shootingStar.length;
-
-            const grad = ctx.createLinearGradient(
-              shootingStar.x,
-              shootingStar.y,
-              tailX,
-              tailY
-            );
-            grad.addColorStop(0, `rgba(255, 255, 255, ${opacity.toFixed(3)})`);
-            grad.addColorStop(0.35, `rgba(165, 178, 255, ${(opacity * 0.6).toFixed(3)})`);
-            grad.addColorStop(1, "rgba(139, 155, 247, 0)");
-
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.6;
-            ctx.lineCap = "round";
-            ctx.beginPath();
-            ctx.moveTo(shootingStar.x, shootingStar.y);
-            ctx.lineTo(tailX, tailY);
-            ctx.stroke();
-
-            if (shootingStar.life >= shootingStar.maxLife) {
-              shootingStar = null;
-            }
-          }
-        }
-
-        // 4. Living Organically Drifting Fireflies (with gentle cursor swirl)
+        // 3. Calm, Slow-Rising Meadow Fireflies (exact footer atmosphere)
         for (let i = 0; i < fireflies.length; i++) {
           const f = fireflies[i];
 
           if (!prefersReducedMotion) {
-            const sway = Math.sin(tick * 0.012 + f.phase) * 0.25;
-            f.x += f.vx + sway;
-            f.y += f.vy + Math.cos(tick * 0.01 + f.phase) * 0.08;
+            f.x += f.vx + Math.sin(tick * f.swaySpeed + f.phase) * f.swayAmp;
+            f.y += f.vy;
 
-            // Gentle organic repulsion near pointer
+            // Subtle organic drift away from cursor
             if (mouseRef.current.active && isFinePointer) {
               const dx = f.x - mouseRef.current.x;
               const dy = f.y - mouseRef.current.y;
               const dist = Math.hypot(dx, dy);
-              if (dist < 130 && dist > 1) {
-                const force = ((130 - dist) / 130) * 0.45;
-                f.x += (dx / dist) * force;
-                f.y += (dy / dist) * force;
+              if (dist < 110 && dist > 1) {
+                const push = ((110 - dist) / 110) * 0.25;
+                f.x += (dx / dist) * push;
+                f.y += (dy / dist) * push;
               }
             }
 
-            // Wrap seamlessly around viewport edges
-            if (f.y < -20) {
-              f.y = height + 20;
+            if (f.y < -18) {
+              f.y = height + 18;
               f.x = Math.random() * width;
             }
-            if (f.x < -20) f.x = width + 20;
-            if (f.x > width + 20) f.x = -20;
+            if (f.x < -18) f.x = width + 18;
+            if (f.x > width + 18) f.x = -18;
           }
 
-          const glowPulse = prefersReducedMotion
-            ? 0.75
-            : 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(tick * f.pulseSpeed + f.phase));
+          // Smooth breathing firefly glow
+          const breath = prefersReducedMotion
+            ? 0.72
+            : 0.25 + 0.75 * Math.pow(0.5 + 0.5 * Math.sin(tick * f.pulseSpeed + f.phase), 1.6);
 
-          const rgb = f.hue === "gold" ? "255, 206, 102" : "155, 172, 255";
-          const haloRadius = f.r * 5.2;
+          // Gently brighten fireflies near the cursor
+          let proximityBoost = 1;
+          if (mouseRef.current.active && isFinePointer) {
+            const dist = Math.hypot(f.x - mouseRef.current.x, f.y - mouseRef.current.y);
+            if (dist < 160) {
+              proximityBoost = 1 + (1 - dist / 160) * 0.45;
+            }
+          }
 
-          const radial = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, haloRadius);
-          radial.addColorStop(0, `rgba(${rgb}, ${(0.85 * glowPulse).toFixed(3)})`);
-          radial.addColorStop(0.35, `rgba(${rgb}, ${(0.28 * glowPulse).toFixed(3)})`);
-          radial.addColorStop(1, `rgba(${rgb}, 0)`);
+          const finalAlpha = Math.min(1, breath * proximityBoost);
+          const rgb =
+            f.kind === "gold"
+              ? "255, 204, 96"
+              : f.kind === "amber"
+              ? "245, 182, 78"
+              : "165, 178, 255";
 
-          ctx.fillStyle = radial;
+          const haloR = f.r * 5.8;
+          const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, haloR);
+          grad.addColorStop(0, `rgba(${rgb}, ${(0.78 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(0.32, `rgba(${rgb}, ${(0.22 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(1, `rgba(${rgb}, 0)`);
+
+          ctx.fillStyle = grad;
           ctx.beginPath();
-          ctx.arc(f.x, f.y, haloRadius, 0, Math.PI * 2);
+          ctx.arc(f.x, f.y, haloR, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.fillStyle = `rgba(255, 255, 255, ${(0.9 * glowPulse).toFixed(3)})`;
+          // Crisp warm core speck
+          ctx.fillStyle = `rgba(255, 248, 228, ${(0.88 * finalAlpha).toFixed(3)})`;
           ctx.beginPath();
-          ctx.arc(f.x, f.y, f.r * 0.55, 0, Math.PI * 2);
+          ctx.arc(f.x, f.y, f.r * 0.48, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -297,16 +243,16 @@ export function InteractiveBackground() {
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#07080D] select-none"
       aria-hidden="true"
     >
-      {/* 1. Panoramic Blue-Hour Twilight Meadow Video with Scroll Parallax */}
+      {/* 1. Continuous Footer-Style Blue-Hour Misty Meadow Looping Video */}
       <motion.div
         className="absolute inset-x-0 top-0 w-full will-change-transform"
         style={{
-          height: "185vh",
-          y: mounted ? videoY : "0%",
+          height: "155vh",
+          y: mounted ? videoY : "-6%",
         }}
       >
         <video
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-[50%_72%] opacity-85"
           src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
           poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
           autoPlay
@@ -316,56 +262,39 @@ export function InteractiveBackground() {
           preload="auto"
         />
 
-        {/* Luminous Balanced Scrim: keeps the starry sky vivid while ensuring effortless readability */}
+        {/* Deep Velvety Obsidian-Twilight Veil (same calm mood as the footer — zero washed-out glare) */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(7, 8, 15, 0.48) 0%, rgba(10, 12, 24, 0.28) 20%, rgba(7, 9, 16, 0.56) 48%, rgba(7, 8, 14, 0.68) 76%, rgba(7, 8, 13, 0.88) 100%)",
+              "linear-gradient(to bottom, rgba(7, 8, 13, 0.72) 0%, rgba(7, 9, 16, 0.56) 28%, rgba(7, 9, 16, 0.64) 62%, rgba(7, 8, 13, 0.86) 100%)",
           }}
         />
       </motion.div>
 
-      {/* 2. Breathing Twilight Aurora & Drifting Mist Layers */}
-      <motion.div
-        className="absolute inset-x-0 top-0 h-[78vh] pointer-events-none overflow-hidden"
-        style={{
-          y: mounted ? auroraY : "0%",
-          opacity: mounted ? auroraOpacity : 0.8,
-        }}
-      >
-        <div
-          className="absolute -top-24 -left-1/4 w-[150%] h-[420px] rounded-[50%] blur-[90px] opacity-30 animate-cloud-drift"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 60%, rgba(165, 178, 255, 0.42) 0%, rgba(139, 155, 247, 0.22) 40%, rgba(212, 143, 178, 0.14) 65%, transparent 82%)",
-          }}
-        />
-        <div
-          className="absolute top-36 -right-1/4 w-[140%] h-[360px] rounded-[50%] blur-[100px] opacity-25 animate-cloud-drift-reverse"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 50%, rgba(245, 196, 81, 0.16) 0%, rgba(139, 155, 247, 0.22) 45%, transparent 76%)",
-          }}
-        />
-      </motion.div>
-
-      {/* 3. Subtle Masked Architectural Grid */}
+      {/* 2. Single Calm Drifting Twilight Mist Layer (Minimal, Zero Loud Color Blobs) */}
       <div
-        className="absolute inset-0 meadow-grid opacity-35 pointer-events-none"
+        className="absolute inset-x-0 bottom-[-10%] h-[55vh] pointer-events-none opacity-40 animate-cloud-drift"
         style={{
-          maskImage:
-            "radial-gradient(ellipse 85% 65% at 50% 25%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 65%, transparent 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 85% 65% at 50% 25%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 65%, transparent 100%)",
+          background:
+            "radial-gradient(ellipse 75% 55% at 50% 80%, rgba(139, 155, 247, 0.18) 0%, rgba(184, 194, 242, 0.06) 48%, transparent 80%)",
         }}
       />
 
-      {/* 4. Live 60fps Canvas: Twinkling Stars, Shooting Stars, Organic Fireflies & Cursor Halo */}
+      {/* 3. Subtle Radial Vignette for Editorial Focus */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 70% at 50% 35%, transparent 25%, rgba(6, 7, 12, 0.58) 100%)",
+        }}
+      />
+
+      {/* 4. 60fps Minimal Live Fireflies & Pinpoint Stars Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
       {/* 5. Top Subtle Horizon Hairline */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#A5B2FF]/45 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/35 to-transparent" />
     </div>
   );
 }

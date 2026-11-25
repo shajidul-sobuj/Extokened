@@ -79,11 +79,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#08090E] text-[#FFFFFF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-[#FFFFFF]`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
       >
         <InteractiveBackground />
         <Navbar />
-        <main className="flex-1 relative z-10">{children}</main>
+        <main className="flex-1 relative z-10 w-full">{children}</main>
         <Footer />
       </body>
     </html>

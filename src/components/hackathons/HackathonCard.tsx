@@ -3,14 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { Hackathon } from "@/data/hackathons";
-import { 
-  Trophy, 
-  ExternalLink, 
-  Calendar, 
-  Clock, 
-  MapPin, 
+import {
+  Trophy,
+  ExternalLink,
+  Calendar,
+  Clock,
+  MapPin,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
 } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
 
@@ -23,87 +23,84 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
   const getBadgeStyle = () => {
     switch (hackathon.resultType) {
       case "winner":
-        return "bg-[#FFC857]/15 text-[#FFC857] border-[#FFC857]/45 shadow-[0_0_14px_rgba(255,200,87,0.25)]";
+        return "bg-[#F5C451]/10 text-[#F5C451] border-[#F5C451]/35";
       case "runner_up":
-        return "bg-[#8B9BF7]/15 text-[#8B9BF7] border-[#8B9BF7]/45 shadow-[0_0_14px_rgba(139,155,247,0.25)]";
+        return "bg-[#8B9BF7]/10 text-[#A5B2FF] border-[#8B9BF7]/35";
       case "finalist":
-        return "bg-[rgba(22,27,44,0.7)] text-[#CAD1F0] border-[rgba(139,155,247,0.25)]";
+        return "bg-[#141827] text-[#DCE2FF] border-white/[0.15]";
       default:
-        return "bg-[rgba(22,27,44,0.7)] text-[#8E96B8] border-[rgba(139,155,247,0.2)]";
+        return "bg-[#111522] text-[#8F99B8] border-white/[0.1]";
     }
   };
 
   return (
-    <div className="meadow-card p-6 sm:p-7 flex flex-col justify-between group h-full">
-      {/* Top Header */}
-      <div className="space-y-4">
-        
-        {/* Award & Metric */}
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${getBadgeStyle()}`}>
-            <Trophy className="w-3.5 h-3.5" />
-            <span>{hackathon.badgeLabel}</span>
+    <article className="surface-card surface-card-interactive p-6 sm:p-7 flex flex-col justify-between gap-6 group h-full">
+      <div className="space-y-5">
+        {/* Award & Standout Metric */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5 text-xs font-mono">
+          <span
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold border ${getBadgeStyle()}`}
+          >
+            <Trophy className="w-3.5 h-3.5 shrink-0" />
+            <span>{hackathon.award}</span>
           </span>
 
-          <span className="text-[#727896]">
-            {hackathon.standoutMetric}
-          </span>
+          <span className="text-[#8F99B8]">{hackathon.standoutMetric}</span>
         </div>
 
         {/* Title & Organizer */}
-        <div>
+        <div className="space-y-1">
           <Link href={`/hackathons/${hackathon.slug}`} className="group/link block">
-            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover/link:text-[#8B9BF7] transition-colors">
+            <h3 className="text-xl sm:text-2xl font-display font-bold text-white group-hover/link:text-[#A5B2FF] transition-colors">
               {hackathon.name}
             </h3>
           </Link>
-          <p className="text-xs text-[#727896] mt-1 font-mono">
+          <p className="text-xs text-[#7D87A6] font-mono">
             Organized by {hackathon.organizer}
           </p>
         </div>
 
-        {/* Metadata row */}
-        <div className="flex flex-wrap items-center gap-4 text-xs text-[#727896] font-mono border-y border-[#1E2337] py-2.5">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 text-[#727896]" />
+        {/* Metadata Strip */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[#8F99B8] font-mono border-y border-white/[0.08] py-3">
+          <span className="inline-flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 text-[#7D87A6]" />
             {hackathon.date}
           </span>
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-[#727896]" />
-            {hackathon.duration} Sprint
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#7D87A6]" />
+            {hackathon.duration}
           </span>
-          <span className="flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#727896]" />
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-[#7D87A6]" />
             {hackathon.location}
           </span>
         </div>
 
-        {/* Solution Engineered */}
-        <div className="space-y-1.5 pt-1">
-          <div className="text-xs font-mono uppercase tracking-wider text-[#8B9BF7] font-semibold">
+        {/* Solution Summary */}
+        <div className="space-y-1.5">
+          <div className="text-xs font-mono uppercase tracking-wider text-[#A5B2FF] font-semibold">
             Built: {hackathon.projectTitle}
           </div>
-          <p className="text-sm text-[#BAC0DC] leading-relaxed font-sans line-clamp-3">
+          <p className="text-sm text-[#B4BDD8] leading-relaxed line-clamp-3">
             {hackathon.description}
           </p>
         </div>
 
         {/* Highlights */}
         {!compact && hackathon.highlights.length > 0 && (
-          <div className="space-y-1.5 pt-2">
+          <div className="space-y-2 pt-1">
             {hackathon.highlights.slice(0, 2).map((h, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-[#BAC0DC]">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#8B9BF7] shrink-0 mt-0.5" />
-                <span className="text-[#BAC0DC]">{h}</span>
+              <div key={i} className="flex items-start gap-2 text-xs sm:text-[13px] text-[#C2CBE6]">
+                <CheckCircle2 className="w-4 h-4 text-[#8B9BF7] shrink-0 mt-0.5" />
+                <span>{h}</span>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Bottom Section: Tech Stack & Actions */}
-      <div className="pt-6 mt-6 border-t border-[#1E2337] space-y-4">
-        {/* Tech Stack Pills */}
+      {/* Footer: Stack & Links */}
+      <div className="pt-5 border-t border-white/[0.08] space-y-4">
         <div className="flex flex-wrap gap-1.5">
           {hackathon.techStack.slice(0, 4).map((tech) => (
             <span key={tech} className="tech-tag">
@@ -111,25 +108,24 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
             </span>
           ))}
           {hackathon.techStack.length > 4 && (
-            <span className="tech-tag text-[#727896]">
+            <span className="tech-tag text-[#7D87A6]">
               +{hackathon.techStack.length - 4}
             </span>
           )}
         </div>
 
-        {/* Links & Details CTA */}
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between gap-4 pt-1">
           <div className="flex items-center gap-2">
             {hackathon.links.github && (
               <a
                 href={hackathon.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
-                title="GitHub Repo"
-                aria-label="GitHub Repository"
+                className="w-9 h-9 rounded-lg bg-[#131726] border border-white/[0.1] flex items-center justify-center text-[#B4BDD8] hover:text-white hover:border-[#8B9BF7]/45 transition-colors"
+                title="GitHub Repository"
+                aria-label={`${hackathon.name} GitHub Repository`}
               >
-                <Github className="w-3.5 h-3.5" />
+                <Github className="w-4 h-4" />
               </a>
             )}
             {hackathon.links.liveUrl && (
@@ -137,24 +133,24 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
                 href={hackathon.links.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] hover:text-white text-[#BAC0DC] hover:border-[#8B9BF7]/40 transition-colors"
+                className="w-9 h-9 rounded-lg bg-[#131726] border border-white/[0.1] flex items-center justify-center text-[#B4BDD8] hover:text-white hover:border-[#8B9BF7]/45 transition-colors"
                 title="Live Demo"
-                aria-label="Live Demo"
+                aria-label={`${hackathon.name} Live Demo`}
               >
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-4 h-4" />
               </a>
             )}
           </div>
 
           <Link
             href={`/hackathons/${hackathon.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white hover:text-[#8B9BF7] transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#A5B2FF] hover:text-white transition-colors"
           >
             <span>Case breakdown</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

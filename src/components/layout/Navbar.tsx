@@ -7,6 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, ChevronRight } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Projects", href: "/projects" },
+  { name: "Hackathons", href: "/hackathons" },
+  { name: "Team", href: "/team" },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -14,207 +22,217 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 15);
+      setScrolled(window.scrollY > 12);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle body scroll lock & Escape key when mobile menu is open
+  // Automatically close drawer on route change
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") setMobileMenuOpen(false);
-      };
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.body.style.overflow = "unset";
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    } else {
-      document.body.style.overflow = "unset";
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Body scroll lock & Escape handler while mobile drawer is open
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = "";
+      return;
     }
+
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [mobileMenuOpen]);
 
-  const navItems = [
-    { name: "About", href: "/about" },
-    { name: "Projects", href: "/projects" },
-    { name: "Hackathons", href: "/hackathons" },
-    { name: "Team", href: "/team" },
-  ];
+  const isRouteActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        // Always provide a solid, crisp, frosted glass backdrop on mobile for 100% contrast & visibility
-        scrolled || mobileMenuOpen
-          ? "bg-[#08090E]/95 backdrop-blur-2xl border-b border-[#1E2337] shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
-          : "bg-[#08090E]/80 backdrop-blur-xl border-b border-[#1E2337]/50 md:bg-transparent md:border-transparent md:backdrop-blur-none"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          
-          {/* Left: Extokened Symbol + Wordmark */}
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
-          >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl glass-panel-inset p-1 flex items-center justify-center group-hover:border-[#8B9BF7]/60 group-hover:shadow-[0_0_18px_rgba(139,155,247,0.4)] transition-all overflow-hidden shrink-0 border border-[#8B9BF7]/30">
-              <img
-                src="/images/extokened-logo-glow.png"
-                alt="Extokened Logo"
-                className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(139,155,247,0.4)] group-hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-semibold text-sm sm:text-base tracking-tight text-white group-hover:text-[#B8C0EC] transition-colors leading-tight">
-                Extokened
-              </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-[#8B9BF7] uppercase tracking-wider">
-                Tech Team
-              </span>
-            </div>
-          </Link>
-
-          {/* Center Desktop Navigation with Animated Indicator */}
-          <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`text-xs font-mono uppercase tracking-wider transition-colors relative px-4 py-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
-                    isActive
-                      ? "text-[#8B9BF7] font-semibold"
-                      : "text-[#BAC0DC] hover:text-white"
-                  }`}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeNavIndicator"
-                      className="absolute inset-0 bg-[#151824] border border-[#1E2337] rounded-full -z-10 shadow-[0_0_12px_rgba(139,155,247,0.15)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  {item.name}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Far Right: Contact CTA & High-Contrast Mobile Menu Button */}
-          <div className="flex items-center gap-3 sm:gap-4">
+    <>
+      <header
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+          scrolled || mobileMenuOpen
+            ? "bg-[#07080D]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.45)]"
+            : "bg-[#07080D]/55 backdrop-blur-md border-b border-white/[0.04]"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 sm:h-[72px] gap-4">
+            {/* Left: Brand Identity */}
             <Link
-              href="/contact"
-              className="hidden sm:inline-flex btn-meadow-dark text-xs py-2 px-4 shadow-[0_0_20px_rgba(139,155,247,0.2)]"
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2.5 sm:gap-3 group shrink-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
             >
-              <span>Contact the Team</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <div className="w-9 h-9 rounded-xl bg-[#0F1322] border border-[#8B9BF7]/25 p-1.5 flex items-center justify-center group-hover:border-[#8B9BF7]/55 transition-colors overflow-hidden shrink-0">
+                <img
+                  src="/images/extokened-logo-glow.png"
+                  alt="Extokened"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-display font-semibold text-[15px] sm:text-base tracking-tight text-white leading-none">
+                  Extokened
+                </span>
+                <span className="text-[10px] font-mono text-[#8B9BF7] uppercase tracking-[0.12em] mt-1 leading-none">
+                  Engineering Squad
+                </span>
+              </div>
             </Link>
 
-            {/* High-Contrast Mobile Hamburger Toggle Button (Minimum 44px Touch Target) */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#121626] border border-[#8B9BF7]/35 text-white hover:border-[#8B9BF7]/60 active:scale-95 transition-all shadow-[0_0_14px_rgba(139,155,247,0.15)] focus:outline-none focus:ring-2 focus:ring-[#8B9BF7]"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
+            {/* Center: Floating Precision Navigation Rail */}
+            <nav
+              aria-label="Primary Navigation"
+              className="hidden md:flex items-center gap-1 p-1 rounded-full bg-[#0D1019]/85 border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
             >
-              {mobileMenuOpen ? (
-                <X className="w-5 h-5 text-[#8B9BF7]" />
-              ) : (
-                <Menu className="w-5 h-5 text-white" />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Drawer: Full Viewport-Safe (100dvh safe, zero cutoff) */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden fixed inset-x-0 top-16 sm:top-20 bottom-0 bg-[#08090E]/98 backdrop-blur-2xl border-t border-[#1E2337] p-5 sm:p-6 flex flex-col justify-between overflow-y-auto z-50"
-          >
-            {/* Top Navigation Links */}
-            <div className="space-y-2 pt-2">
-              <div className="text-[10px] font-mono text-[#727896] uppercase tracking-wider pb-2 border-b border-[#1E2337] mb-3">
-                Main Navigation
-              </div>
               {navItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const active = isRouteActive(item.href);
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between p-3.5 rounded-xl border text-base font-medium transition-all ${
-                      isActive
-                        ? "bg-[#15192C] text-[#8B9BF7] border-[#8B9BF7]/40 shadow-[0_0_14px_rgba(139,155,247,0.15)] font-semibold"
-                        : "bg-[#0E111C]/60 text-white border-[#1E2337]/70 hover:border-[#8B9BF7]/30"
+                    className={`relative px-3.5 lg:px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
+                      active
+                        ? "text-white"
+                        : "text-[#9BA5C4] hover:text-white"
                     }`}
                   >
-                    <span>{item.name}</span>
-                    {isActive ? (
-                      <span className="w-2 h-2 rounded-full bg-[#8B9BF7] shadow-[0_0_8px_rgba(139,155,247,0.9)]" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-[#727896]" />
+                    {active && (
+                      <motion.span
+                        layoutId="activeNavPill"
+                        className="absolute inset-0 rounded-full bg-[#192038] border border-[#8B9BF7]/30 shadow-[0_0_16px_rgba(139,155,247,0.18)]"
+                        transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                      />
                     )}
+                    <span className="relative z-10">{item.name}</span>
                   </Link>
                 );
               })}
-            </div>
+            </nav>
 
-            {/* Bottom Contact & Quick Socials */}
-            <div className="pt-6 pb-2 space-y-4 border-t border-[#1E2337]">
+            {/* Right: Primary Contact CTA & Mobile Toggle */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
               <Link
                 href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-meadow-dark w-full py-3.5 text-sm font-semibold justify-center shadow-[0_0_20px_rgba(139,155,247,0.25)]"
+                className="hidden sm:inline-flex btn-primary py-2 px-4 text-xs sm:text-[13px] group"
               >
-                <span>Contact the Team</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span>Let&apos;s Collaborate</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
 
-              <div className="flex items-center justify-center gap-6 pt-1 text-xs font-mono text-[#727896]">
-                <a
-                  href={siteConfig.socials.github.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((prev) => !prev)}
+                className="md:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-[#101424] border border-white/[0.12] text-white hover:border-[#8B9BF7]/50 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation-drawer"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-5 h-5 text-[#8B9BF7]" />
+                ) : (
+                  <Menu className="w-5 h-5 text-white" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Navigation Drawer rendered as sibling (avoids backdrop-filter fixed containment bug) */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            id="mobile-navigation-drawer"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="md:hidden fixed inset-x-0 top-16 sm:top-[72px] bottom-0 z-40 bg-[#07080D]/98 backdrop-blur-2xl border-t border-white/[0.08] overflow-y-auto"
+          >
+            <div className="min-h-full px-5 py-6 flex flex-col justify-between gap-8 max-w-lg mx-auto">
+              <div className="space-y-2">
+                <div className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-[0.12em] pb-2.5 border-b border-white/[0.08] mb-3">
+                  Navigation
+                </div>
+                {navItems.map((item) => {
+                  const active = isRouteActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-4 py-3.5 rounded-xl border text-[15px] font-medium transition-all ${
+                        active
+                          ? "bg-[#151B30] text-white border-[#8B9BF7]/40"
+                          : "bg-[#0D1019]/80 text-[#B4BDD8] border-white/[0.07] hover:text-white hover:border-white/[0.16]"
+                      }`}
+                    >
+                      <span>{item.name}</span>
+                      {active ? (
+                        <span className="w-2 h-2 rounded-full bg-[#8B9BF7]" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-[#636D8E]" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="pt-6 border-t border-white/[0.08] space-y-5">
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn-primary w-full py-3.5 text-sm justify-center"
                 >
-                  GitHub
-                </a>
-                <span>•</span>
-                <a
-                  href={siteConfig.socials.linkedin.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  LinkedIn
-                </a>
-                <span>•</span>
-                <a
-                  href={siteConfig.socials.facebook.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  Facebook
-                </a>
+                  <span>Let&apos;s Collaborate</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+
+                <div className="flex items-center justify-center gap-6 text-xs font-mono text-[#7D87A6]">
+                  <a
+                    href={siteConfig.socials.github.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    GitHub
+                  </a>
+                  <span className="text-white/15">•</span>
+                  <a
+                    href={siteConfig.socials.linkedin.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                  <span className="text-white/15">•</span>
+                  <a
+                    href={siteConfig.socials.facebook.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Facebook
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

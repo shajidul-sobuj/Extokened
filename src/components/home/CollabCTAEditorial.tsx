@@ -3,58 +3,59 @@
 import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
-import { ArrowRight, Sparkles, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function CollabCTAEditorial() {
   return (
-    <section className="relative py-24 lg:py-32 bg-transparent border-b border-[#1E2337]/60 overflow-hidden">
-      {/* Background Twilight Atmospheric Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-[#8B9BF7]/[0.05] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-20 right-1/4 w-[350px] h-[350px] bg-[#FFC857]/[0.035] rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-20 sm:py-24 lg:py-28 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <MotionReveal duration={0.55} distance={18}>
+          <div className="surface-card relative overflow-hidden px-6 py-14 sm:px-12 sm:py-16 lg:py-20 text-center">
+            {/* Restrained Top Ambient Sheen */}
+            <div
+              className="absolute -top-32 left-1/2 -translate-x-1/2 w-[560px] max-w-[120%] h-64 rounded-full blur-[90px] bg-[#8B9BF7]/15 pointer-events-none"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/45 to-transparent pointer-events-none"
+              aria-hidden="true"
+            />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <MotionReveal duration={0.6} distance={20} className="space-y-6">
-          {/* Pill */}
-          <div className="inline-flex justify-center">
-            <div className="pill-lavender">
-              <Sparkles className="w-3.5 h-3.5 text-[#8B9BF7]" />
-              <span>Ship Your Idea</span>
+            <div className="relative z-10 max-w-2xl mx-auto space-y-6">
+              <span className="eyebrow-badge">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+                <span>Collaborate With Extokened</span>
+              </span>
+
+              <h2 className="font-section-title font-bold text-white">
+                Have a tough problem or competition ahead?
+              </h2>
+
+              <p className="text-sm sm:text-base text-[#A8B2CF] leading-relaxed">
+                We partner with hackathon organizers, sponsors, and technical teams to turn complex ideas into working, verifiable software on tight timelines.
+              </p>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3.5">
+                <Link href="/contact" className="btn-primary py-3 px-6 text-sm group">
+                  <span>Start a conversation</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
+                  className="btn-secondary py-3 px-5 text-sm"
+                >
+                  <Mail className="w-4 h-4 text-[#8B9BF7]" />
+                  <span>{siteConfig.contactEmail}</span>
+                </a>
+              </div>
+
+              <p className="text-xs font-mono text-[#7D87A6] pt-1">
+                Direct team response within 24–48 hours • Zero intermediary fluff
+              </p>
             </div>
           </div>
-
-          {/* Headline */}
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-white tracking-tight leading-[1.15]">
-            Your next breakthrough starts now.
-          </h2>
-
-          {/* Body */}
-          <p className="text-base sm:text-lg text-[#BAC0DC] max-w-2xl mx-auto font-sans leading-relaxed">
-            Describe it, shape it into working systems and code, ship it to production. Extokened is an independent engineering team turning tough problems into finished products.
-          </p>
-
-          {/* Buttons */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="btn-meadow-dark"
-            >
-              <span>Get started now</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
-            <a
-              href={`mailto:${siteConfig.contactEmail}`}
-              className="btn-meadow-secondary"
-            >
-              <Mail className="w-4 h-4 text-[#727896]" />
-              <span>{siteConfig.contactEmail}</span>
-            </a>
-          </div>
-
-          <p className="text-xs font-mono text-[#727896] pt-2">
-            Zero fluff • Rapid 24–48h sprint cadence • Production ready
-          </p>
         </MotionReveal>
       </div>
     </section>

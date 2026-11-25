@@ -148,7 +148,7 @@ export const hackathons: Hackathon[] = [
     awardType: "runner_up",
     badgeLabel: "🥈 1st Runner Up",
     projectTitle: "Khashra: Vernacular Micro-Merchant Ledger & Credit Scoring",
-    projectSlug: "khashra-ledger",
+    projectSlug: "khashra",
     tagline: "Voice-driven Bangla ledger app turning street-vendor cash transactions into verifiable credit scores.",
     description:
       "Built for unbanked micro-merchants who do not maintain bookkeeping. Allows shopkeepers to speak natural Bangla audio to log sales and dues, automatically verifying transactions, generating digital invoices, and compiling an alternative credit score for micro-loans.",

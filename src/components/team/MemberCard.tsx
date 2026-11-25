@@ -2,7 +2,7 @@
 
 import React from "react";
 import { TeamMember } from "@/data/team";
-import { Github, Linkedin, Facebook, Twitter } from "@/components/ui/Icons";
+import { Github, Linkedin } from "@/components/ui/Icons";
 
 interface MemberCardProps {
   member: TeamMember;
@@ -10,51 +10,47 @@ interface MemberCardProps {
 
 export function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="meadow-card p-6 flex flex-col justify-between group space-y-6">
-      {/* Top Header */}
-      <div className="space-y-4">
-        
-        {/* Identifier & Badge */}
-        <div className="flex items-center justify-between text-xs pb-3 border-b border-[rgba(139,155,247,0.14)]">
-          <span className="text-[11px] font-mono text-[#8E96B8]">
-            @{member.slug}
-          </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#8B9BF7]/15 text-[#8B9BF7] border border-[#8B9BF7]/35 shadow-[0_0_10px_rgba(139,155,247,0.15)]">
+    <article className="surface-card surface-card-interactive p-6 flex flex-col justify-between gap-6 group h-full">
+      <div className="space-y-5">
+        {/* Handle & Role Badge */}
+        <div className="flex items-center justify-between gap-2 pb-3.5 border-b border-white/[0.08]">
+          <span className="text-xs font-mono text-[#7D87A6] truncate">@{member.slug}</span>
+          <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-[#8B9BF7]/10 text-[#A5B2FF] border border-[#8B9BF7]/25 shrink-0">
             {member.badge}
           </span>
         </div>
 
         {/* Portrait & Identity */}
-        <div className="space-y-3">
-          <div className="w-16 h-16 rounded-xl overflow-hidden glass-panel-inset shrink-0">
+        <div className="space-y-3.5">
+          <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#0A0D16] border border-white/[0.1] shrink-0">
             <img
               src={member.avatar}
               alt={member.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white group-hover:text-[#8B9BF7] transition-colors">
+            <h3 className="text-lg font-display font-bold text-white group-hover:text-[#A5B2FF] transition-colors">
               {member.name}
             </h3>
-            <p className="text-xs text-[#8B9BF7] mt-0.5 font-mono font-medium">
+            <p className="text-xs text-[#8B9BF7] mt-1 font-mono leading-snug">
               {member.role}
             </p>
           </div>
         </div>
 
         {/* Bio */}
-        <p className="text-xs text-[#BAC0DC] leading-relaxed font-sans line-clamp-3">
+        <p className="text-sm text-[#B4BDD8] leading-relaxed line-clamp-3">
           {member.bio}
         </p>
 
         {/* Focus Areas */}
-        <div className="space-y-1 pt-1">
-          <div className="text-[10px] font-mono uppercase tracking-wider text-[#727896]">
+        <div className="space-y-2 pt-1">
+          <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#7D87A6]">
             Focus Areas
           </div>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1.5">
             {member.focusAreas.map((area) => (
               <span key={area} className="tech-tag">
                 {area}
@@ -64,20 +60,19 @@ export function MemberCard({ member }: MemberCardProps) {
         </div>
       </div>
 
-      {/* Bottom Section: Stats & Socials */}
-      <div className="pt-4 border-t border-[#1E2337] flex items-center justify-between">
-        <div className="text-xs font-mono text-[#727896]">
+      {/* Footer: Stats & Social Links */}
+      <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between gap-3">
+        <div className="text-xs font-mono text-[#7D87A6]">
           <span className="text-white font-semibold">{member.stats.trophies}</span> Podiums
         </div>
 
-        {/* Social Links */}
         <div className="flex items-center gap-2">
           {member.socials.github && (
             <a
               href={member.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-[#8B9BF7] transition-colors"
+              className="w-8 h-8 rounded-lg bg-[#131726] border border-white/[0.1] flex items-center justify-center text-[#9BA5C4] hover:text-white hover:border-[#8B9BF7]/45 transition-colors"
               title="GitHub"
               aria-label={`${member.name} GitHub`}
             >
@@ -89,7 +84,7 @@ export function MemberCard({ member }: MemberCardProps) {
               href={member.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-[#8B9BF7] transition-colors"
+              className="w-8 h-8 rounded-lg bg-[#131726] border border-white/[0.1] flex items-center justify-center text-[#9BA5C4] hover:text-white hover:border-[#8B9BF7]/45 transition-colors"
               title="LinkedIn"
               aria-label={`${member.name} LinkedIn`}
             >
@@ -98,6 +93,6 @@ export function MemberCard({ member }: MemberCardProps) {
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 }

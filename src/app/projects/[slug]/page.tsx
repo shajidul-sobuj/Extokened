@@ -129,8 +129,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
       {/* Hairline Metadata Rail */}
       <MotionReveal delay={0.1}>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.08] rounded-2xl overflow-hidden border border-white/[0.08]">
-          <div className="bg-[#0D1019] p-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.1] rounded-2xl overflow-hidden border border-white/[0.1] backdrop-blur-xl">
+          <div className="bg-[#0B0F1D]/80 p-5">
             <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
               Category
             </span>
@@ -138,7 +138,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               {project.category}
             </span>
           </div>
-          <div className="bg-[#0D1019] p-5">
+          <div className="bg-[#0B0F1D]/80 p-5">
             <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
               Status
             </span>
@@ -146,7 +146,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               {project.status}
             </span>
           </div>
-          <div className="bg-[#0D1019] p-5">
+          <div className="bg-[#0B0F1D]/80 p-5">
             <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
               Year
             </span>
@@ -154,7 +154,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               {project.year}
             </span>
           </div>
-          <div className="bg-[#0D1019] p-5">
+          <div className="bg-[#0B0F1D]/80 p-5">
             <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
               Sprint Base
             </span>

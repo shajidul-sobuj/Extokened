@@ -61,8 +61,8 @@ export default function HackathonsPage() {
 
       {/* Hairline Achievement Overview (Zero Misaligned Borders) */}
       <MotionReveal delay={0.08}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.08] rounded-2xl overflow-hidden border border-white/[0.08]">
-          <div className="bg-[#0D1019] p-6 space-y-1.5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.1] rounded-2xl overflow-hidden border border-white/[0.1] backdrop-blur-xl">
+          <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
               Total Competitions
             </span>
@@ -72,7 +72,7 @@ export default function HackathonsPage() {
             <span className="text-xs text-[#8F99B8] block">National &amp; global sprints</span>
           </div>
 
-          <div className="bg-[#0D1019] p-6 space-y-1.5">
+          <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#F5C451] uppercase tracking-wider block">
               Grand Champions
             </span>
@@ -82,7 +82,7 @@ export default function HackathonsPage() {
             <span className="text-xs text-[#A8B2CF] block">1st place &amp; track awards</span>
           </div>
 
-          <div className="bg-[#0D1019] p-6 space-y-1.5">
+          <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#A5B2FF] uppercase tracking-wider block">
               Runners-Up
             </span>
@@ -92,7 +92,7 @@ export default function HackathonsPage() {
             <span className="text-xs text-[#A8B2CF] block">2nd place &amp; special honors</span>
           </div>
 
-          <div className="bg-[#0D1019] p-6 space-y-1.5">
+          <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#B4BDD8] uppercase tracking-wider block">
               Finalists / Sprints
             </span>

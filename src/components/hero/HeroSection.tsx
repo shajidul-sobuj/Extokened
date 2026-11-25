@@ -127,8 +127,8 @@ export function HeroSection() {
               </Link>
 
               {/* Hairline 3-Cell Record Summary */}
-              <div className="grid grid-cols-3 gap-px bg-white/[0.08] rounded-xl overflow-hidden border border-white/[0.08]">
-                <div className="bg-[#0C0F1A] p-3.5 text-center">
+              <div className="grid grid-cols-3 gap-px bg-white/[0.1] rounded-xl overflow-hidden border border-white/[0.1]">
+                <div className="bg-[#0B0E1A]/80 backdrop-blur-md p-3.5 text-center">
                   <div className="text-xl sm:text-2xl font-display font-bold text-[#F5C451] tabular-nums">
                     7
                   </div>
@@ -136,7 +136,7 @@ export function HeroSection() {
                     1st Places
                   </div>
                 </div>
-                <div className="bg-[#0C0F1A] p-3.5 text-center">
+                <div className="bg-[#0B0E1A]/80 backdrop-blur-md p-3.5 text-center">
                   <div className="text-xl sm:text-2xl font-display font-bold text-[#A5B2FF] tabular-nums">
                     12
                   </div>
@@ -144,7 +144,7 @@ export function HeroSection() {
                     Podiums
                   </div>
                 </div>
-                <div className="bg-[#0C0F1A] p-3.5 text-center">
+                <div className="bg-[#0B0E1A]/80 backdrop-blur-md p-3.5 text-center">
                   <div className="text-xl sm:text-2xl font-display font-bold text-white tabular-nums">
                     26+
                   </div>

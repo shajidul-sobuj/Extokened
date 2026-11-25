@@ -7,7 +7,7 @@ import { ArrowRight, ArrowUpRight, Trophy } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative pt-32 pb-14 sm:pt-40 sm:pb-16 lg:pt-44 lg:pb-20 overflow-hidden">
+    <section className="relative pt-36 pb-14 sm:pt-44 sm:pb-16 lg:pt-48 lg:pb-20 overflow-hidden">
       {/* Soft Zenith Twilight Glow behind Typography */}
       <div
         className="absolute top-24 left-1/2 -translate-x-1/2 w-[780px] max-w-[125vw] h-[360px] rounded-full blur-[110px] pointer-events-none"
@@ -18,20 +18,7 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
-        {/* Eyebrow Status Capsule */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="flex justify-center"
-        >
-          <span className="eyebrow-badge px-4 py-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-            <span>Dhaka Hackathon &amp; Engineering Team · Est. 2023</span>
-          </span>
-        </motion.div>
-
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-7">
         {/* Monumental Two-Font Editorial Headline (Space Grotesk + Instrument Serif Italic) */}
         <motion.h1
           initial={{ opacity: 0, y: 18 }}

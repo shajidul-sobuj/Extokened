@@ -48,7 +48,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="pt-28 sm:pt-36 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="pt-28 sm:pt-36 pb-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
       {/* Page Hero */}
       <MotionReveal className="space-y-4 max-w-3xl">
         <span className="eyebrow-badge">Portfolio / Selected Work</span>
@@ -190,7 +190,7 @@ export default function ProjectsPage() {
         </div>
       </MotionReveal>
 
-      {/* Balanced 2-Column Editorial Project Grid (Eliminates Lonely Orphan Cards) */}
+      {/* Compact 3-Column Editorial Project Grid */}
       {filtered.length === 0 ? (
         <MotionReveal>
           <div className="surface-card text-center py-20 px-6 space-y-4">
@@ -205,7 +205,7 @@ export default function ProjectsPage() {
           </div>
         </MotionReveal>
       ) : (
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <AnimatePresence mode="popLayout">
             {filtered.map((project) => (
               <motion.div

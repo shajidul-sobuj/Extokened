@@ -52,7 +52,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="pt-28 sm:pt-36 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20 sm:space-y-24">
+    <div className="pt-28 sm:pt-36 pb-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
       {/* Page Hero */}
       <MotionReveal className="space-y-5 max-w-4xl">
         <span className="eyebrow-badge">About / Extokened</span>

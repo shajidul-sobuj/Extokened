@@ -34,8 +34,8 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
   };
 
   return (
-    <article className="surface-card surface-card-interactive p-6 sm:p-7 flex flex-col justify-between gap-6 group h-full">
-      <div className="space-y-5">
+    <article className="surface-card surface-card-interactive p-5 flex flex-col justify-between gap-5 group h-full">
+      <div className="space-y-4">
         {/* Award & Standout Metric */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 text-xs font-mono">
           <span

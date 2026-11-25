@@ -8,8 +8,8 @@ import { MotionReveal } from "@/components/ui/MotionReveal";
 
 export function CollabCTAEditorial() {
   return (
-    <section className="py-20 sm:py-24 lg:py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-20 lg:py-24 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <MotionReveal duration={0.55} distance={18}>
           <div className="surface-card relative overflow-hidden px-6 py-14 sm:px-12 sm:py-16 lg:py-20 text-center">
             {/* Restrained Top Ambient Sheen */}

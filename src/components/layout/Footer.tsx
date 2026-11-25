@@ -44,7 +44,7 @@ export function Footer() {
       />
 
       {/* 2. Foreground Content Container (Strictly Above Wordmark — Zero Overlap) */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-12">
+      <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-12">
         {/* Main 12-Column Footer Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-start">
           {/* Brand Column (5 Cols) */}

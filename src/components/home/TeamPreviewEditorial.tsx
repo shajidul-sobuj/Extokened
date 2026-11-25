@@ -9,8 +9,8 @@ import { MotionReveal, MotionStagger, MotionItem } from "@/components/ui/MotionR
 
 export function TeamPreviewEditorial() {
   return (
-    <section className="py-20 sm:py-24 lg:py-28 border-b border-white/[0.08] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section className="py-16 sm:py-20 lg:py-24 border-b border-white/[0.08] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Section Header */}
         <MotionReveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-white/[0.08]">

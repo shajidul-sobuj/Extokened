@@ -8,8 +8,8 @@ import { MotionReveal, MotionStagger, MotionItem } from "@/components/ui/MotionR
 
 export function PhilosophyEditorial() {
   return (
-    <section className="py-20 sm:py-24 lg:py-28 border-b border-white/[0.08] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+    <section className="py-16 sm:py-20 lg:py-24 border-b border-white/[0.08] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Two-Column Editorial Statement Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <MotionReveal direction="left" className="lg:col-span-5 space-y-4">

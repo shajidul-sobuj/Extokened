@@ -37,12 +37,23 @@ export function InteractiveBackground() {
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 65,
-    damping: 28,
+    damping: 26,
     restDelta: 0.001,
   });
 
-  // Gentle, unhurried scroll parallax keeping the moody twilight hills & mist in frame
-  const videoY = useTransform(smoothProgress, [0, 1], ["-6%", "-34%"]);
+  // Single continuous panoramic journey: Top twilight sky/hills -> Bottom glowing firefly meadow (Footer)
+  // Container is 165vh tall, shifting from 0% to -39.3% lands the exact bottom meadow cleanly at scrollYProgress = 1
+  const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-39.3%"]);
+
+  // Velvety dark veil while reading content, lifting smoothly as you arrive at the footer meadow stage
+  const contentScrimOpacity = useTransform(
+    smoothProgress,
+    [0, 0.72, 0.92, 1],
+    [0.72, 0.68, 0.42, 0.24]
+  );
+
+  // Subtle top vignette softens slightly near the footer so the misty hills glow continuously
+  const bottomGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.22, 0.32, 0.65]);
 
   useEffect(() => {
     setMounted(true);
@@ -71,27 +82,27 @@ export function InteractiveBackground() {
     };
     resize();
 
-    // Minimal distant night stars strictly in the upper dark twilight sky (top 30%)
-    const starCount = width < 768 ? 22 : 38;
+    // Minimal distant night stars strictly in upper dark sky
+    const starCount = width < 768 ? 24 : 40;
     const stars: DistantStar[] = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
-      y: Math.random() * height * 0.3,
+      y: Math.random() * height * 0.32,
       r: Math.random() * 1.0 + 0.35,
-      alpha: Math.random() * 0.36 + 0.12,
+      alpha: Math.random() * 0.36 + 0.14,
       phase: Math.random() * Math.PI * 2,
       speed: Math.random() * 0.01 + 0.004,
     }));
 
-    // Calm, footer-style warm golden fireflies & soft twilight mist embers
-    const fireflyCount = width < 768 ? 16 : 26;
+    // Continuous living golden fireflies & soft twilight mist embers across the entire site & footer
+    const fireflyCount = width < 768 ? 18 : 30;
     const fireflies: Firefly[] = Array.from({ length: fireflyCount }, (_, idx) => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.14,
-      vy: -(Math.random() * 0.18 + 0.06),
-      r: Math.random() * 1.8 + 0.9,
+      vy: -(Math.random() * 0.2 + 0.07),
+      r: Math.random() * 1.85 + 0.95,
       phase: Math.random() * Math.PI * 2,
-      pulseSpeed: Math.random() * 0.015 + 0.007,
+      pulseSpeed: Math.random() * 0.016 + 0.008,
       swayAmp: Math.random() * 0.22 + 0.08,
       swaySpeed: Math.random() * 0.008 + 0.004,
       kind: idx % 5 === 0 ? "mist" : idx % 2 === 0 ? "gold" : "amber",
@@ -126,12 +137,12 @@ export function InteractiveBackground() {
         ctx.clearRect(0, 0, width, height);
         tick += 1;
 
-        // 1. Whisper-subtle cursor twilight warmth (never overpowering)
+        // 1. Subtle interactive cursor twilight warmth
         if (mouseRef.current.active && isFinePointer) {
           const { x: mx, y: my } = mouseRef.current;
           const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 210);
           halo.addColorStop(0, "rgba(139, 155, 247, 0.055)");
-          halo.addColorStop(0.5, "rgba(245, 196, 81, 0.018)");
+          halo.addColorStop(0.5, "rgba(245, 196, 81, 0.02)");
           halo.addColorStop(1, "rgba(0, 0, 0, 0)");
           ctx.fillStyle = halo;
           ctx.beginPath();
@@ -139,7 +150,7 @@ export function InteractiveBackground() {
           ctx.fill();
         }
 
-        // 2. Subtle Distant Upper-Sky Pinpoint Stars
+        // 2. Subtle upper-sky pinpoint stars
         for (let i = 0; i < stars.length; i++) {
           const s = stars[i];
           const twinkle = prefersReducedMotion
@@ -151,7 +162,7 @@ export function InteractiveBackground() {
           ctx.fill();
         }
 
-        // 3. Calm, Slow-Rising Meadow Fireflies (exact footer atmosphere)
+        // 3. Calm, slow-rising warm fireflies flowing uninterrupted across page & footer
         for (let i = 0; i < fireflies.length; i++) {
           const f = fireflies[i];
 
@@ -159,13 +170,12 @@ export function InteractiveBackground() {
             f.x += f.vx + Math.sin(tick * f.swaySpeed + f.phase) * f.swayAmp;
             f.y += f.vy;
 
-            // Subtle organic drift away from cursor
             if (mouseRef.current.active && isFinePointer) {
               const dx = f.x - mouseRef.current.x;
               const dy = f.y - mouseRef.current.y;
               const dist = Math.hypot(dx, dy);
-              if (dist < 110 && dist > 1) {
-                const push = ((110 - dist) / 110) * 0.25;
+              if (dist < 115 && dist > 1) {
+                const push = ((115 - dist) / 115) * 0.26;
                 f.x += (dx / dist) * push;
                 f.y += (dy / dist) * push;
               }
@@ -179,12 +189,10 @@ export function InteractiveBackground() {
             if (f.x > width + 18) f.x = -18;
           }
 
-          // Smooth breathing firefly glow
           const breath = prefersReducedMotion
             ? 0.72
-            : 0.25 + 0.75 * Math.pow(0.5 + 0.5 * Math.sin(tick * f.pulseSpeed + f.phase), 1.6);
+            : 0.28 + 0.72 * Math.pow(0.5 + 0.5 * Math.sin(tick * f.pulseSpeed + f.phase), 1.5);
 
-          // Gently brighten fireflies near the cursor
           let proximityBoost = 1;
           if (mouseRef.current.active && isFinePointer) {
             const dist = Math.hypot(f.x - mouseRef.current.x, f.y - mouseRef.current.y);
@@ -196,15 +204,15 @@ export function InteractiveBackground() {
           const finalAlpha = Math.min(1, breath * proximityBoost);
           const rgb =
             f.kind === "gold"
-              ? "255, 204, 96"
+              ? "255, 206, 98"
               : f.kind === "amber"
               ? "245, 182, 78"
               : "165, 178, 255";
 
           const haloR = f.r * 5.8;
           const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, haloR);
-          grad.addColorStop(0, `rgba(${rgb}, ${(0.78 * finalAlpha).toFixed(3)})`);
-          grad.addColorStop(0.32, `rgba(${rgb}, ${(0.22 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(0, `rgba(${rgb}, ${(0.8 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(0.32, `rgba(${rgb}, ${(0.24 * finalAlpha).toFixed(3)})`);
           grad.addColorStop(1, `rgba(${rgb}, 0)`);
 
           ctx.fillStyle = grad;
@@ -212,8 +220,7 @@ export function InteractiveBackground() {
           ctx.arc(f.x, f.y, haloR, 0, Math.PI * 2);
           ctx.fill();
 
-          // Crisp warm core speck
-          ctx.fillStyle = `rgba(255, 248, 228, ${(0.88 * finalAlpha).toFixed(3)})`;
+          ctx.fillStyle = `rgba(255, 248, 228, ${(0.9 * finalAlpha).toFixed(3)})`;
           ctx.beginPath();
           ctx.arc(f.x, f.y, f.r * 0.48, 0, Math.PI * 2);
           ctx.fill();
@@ -243,16 +250,16 @@ export function InteractiveBackground() {
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#07080D] select-none"
       aria-hidden="true"
     >
-      {/* 1. Continuous Footer-Style Blue-Hour Misty Meadow Looping Video */}
+      {/* 1. Single Unified Panoramic Twilight Meadow Video (Runs seamlessly behind EVERY page + Footer) */}
       <motion.div
         className="absolute inset-x-0 top-0 w-full will-change-transform"
         style={{
-          height: "155vh",
-          y: mounted ? videoY : "-6%",
+          height: "165vh",
+          y: mounted ? videoY : "0%",
         }}
       >
         <video
-          className="w-full h-full object-cover object-[50%_72%] opacity-85"
+          className="w-full h-full object-cover object-bottom"
           src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
           poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
           autoPlay
@@ -261,39 +268,50 @@ export function InteractiveBackground() {
           playsInline
           preload="auto"
         />
-
-        {/* Deep Velvety Obsidian-Twilight Veil (same calm mood as the footer — zero washed-out glare) */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(7, 8, 13, 0.72) 0%, rgba(7, 9, 16, 0.56) 28%, rgba(7, 9, 16, 0.64) 62%, rgba(7, 8, 13, 0.86) 100%)",
-          }}
-        />
       </motion.div>
 
-      {/* 2. Single Calm Drifting Twilight Mist Layer (Minimal, Zero Loud Color Blobs) */}
-      <div
-        className="absolute inset-x-0 bottom-[-10%] h-[55vh] pointer-events-none opacity-40 animate-cloud-drift"
+      {/* 2. Scroll-Linked Dynamic Atmospheric Veil (Velvety dark for content, opens smoothly into luminous meadow at footer) */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
         style={{
+          opacity: mounted ? contentScrimOpacity : 0.7,
           background:
-            "radial-gradient(ellipse 75% 55% at 50% 80%, rgba(139, 155, 247, 0.18) 0%, rgba(184, 194, 242, 0.06) 48%, transparent 80%)",
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0.92) 0%, rgba(7, 9, 16, 0.78) 42%, rgba(7, 9, 16, 0.65) 78%, rgba(7, 8, 13, 0.55) 100%)",
         }}
       />
 
-      {/* 3. Subtle Radial Vignette for Editorial Focus */}
+      {/* 3. Subtle Continuous Top-to-Bottom Depth Gradient (Ensures navbar & bottom edge always feel grounded) */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 35%, transparent 25%, rgba(6, 7, 12, 0.58) 100%)",
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0.48) 0%, transparent 18%, transparent 78%, rgba(7, 8, 13, 0.62) 100%)",
         }}
       />
 
-      {/* 4. 60fps Minimal Live Fireflies & Pinpoint Stars Canvas */}
+      {/* 4. Soft Drifting Twilight Mist Ribbon (Intensifies softly near the meadow horizon) */}
+      <motion.div
+        className="absolute inset-x-0 bottom-[-10%] h-[52vh] pointer-events-none animate-cloud-drift"
+        style={{
+          opacity: mounted ? bottomGlowOpacity : 0.25,
+          background:
+            "radial-gradient(ellipse 78% 58% at 50% 84%, rgba(139, 155, 247, 0.26) 0%, rgba(184, 194, 242, 0.08) 48%, transparent 80%)",
+        }}
+      />
+
+      {/* 5. Gentle Editorial Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 84% 72% at 50% 40%, transparent 32%, rgba(6, 7, 12, 0.5) 100%)",
+        }}
+      />
+
+      {/* 6. Unified 60fps Live Fireflies & Pinpoint Stars Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
-      {/* 5. Top Subtle Horizon Hairline */}
+      {/* 7. Subtle Top Horizon Hairline */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/35 to-transparent" />
     </div>
   );

@@ -10,40 +10,24 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 overflow-hidden isolate border-t border-white/[0.1] bg-[#07080D]">
-      {/* 1. Iconic Blue-Hour Meadow Looping Video Stage */}
+    <footer className="relative z-10 overflow-hidden isolate bg-transparent border-t border-white/[0.08]">
+      {/* Soft Translucent Contrast Veil (Zero Duplicate Video — Melds 100% Seamlessly with Global Backdrop) */}
       <div
-        className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
-        aria-hidden="true"
-      >
-        <video
-          className="w-full h-full object-cover object-[50%_88%] scale-[1.03]"
-          src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
-          poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-
-        {/* Smooth Atmospheric Gradient Veil: seamlessly continues the page's twilight meadow mood */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(7, 8, 13, 0.88) 0%, rgba(7, 8, 13, 0.78) 28%, rgba(7, 8, 13, 0.45) 56%, rgba(7, 8, 13, 0.22) 78%, rgba(7, 8, 13, 0.72) 100%)",
-          }}
-        />
-      </div>
-
-      {/* Subtle Top Horizon Accent */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[780px] max-w-[92vw] h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/50 to-transparent pointer-events-none z-20"
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0.45) 0%, rgba(7, 8, 13, 0.34) 38%, rgba(7, 8, 13, 0.08) 72%, rgba(7, 8, 13, 0.58) 100%)",
+        }}
         aria-hidden="true"
       />
 
-      {/* 2. Foreground Content Container (Strictly Above Wordmark — Zero Overlap) */}
+      {/* Subtle Top Horizon Hairline Accent */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[780px] max-w-[92vw] h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/45 to-transparent pointer-events-none z-20"
+        aria-hidden="true"
+      />
+
+      {/* Foreground Content Container (Strictly Above Wordmark — Zero Overlap) */}
       <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-8 sm:pb-12 space-y-12">
         {/* Main 12-Column Footer Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-start">
@@ -65,7 +49,7 @@ export function Footer() {
                 <span className="font-display font-semibold text-lg tracking-tight text-white block leading-none">
                   Extokened
                 </span>
-                <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#8B9BF7] mt-1 block">
+                <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#A5B2FF] mt-1 block">
                   Dhaka • Est. {siteConfig.establishedYear}
                 </span>
               </div>
@@ -75,14 +59,14 @@ export function Footer() {
               The calm squad for high-velocity software.
             </h2>
 
-            <p className="text-sm text-[#B8C2E0] leading-relaxed max-w-md">
+            <p className="text-sm text-[#CFD7F2] leading-relaxed max-w-md">
               Extokened brings full-stack architecture, multimodal AI agents, distributed telemetry, and hackathon execution into one permanent engineering unit.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <a
                 href={`mailto:${siteConfig.contactEmail}`}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#0D1120]/80 backdrop-blur-md border border-white/[0.14] text-xs font-mono text-[#E8ECFF] hover:border-[#8B9BF7]/55 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#0B0F1D]/75 backdrop-blur-md border border-white/[0.14] text-xs font-mono text-[#E8ECFF] hover:border-[#8B9BF7]/55 hover:text-white transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-[#8B9BF7]" />
                 <span>{siteConfig.contactEmail}</span>
@@ -94,7 +78,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Extokened GitHub"
-                  className="w-9 h-9 rounded-lg bg-[#0D1120]/80 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#B4BDD8] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
+                  className="w-9 h-9 rounded-lg bg-[#0B0F1D]/75 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#C2CBE6] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
                 >
                   <Github className="w-4 h-4" />
                 </a>
@@ -103,7 +87,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Extokened LinkedIn"
-                  className="w-9 h-9 rounded-lg bg-[#0D1120]/80 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#B4BDD8] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
+                  className="w-9 h-9 rounded-lg bg-[#0B0F1D]/75 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#C2CBE6] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
@@ -112,7 +96,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Extokened Facebook"
-                  className="w-9 h-9 rounded-lg bg-[#0D1120]/80 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#B4BDD8] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
+                  className="w-9 h-9 rounded-lg bg-[#0B0F1D]/75 backdrop-blur-md border border-white/[0.14] flex items-center justify-center text-[#C2CBE6] hover:text-white hover:border-[#8B9BF7]/55 transition-colors"
                 >
                   <Facebook className="w-4 h-4" />
                 </a>
@@ -126,7 +110,7 @@ export function Footer() {
               <h3 className="text-[11px] font-mono font-semibold uppercase tracking-[0.12em] text-white">
                 Explore
               </h3>
-              <ul className="space-y-3 text-sm text-[#B8C2E0]">
+              <ul className="space-y-3 text-sm text-[#CFD7F2]">
                 <li>
                   <Link href="/" className="hover:text-white transition-colors">
                     Overview
@@ -159,7 +143,7 @@ export function Footer() {
               <h3 className="text-[11px] font-mono font-semibold uppercase tracking-[0.12em] text-white">
                 Selected Work
               </h3>
-              <ul className="space-y-3 text-sm text-[#B8C2E0]">
+              <ul className="space-y-3 text-sm text-[#CFD7F2]">
                 <li>
                   <Link href="/projects/pulse-ai" className="hover:text-white transition-colors">
                     PulseAI
@@ -195,7 +179,7 @@ export function Footer() {
               <h3 className="text-[11px] font-mono font-semibold uppercase tracking-[0.12em] text-white">
                 Connect
               </h3>
-              <ul className="space-y-3 text-sm text-[#B8C2E0]">
+              <ul className="space-y-3 text-sm text-[#CFD7F2]">
                 <li>
                   <Link href="/contact" className="hover:text-white transition-colors">
                     Direct Dispatch
@@ -219,7 +203,7 @@ export function Footer() {
                     className="hover:text-white transition-colors inline-flex items-center gap-1"
                   >
                     <span>GitHub</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#8F99B8]" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#9BA5C4]" />
                   </a>
                 </li>
                 <li>
@@ -230,7 +214,7 @@ export function Footer() {
                     className="hover:text-white transition-colors inline-flex items-center gap-1"
                   >
                     <span>LinkedIn</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-[#8F99B8]" />
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#9BA5C4]" />
                   </a>
                 </li>
               </ul>
@@ -238,32 +222,31 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright & Status Bar — Frosted Pill Surface so it stays 100% readable over the hills */}
+        {/* Bottom Copyright & Status Bar — Frosted Readability over Continuous Meadow */}
         <div className="pt-6 border-t border-white/[0.12] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-[#C2CBE6]">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-[#DCE2FF]">
             <span>© {currentYear} Extokened</span>
             <span className="text-white/25">•</span>
             <span>Made in Dhaka</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0A0D18]/75 backdrop-blur-md border border-white/[0.12] text-[#DCE2FF]">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0A0D18]/70 backdrop-blur-md border border-white/[0.14] text-[#E8ECFF]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
             <span>Built by Extokened Squad</span>
           </div>
         </div>
       </div>
 
-      {/* 3. Dedicated Monumental Frosted-Glass EXTOKENED Stage (Normal Flow — Zero Overlap, Zero GPU Glitch) */}
+      {/* Dedicated Monumental Frosted-Glass EXTOKENED Stage (Normal Flow — Zero Overlap, Zero GPU Glitch) */}
       <div
         className="relative z-10 w-full pt-8 sm:pt-12 md:pt-16 pb-2 sm:pb-3 px-4 flex justify-center overflow-hidden select-none pointer-events-none"
         aria-hidden="true"
       >
-        {/* Soft Twilight Lavender Mist Aura behind the wordmark (replaces buggy drop-shadow filter) */}
         <div
           className="absolute inset-x-0 bottom-0 h-[85%] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 75% 70% at 50% 85%, rgba(139, 155, 247, 0.28) 0%, rgba(184, 194, 242, 0.1) 45%, transparent 78%)",
+              "radial-gradient(ellipse 75% 70% at 50% 85%, rgba(139, 155, 247, 0.24) 0%, rgba(184, 194, 242, 0.08) 45%, transparent 78%)",
           }}
         />
 
@@ -271,12 +254,11 @@ export function Footer() {
           EXTOKENED
         </p>
 
-        {/* Soft Bottom Horizon Fog Veil */}
         <div
           className="absolute inset-x-0 bottom-0 h-[42%] z-20 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to top, rgba(7, 8, 13, 0.92) 0%, rgba(139, 155, 247, 0.16) 45%, transparent 100%)",
+              "linear-gradient(to top, rgba(7, 8, 13, 0.88) 0%, rgba(139, 155, 247, 0.14) 45%, transparent 100%)",
           }}
         />
       </div>

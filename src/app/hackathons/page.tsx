@@ -32,12 +32,15 @@ export default function HackathonsPage() {
   const featuredEvent =
     hackathons.find((h) => h.featured && h.resultType === "winner") || hackathons[0];
 
+  const winnerCount = hackathons.filter((h) => h.resultType === "winner").length;
+  const finalistCount = hackathons.filter((h) => h.resultType === "finalist").length;
+  const participantCount = hackathons.filter((h) => h.resultType === "participant").length;
+
   const filterTabs = [
     { id: "all", label: `All Events (${hackathons.length})` },
-    { id: "winner", label: "Champions" },
-    { id: "runner_up", label: "Runners-Up" },
-    { id: "finalist", label: "Finalists" },
-    { id: "participant", label: "Competitors" },
+    { id: "winner", label: `Winner (${winnerCount})` },
+    { id: "finalist", label: `Finalist (${finalistCount})` },
+    { id: "participant", label: `Participated (${participantCount})` },
   ];
 
   const clearFilters = () => {
@@ -58,51 +61,51 @@ export default function HackathonsPage() {
           </span>
         </h1>
         <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72]">
-          A chronological record of hackathons entered, problems tackled under tight deadlines, and verified outcomes. Championships, runner-up podiums, and finalists are counted separately.
+          A chronological record of hackathons Extokened has participated in—organized cleanly by Winner, Finalist, and Participated events with live code and demos.
         </p>
       </MotionReveal>
 
-      {/* Hairline Achievement Overview (Zero Misaligned Borders) */}
+      {/* Hairline Journey Overview (Winner / Finalist / Participated) */}
       <MotionReveal delay={0.08}>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.1] rounded-2xl overflow-hidden border border-white/[0.1] backdrop-blur-xl">
           <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
-            <span className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider block">
-              Total Competitions
+            <span className="text-[11px] font-mono text-[#8F99B8] uppercase tracking-wider block">
+              Total Logged
             </span>
             <span className="text-3xl sm:text-4xl font-display font-bold text-white block tabular-nums">
-              18
+              {hackathons.length}
             </span>
-            <span className="text-xs text-[#8F99B8] block">National &amp; global sprints</span>
+            <span className="text-xs text-[#9BA5C4] block">Documented hackathon sprints</span>
           </div>
 
           <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#F5C451] uppercase tracking-wider block">
-              Grand Champions
+              Winner
             </span>
             <span className="text-3xl sm:text-4xl font-display font-bold text-[#F5C451] block tabular-nums">
-              7
+              {winnerCount}
             </span>
-            <span className="text-xs text-[#A8B2CF] block">1st place &amp; track awards</span>
+            <span className="text-xs text-[#CFD7F2] block">Winning builds &amp; track honors</span>
           </div>
 
           <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#A5B2FF] uppercase tracking-wider block">
-              Runners-Up
+              Finalist
             </span>
             <span className="text-3xl sm:text-4xl font-display font-bold text-[#A5B2FF] block tabular-nums">
-              5
+              {finalistCount}
             </span>
-            <span className="text-xs text-[#A8B2CF] block">2nd place &amp; special honors</span>
+            <span className="text-xs text-[#CFD7F2] block">Finalist stage selections</span>
           </div>
 
           <div className="bg-[#0B0F1D]/80 p-6 space-y-1.5">
             <span className="text-[11px] font-mono text-[#B4BDD8] uppercase tracking-wider block">
-              Finalists / Sprints
+              Participated
             </span>
             <span className="text-3xl sm:text-4xl font-display font-bold text-white block tabular-nums">
-              6
+              {participantCount}
             </span>
-            <span className="text-xs text-[#8F99B8] block">Top selections &amp; entrants</span>
+            <span className="text-xs text-[#9BA5C4] block">Completed competition sprints</span>
           </div>
         </div>
       </MotionReveal>
@@ -114,7 +117,7 @@ export default function HackathonsPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] font-semibold text-[#F5C451] border-[#F5C451]/35 bg-[#F5C451]/10">
                 <Trophy className="w-3.5 h-3.5" />
-                <span>Featured Podium Result</span>
+                <span>Featured Hackathon</span>
               </span>
               <span className="text-[#8F99B8]">
                 {featuredEvent.date} • {featuredEvent.duration} Sprint
@@ -142,14 +145,14 @@ export default function HackathonsPage() {
               <div className="lg:col-span-4 space-y-5 lg:border-l lg:border-white/[0.08] lg:pl-8">
                 <div className="space-y-1">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D87A6]">
-                    Official Award
+                    Outcome Status
                   </span>
-                  <div className="text-base font-bold text-[#F5C451]">{featuredEvent.award}</div>
+                  <div className="text-base font-bold text-[#F5C451]">{featuredEvent.badgeLabel}</div>
                 </div>
 
                 <div className="space-y-1">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-[#7D87A6]">
-                    Standout Metric
+                    Technical Highlight
                   </span>
                   <div className="text-sm font-mono text-white">{featuredEvent.standoutMetric}</div>
                 </div>

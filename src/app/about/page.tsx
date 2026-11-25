@@ -84,13 +84,13 @@ export default function AboutPage() {
 
           <div className="lg:col-span-7 space-y-5 text-[#B4BDD8] text-sm sm:text-base leading-[1.75]">
             <p>
-              In late 2023, four university engineers and designers entered their first bilateral hackathon under the team name <strong className="text-white font-semibold">Extokened</strong>. We engineered <em>BhashaBondhu</em>, a cross-dialect translation bridge for rural telemedicine consultations, and won the Grand Championship.
+              In late 2023, four university engineers and designers entered their first bilateral hackathon under the team name <strong className="text-white font-semibold">Extokened</strong>. We engineered <em>BhashaBondhu</em>, a cross-dialect translation bridge for rural telemedicine consultations, and earned our first hackathon win together.
             </p>
             <p>
               The sprint revealed immediate chemistry: an intuitive division of labor, shared obsession with code quality, and the ability to maintain architectural clarity under pressure. Rather than disbanding after the competition, we made Extokened our permanent team home.
             </p>
             <p>
-              Over the following two years, we participated in 18 competitive sprints across national ICT championships, international developer collectives, and fintech challenges—securing 12 podium honors while continually refining our open-source tools.
+              Over the following two years, we participated in numerous hackathons across national ICT events, international developer collectives, and fintech sprints—consistently reaching finals and winning while building open-source tools along the way.
             </p>
           </div>
         </section>
@@ -168,7 +168,7 @@ export default function AboutPage() {
               </span>
             </h2>
             <p className="text-sm sm:text-base text-[#CFD7F2]">
-              Verified proficiencies evidenced through deployed software and competitive podium records.
+              Verified proficiencies evidenced through deployed software and hackathon builds.
             </p>
           </div>
 

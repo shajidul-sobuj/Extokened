@@ -25,13 +25,13 @@ export function ProofStrip() {
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#F5C451]/15 border border-[#F5C451]/35 text-[#F5C451] font-semibold">
                   <Trophy className="w-3 h-3" />
-                  <span>Grand Champion</span>
+                  <span>Winner</span>
                 </span>
                 <span className="text-white font-medium">
                   PulseAI · AI Horizon Global 2025
                 </span>
                 <span className="text-[#9BA5C4] hidden md:inline">
-                  — Ranked 1st out of 220+ international teams
+                  — Multimodal clinical ICU triage built in 48 hours
                 </span>
               </div>
 

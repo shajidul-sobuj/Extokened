@@ -28,7 +28,7 @@ export function HeroSection() {
         >
           <span className="eyebrow-badge px-4 py-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-            <span>Dhaka Engineering Squad · 12 Podiums · Est. 2023</span>
+            <span>Dhaka Hackathon &amp; Engineering Team · Est. 2023</span>
           </span>
         </motion.div>
 

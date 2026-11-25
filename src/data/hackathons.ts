@@ -1,5 +1,4 @@
-export type ResultType = "winner" | "runner_up" | "finalist" | "participant";
-export type AwardType = "champion" | "runner_up" | "special_track" | "finalist" | "participant";
+export type ResultType = "winner" | "finalist" | "participant";
 
 export interface HackathonEvidenceLink {
   label: string;
@@ -18,7 +17,6 @@ export interface Hackathon {
   location: string;
   resultType: ResultType;
   award: string;
-  awardType: AwardType;
   badgeLabel: string;
   projectTitle: string;
   projectSlug?: string;
@@ -54,9 +52,8 @@ export const hackathons: Hackathon[] = [
     duration: "48 Hours",
     location: "Hybrid (Dhaka & Virtual)",
     resultType: "winner",
-    award: "Grand Champion (1st Place)",
-    awardType: "champion",
-    badgeLabel: "🏆 Grand Champion",
+    award: "Winner",
+    badgeLabel: "Winner",
     projectTitle: "PulseAI: Autonomous Critical Patient Triage",
     projectSlug: "pulse-ai",
     tagline: "Multimodal Gemini-powered real-time clinical vital anomaly detection and automatic ICU alert routing.",
@@ -67,12 +64,12 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "We built a high-throughput time-series streaming pipeline coupled with Gemini 2.0 Flash to evaluate rolling 10-minute ECG waveforms and lab vitals, producing actionable, prioritized physician alerts.",
     highlights: [
-      "Ranked #1 out of 220+ international competing teams",
+      "Selected as a winning project across international competing teams",
       "99.4% precision in test ECG waveform anomaly classification",
-      "Zero-latency WebSockets streaming architecture with edge fallback",
+      "Low-latency WebSockets streaming architecture with edge fallback",
     ],
     techStack: ["Next.js 15", "Google Gemini API", "FastAPI", "Python", "Tailwind CSS", "WebSockets", "TimescaleDB"],
-    standoutMetric: "1st Place of 220+ Teams",
+    standoutMetric: "99.4% ECG Triage Precision",
     teamMembers: ["Sobuj Ahmed", "Abrar Hasan", "Tanvir Rahman", "Nafisa Tabassum"],
     learnings:
       "Balancing model inference latency with real-time UI streaming required strict payload batching. We learned to isolate telemetry streams into WebSockets and decouple AI summary generation to prevent UI blocking.",
@@ -99,9 +96,8 @@ export const hackathons: Hackathon[] = [
     duration: "36 Hours",
     location: "Bangabandhu Military Museum Hall, Dhaka",
     resultType: "winner",
-    award: "Champion — Smart City Track",
-    awardType: "champion",
-    badgeLabel: "🏆 1st in Smart City Track",
+    award: "Winner — Smart City Track",
+    badgeLabel: "Winner",
     projectTitle: "GridSync: Dynamic Traffic Optimization Matrix",
     projectSlug: "gridsync",
     tagline: "Real-time edge computer vision and adaptive green-wave coordination for congestion relief.",
@@ -112,9 +108,9 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "Deployed lightweight YOLOv9 vehicle-counting models alongside acoustic siren detectors on edge nodes, dynamically calculating optimal green-wave timings across intersecting corridors.",
     highlights: [
-      "Awarded Best Engineering Feat by Department of ICT judges",
+      "Winner in the Smart City Track with hardware + web live demo",
       "Simulated 41% emergency ambulance transit time reduction in 4 arterial intersections",
-      "Engineered full hardware prototype + web visualization in 36h",
+      "Engineered full edge prototype and Mapbox visualizer in 36 hours",
     ],
     techStack: ["React", "FastAPI", "YOLOv9", "Python", "OpenCV", "PostgreSQL", "Mapbox GL"],
     standoutMetric: "41% Transit Delay Reduction",
@@ -143,10 +139,9 @@ export const hackathons: Hackathon[] = [
     year: 2024,
     duration: "36 Hours",
     location: "Dhaka, Bangladesh",
-    resultType: "runner_up",
-    award: "1st Runner Up (2nd Place)",
-    awardType: "runner_up",
-    badgeLabel: "🥈 1st Runner Up",
+    resultType: "finalist",
+    award: "Finalist",
+    badgeLabel: "Finalist",
     projectTitle: "Khashra: Vernacular Micro-Merchant Ledger & Credit Scoring",
     projectSlug: "khashra",
     tagline: "Voice-driven Bangla ledger app turning street-vendor cash transactions into verifiable credit scores.",
@@ -159,10 +154,10 @@ export const hackathons: Hackathon[] = [
     highlights: [
       "Voice recognition in native colloquial Bangla accents with 94% accuracy",
       "Offline-first PWA sync architecture for unreliable market internet connections",
-      "Pitched to senior banking executives and venture partners",
+      "Presented live before senior banking executives and venture mentors",
     ],
     techStack: ["Next.js", "Whisper AI", "FastAPI", "Supabase", "IndexedDB PWA", "Tailwind CSS"],
-    standoutMetric: "Top 2 out of 85 FinTech Teams",
+    standoutMetric: "94% Bangla Voice Accuracy",
     teamMembers: ["Sobuj Ahmed", "Abrar Hasan", "Tanvir Rahman", "Nafisa Tabassum"],
     learnings:
       "Market shopkeepers operate in high-noise environments. Simple speech-to-text models failed until we added localized spectral noise suppression pre-processing.",
@@ -189,12 +184,11 @@ export const hackathons: Hackathon[] = [
     duration: "48 Hours",
     location: "Global Virtual",
     resultType: "winner",
-    award: "Best Autonomous Agent Architecture",
-    awardType: "special_track",
-    badgeLabel: "⚡ Best Agent Architecture",
+    award: "Winner — Agent Architecture",
+    badgeLabel: "Winner",
     projectTitle: "OmniScrape AI: Autonomous Web Reasoning Agent",
     projectSlug: "omniscrape-ai",
-    tagline: "Multi-agent swarm that navigates dynamic web interfaces, handles CAPTCHAs, and compiles structured datasets on demand.",
+    tagline: "Multi-agent swarm that navigates dynamic web interfaces and compiles structured datasets on demand.",
     description:
       "Constructed a hierarchical agent swarm utilizing browser automation and vision models to parse arbitrary websites into validated JSON schemas, automatically self-healing when DOM trees change.",
     challengeSummary:
@@ -202,12 +196,12 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "Engineered vision-guided autonomous Playwright agents equipped with DOM tree reflection and schema-guaranteed JSON repair routines.",
     highlights: [
-      "Top-scoring submission in the Agentic Workflows track",
+      "Winner in the Agentic Workflows track",
       "Engineered automated recursive DOM reflection loop",
-      "Processed 1500+ dynamic web pages during live judging evaluation without hallucination",
+      "Processed 1,500+ dynamic web pages during live evaluation without hallucination",
     ],
     techStack: ["TypeScript", "Playwright", "Claude 3.5 Sonnet", "Node.js", "Tailwind CSS", "Redis"],
-    standoutMetric: "Best Architecture Award",
+    standoutMetric: "62% Lower Token Cost",
     teamMembers: ["Sobuj Ahmed", "Abrar Hasan", "Tanvir Rahman"],
     learnings:
       "Agent execution cost and token latency explode quickly without hierarchical delegation. Separating fast parser workers from heavy planner agents cut API token consumption by 62%.",
@@ -233,9 +227,8 @@ export const hackathons: Hackathon[] = [
     duration: "24 Hours",
     location: "Dhaka, Bangladesh",
     resultType: "finalist",
-    award: "Top 3 Finalist & Special Security Commendation",
-    awardType: "runner_up",
-    badgeLabel: "🛡️ Top 3 & Security Honors",
+    award: "Finalist",
+    badgeLabel: "Finalist",
     projectTitle: "SentinelZero: Real-time Supply Chain Vulnerability Watchdog",
     projectSlug: "sentinel-zero",
     tagline: "Continuous automated scanning for malicious npm/pip dependencies and automated PR remediations.",
@@ -246,7 +239,7 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "Built an in-memory Go binary analyzer that disassembles package tarballs in isolated containers, performing AST inspection for obfuscated payload execution.",
     highlights: [
-      "Detected 14 known zero-day vulnerable payloads during live red-team shootout",
+      "Detected 14 known zero-day vulnerable payloads during live red-team evaluation",
       "Automated deterministic AST parsing without executing unsafe code",
     ],
     techStack: ["Go", "Docker", "Next.js", "PostgreSQL", "GitHub API Webhooks"],
@@ -274,9 +267,8 @@ export const hackathons: Hackathon[] = [
     duration: "36 Hours",
     location: "Kolkata & Dhaka (Bilateral)",
     resultType: "winner",
-    award: "Grand Champion (1st Place)",
-    awardType: "champion",
-    badgeLabel: "🏆 Grand Champion",
+    award: "Winner",
+    badgeLabel: "Winner",
     projectTitle: "BhashaBondhu: Accessible Dialect Translation Bridge",
     projectSlug: "bhasha-bondhu",
     tagline: "Cross-dialect Bengali speech translation for rural healthcare workers and tele-medicine.",
@@ -287,11 +279,11 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "Fine-tuned lightweight sequence-to-sequence audio transformers on phonetic dialect mappings, delivering sub-second real-time translated audio subtitles.",
     highlights: [
-      "Extokened's first championship trophy as a united squad",
+      "Extokened's debut hackathon win as a united squad",
       "Over 98% comprehension score rated by native dialect speakers",
     ],
     techStack: ["Python", "PyTorch", "FastAPI", "React", "WebRTC"],
-    standoutMetric: "Team Debut Championship",
+    standoutMetric: "98% Dialect Comprehension",
     teamMembers: ["Sobuj Ahmed", "Abrar Hasan", "Tanvir Rahman", "Nafisa Tabassum"],
     learnings:
       "Establishing clear role ownership on night one of the hackathon laid the foundation for our entire team collaboration playbook that we still use today.",
@@ -315,9 +307,8 @@ export const hackathons: Hackathon[] = [
     duration: "36 Hours",
     location: "Agargaon, Dhaka",
     resultType: "finalist",
-    award: "Top 5 Finalist & National Civic Honors",
-    awardType: "finalist",
-    badgeLabel: "🏛️ National Finalist",
+    award: "Finalist",
+    badgeLabel: "Finalist",
     projectTitle: "NogorBarta: Civic Issue Tracking & Geospatial Dispatch",
     tagline: "Citizen reporting PWA with automated duplicate ticket merging and municipal zoning routing.",
     description:
@@ -331,7 +322,7 @@ export const hackathons: Hackathon[] = [
       "Deduplicated over 3,000 public trial complaints with 97% accuracy",
     ],
     techStack: ["React", "Node.js", "PostgreSQL", "PostGIS", "Tailwind CSS"],
-    standoutMetric: "Top 5 of 110 Civic Teams",
+    standoutMetric: "97% Duplicate Clustering",
     teamMembers: ["Sobuj Ahmed", "Tanvir Rahman", "Nafisa Tabassum"],
     learnings:
       "Designing for non-technical civil service operators requires hyper-simple tabular views rather than complex multi-layered dashboards.",
@@ -353,9 +344,8 @@ export const hackathons: Hackathon[] = [
     duration: "48 Hours",
     location: "Virtual Global",
     resultType: "participant",
-    award: "Official Global Competitor",
-    awardType: "participant",
-    badgeLabel: "⚡ Global Competitor",
+    award: "Participated",
+    badgeLabel: "Participated",
     projectTitle: "SolarYield: Distributed Rooftop PV Optimization",
     tagline: "Satellite imagery solar irradiance estimation and distributed micro-grid demand modeling.",
     description:
@@ -365,11 +355,11 @@ export const hackathons: Hackathon[] = [
     solutionSummary:
       "Created a solar shadow modeling tool that estimates monthly kilowatt-hour output from rooftop polygon boundaries.",
     highlights: [
-      "Selected among 300 international applicant teams",
-      "Shipped functional solar irradiance calculator in 48 hours",
+      "Collaborated across a 48-hour global clean-tech sprint",
+      "Shipped a working solar irradiance calculator with polygon roof estimation",
     ],
     techStack: ["Next.js", "Python", "OpenCV", "Leaflet", "Tailwind CSS"],
-    standoutMetric: "Global 48h Sprint",
+    standoutMetric: "48h Clean-Tech Sprint",
     teamMembers: ["Sobuj Ahmed", "Abrar Hasan", "Tanvir Rahman"],
     learnings:
       "Real-world satellite resolution in emerging markets is often insufficient for obstacle calculation. We learned to combine low-res satellite tiles with user-drawn roof geometry.",

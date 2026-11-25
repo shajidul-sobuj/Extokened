@@ -37,8 +37,8 @@ export default function LinksPage() {
     },
     {
       href: "/hackathons",
-      title: "Hackathon Archive & Podiums",
-      subtitle: "12 podium trophies, 7 grand championships",
+      title: "Hackathon Journey & Wins",
+      subtitle: "Events participated, finalist finishes, and winning builds",
       icon: Trophy,
       iconColor: "text-[#F5C451]",
       external: false,

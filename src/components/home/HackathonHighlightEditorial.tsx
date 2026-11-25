@@ -30,29 +30,29 @@ export function HackathonHighlightEditorial() {
       projects.some((p) => p.slug === activeEvent.projectSlug)
   );
 
+  const winnerCount = hackathons.filter((h) => h.resultType === "winner").length;
+  const finalistCount = hackathons.filter((h) => h.resultType === "finalist").length;
+  const participatedCount = hackathons.length;
+
   const getResultBadge = (resultType: string) => {
     switch (resultType) {
       case "winner":
         return "text-[#F5C451] border-[#F5C451]/35 bg-[#F5C451]/12";
-      case "runner_up":
-        return "text-[#A5B2FF] border-[#8B9BF7]/35 bg-[#8B9BF7]/12";
       case "finalist":
-        return "text-[#DCE2FF] border-white/[0.16] bg-white/[0.06]";
+        return "text-[#A5B2FF] border-[#8B9BF7]/35 bg-[#8B9BF7]/12";
       default:
-        return "text-[#8F99B8] border-white/[0.1] bg-white/[0.04]";
+        return "text-[#CFD7F2] border-white/[0.14] bg-white/[0.05]";
     }
   };
 
   const getShortResultLabel = (resultType: string) => {
     switch (resultType) {
       case "winner":
-        return "Champion";
-      case "runner_up":
-        return "Runner-Up";
+        return "Winner";
       case "finalist":
         return "Finalist";
       default:
-        return "Competitor";
+        return "Participated";
     }
   };
 
@@ -71,24 +71,24 @@ export function HackathonHighlightEditorial() {
                 </span>
               </h2>
               <p className="text-sm sm:text-[15px] text-[#C8D0EC] leading-[1.68]">
-                Championship titles, runner-up podiums, and sprints tracked transparently—each backed by live repositories and official submissions.
+                Our hackathon journey—tracking events we participated in, reached the finals, and won, backed by live repositories and demos.
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 self-start lg:self-auto">
-              {/* Separated Podium Summary Strip */}
+              {/* Separated Journey Summary Strip (Winner / Finalist / Participated) */}
               <div className="inline-flex items-center divide-x divide-white/[0.1] rounded-full bg-[#0C1020]/75 backdrop-blur-md border border-white/[0.12] px-1 py-1 text-xs font-mono">
                 <span className="px-3 py-1 flex items-center gap-1.5">
-                  <strong className="text-[#F5C451] font-bold">7</strong>
-                  <span className="text-[#B8C2E0]">Champions</span>
+                  <strong className="text-[#F5C451] font-bold">{winnerCount}</strong>
+                  <span className="text-[#B8C2E0]">Winner</span>
                 </span>
                 <span className="px-3 py-1 flex items-center gap-1.5">
-                  <strong className="text-[#A5B2FF] font-bold">5</strong>
-                  <span className="text-[#B8C2E0]">Runners-Up</span>
+                  <strong className="text-[#A5B2FF] font-bold">{finalistCount}</strong>
+                  <span className="text-[#B8C2E0]">Finalist</span>
                 </span>
                 <span className="px-3 py-1 flex items-center gap-1.5">
-                  <strong className="text-white font-bold">6</strong>
-                  <span className="text-[#B8C2E0]">Finalists</span>
+                  <strong className="text-white font-bold">{participatedCount}</strong>
+                  <span className="text-[#B8C2E0]">Logged</span>
                 </span>
               </div>
 
@@ -96,7 +96,7 @@ export function HackathonHighlightEditorial() {
                 href="/hackathons"
                 className="btn-secondary py-2 px-4 text-xs sm:text-[13px] group"
               >
-                <span>All 18 events</span>
+                <span>View full journey</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </div>
@@ -171,7 +171,7 @@ export function HackathonHighlightEditorial() {
               </div>
 
               <div className="pt-2.5 px-2.5 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono text-[#8F99B8]">
-                <span>12/18 Podium Finish Rate</span>
+                <span>{participatedCount} Documented Hackathons</span>
                 <Link
                   href="/hackathons"
                   className="text-[#A5B2FF] hover:text-white inline-flex items-center gap-1 transition-colors"

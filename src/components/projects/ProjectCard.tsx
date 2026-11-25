@@ -13,10 +13,11 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const [imgFailed, setImgFailed] = useState(false);
 
-  const isAwardWinner =
+  const isWinner =
     project.outcome.toLowerCase().includes("champion") ||
-    project.outcome.toLowerCase().includes("1st") ||
-    project.outcome.toLowerCase().includes("runner");
+    project.outcome.toLowerCase().includes("1st place");
+  const isFinalist =
+    !isWinner && project.outcome.toLowerCase().includes("runner");
 
   return (
     <article className="surface-card surface-card-interactive p-4 sm:p-5 flex flex-col justify-between gap-4 group h-full">
@@ -58,12 +59,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#8F99B8]">
             <span>{project.year}</span>
-            {isAwardWinner && (
+            {isWinner ? (
               <span className="inline-flex items-center gap-1 text-[#F5C451] font-semibold">
                 <Trophy className="w-3 h-3" />
-                Podium Winner
+                Winner
               </span>
-            )}
+            ) : isFinalist ? (
+              <span className="inline-flex items-center gap-1 text-[#A5B2FF] font-semibold">
+                <Trophy className="w-3 h-3" />
+                Finalist
+              </span>
+            ) : null}
           </div>
 
           <Link
@@ -78,16 +84,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           <p className="text-[13px] text-[#CFD7F2] leading-[1.6] line-clamp-2">
             {project.summary}
-          </p>
-        </div>
-
-        {/* Compact Validated Outcome */}
-        <div className="surface-inset px-3.5 py-2.5 space-y-0.5">
-          <div className="text-[10px] font-mono uppercase tracking-[0.12em] text-[#A5B2FF]">
-            Outcome
-          </div>
-          <p className="text-xs text-[#E4E9FF] leading-relaxed line-clamp-2">
-            {project.outcome}
           </p>
         </div>
       </div>

@@ -146,14 +146,14 @@ export function MemberCard({
             <strong className="text-white font-semibold tabular-nums">
               {member.stats.trophies}
             </strong>
-            <span>Podiums</span>
+            <span>Wins</span>
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Flame className="w-3.5 h-3.5 text-[#8B9BF7]" />
             <strong className="text-white font-semibold tabular-nums">
               {member.stats.hackathons}
             </strong>
-            <span>Sprints</span>
+            <span>Hackathons</span>
           </span>
           <span className="hidden sm:inline-flex items-center gap-1.5">
             <Code2 className="w-3.5 h-3.5 text-[#34D399]" />

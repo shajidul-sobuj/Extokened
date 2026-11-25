@@ -104,7 +104,11 @@ export function FeaturedProjectsEditorial() {
                         {isWinner && (
                           <span className="inline-flex items-center gap-1 text-[#F5C451] font-semibold">
                             <Trophy className="w-3 h-3" />
-                            <span>{idx === 0 ? "Grand Champion" : "Podium Winner"}</span>
+                            <span>
+                              {project.outcome.toLowerCase().includes("runner")
+                                ? "Finalist"
+                                : "Winner"}
+                            </span>
                           </span>
                         )}
                       </div>

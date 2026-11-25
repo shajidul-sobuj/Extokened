@@ -67,12 +67,10 @@ export default async function HackathonDetailPage({ params }: HackathonPageProps
     switch (hackathon.resultType) {
       case "winner":
         return "text-[#F5C451] border-[#F5C451]/35 bg-[#F5C451]/10";
-      case "runner_up":
-        return "text-[#A5B2FF] border-[#8B9BF7]/35 bg-[#8B9BF7]/10";
       case "finalist":
-        return "text-[#DCE2FF] border-white/[0.15] bg-[#141827]";
+        return "text-[#A5B2FF] border-[#8B9BF7]/35 bg-[#8B9BF7]/10";
       default:
-        return "text-[#8F99B8] border-white/[0.1] bg-[#111522]";
+        return "text-[#CFD7F2] border-white/[0.14] bg-[#111522]";
     }
   };
 

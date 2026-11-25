@@ -24,12 +24,10 @@ export function HackathonCard({ hackathon, compact = false }: HackathonCardProps
     switch (hackathon.resultType) {
       case "winner":
         return "bg-[#F5C451]/10 text-[#F5C451] border-[#F5C451]/35";
-      case "runner_up":
-        return "bg-[#8B9BF7]/10 text-[#A5B2FF] border-[#8B9BF7]/35";
       case "finalist":
-        return "bg-[#141827] text-[#DCE2FF] border-white/[0.15]";
+        return "bg-[#8B9BF7]/10 text-[#A5B2FF] border-[#8B9BF7]/35";
       default:
-        return "bg-[#111522] text-[#8F99B8] border-white/[0.1]";
+        return "bg-[#111522] text-[#CFD7F2] border-white/[0.14]";
     }
   };
 

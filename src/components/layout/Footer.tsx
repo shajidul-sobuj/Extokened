@@ -9,28 +9,47 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer relative bg-[#08090E]/85 backdrop-blur-xl border-t border-[#1E2337] overflow-hidden pt-16 sm:pt-20 pb-8 isolate">
+    <footer className="footer relative bg-[#08090E] overflow-hidden isolate border-t border-[#1E2337]/60 min-h-[640px] sm:min-h-[700px] lg:min-h-[760px] flex flex-col justify-between pt-16 sm:pt-20 pb-0">
       
-      {/* 1. Subtle Atmospheric Twilight Background */}
-      <div 
-        className="absolute inset-0 -z-10 pointer-events-none overflow-hidden" 
-        aria-hidden="true"
-        style={{
-          background: "linear-gradient(to bottom, rgba(8, 9, 14, 0.75) 0%, rgba(13, 16, 28, 0.85) 60%, rgba(8, 9, 14, 0.98) 100%)"
-        }} 
-      />
-
-      {/* 2. Delicate Background Ambient Watermark */}
-      <div 
-        className="absolute left-1/2 -translate-x-1/2 bottom-12 -z-10 font-bold font-display uppercase tracking-wider text-white/[0.04] pointer-events-none select-none whitespace-nowrap text-[clamp(3.5rem,15vw,16rem)] leading-none"
-        aria-hidden="true"
-      >
-        EXTOKENED
+      {/* 1. Media: Blue-Hour Meadow Looping Video Stage */}
+      <div className="footer__stage absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <video
+          className="footer__video w-full h-full object-cover object-[50%_100%] translate-y-[9%]"
+          src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
+          poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        {/* Dark Haze so the brand block and link columns remain razor-sharp while the meadow shines through */}
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{
+            background: "linear-gradient(to bottom, #08090E 0%, rgba(8, 9, 14, 0.94) 26%, rgba(8, 9, 14, 0.72) 48%, rgba(8, 9, 14, 0.18) 72%, rgba(8, 9, 14, 0.82) 100%)"
+          }} 
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 space-y-12 sm:space-y-16">
+      {/* 2. Giant Frosted-Glass EXTOKENED Wordmark Sinking into Fog */}
+      <p className="footer__wordmark-glass" aria-hidden="true">
+        EXTOKENED
+      </p>
+
+      {/* 3. Fog Layer at the Bottom Edge */}
+      <div 
+        className="footer__fog absolute inset-x-0 bottom-0 z-[15] h-[22%] pointer-events-none"
+        style={{
+          background: "linear-gradient(to top, rgba(8, 9, 14, 0.92) 0%, rgba(184, 192, 236, 0.22) 40%, rgba(184, 192, 236, 0.08) 70%, rgba(184, 192, 236, 0) 100%)"
+        }}
+        aria-hidden="true" 
+      />
+
+      {/* 4. Content Container */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-between mb-28 sm:mb-36 md:mb-44 lg:mb-48 space-y-12">
         
-        {/* 3. Main Footer Grid */}
+        {/* Main Footer Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           
           {/* Brand Block (Left 5 Columns) */}
@@ -63,7 +82,7 @@ export function Footer() {
             <div className="pt-1">
               <Link 
                 href="/contact"
-                className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-[#0F1118] border border-[#1E2337] text-white hover:bg-[#151824] hover:border-[#8B9BF7]/50 text-xs font-medium transition-all shadow-sm"
+                className="inline-flex items-center gap-2 h-9 px-4 rounded-lg bg-[#0F1118]/80 backdrop-blur-md border border-[#1E2337] text-white hover:bg-[#151824] hover:border-[#8B9BF7]/50 text-xs font-medium transition-all shadow-sm"
               >
                 <Terminal className="w-3.5 h-3.5 text-[#8B9BF7]" />
                 <span>Dispatch with Extokened</span>
@@ -192,8 +211,8 @@ export function Footer() {
 
         </div>
 
-        {/* 4. Bottom Horizontal Bar: 2 Sides ("2 pashe arki") */}
-        <div className="pt-8 border-t border-[#1E2337] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#727896]">
+        {/* Bottom Horizontal Bar: 2 Sides */}
+        <div className="pt-6 border-t border-[#1E2337]/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#727896]">
           {/* Left Side: Copyright */}
           <div>
             © {currentYear} Extokened · Made in Dhaka.

@@ -22,7 +22,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 18);
+      setScrolled(window.scrollY > 24);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -55,26 +55,40 @@ export function Navbar() {
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
+  const isFloatingGlass = scrolled || mobileMenuOpen;
+
   return (
     <>
-      {/* Floating Luxury Glass Island Navbar */}
-      <div className="fixed top-0 inset-x-0 z-50 px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none">
+      {/* Transparent at Top -> Morphs into Sculpted Floating Glass Island on Scroll */}
+      <div
+        className={`fixed top-0 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none transition-[padding] duration-300 ease-out ${
+          isFloatingGlass ? "pt-3 sm:pt-3.5" : "pt-2 sm:pt-4"
+        }`}
+      >
         <header
-          className={`pointer-events-auto max-w-6xl mx-auto rounded-2xl transition-all duration-300 ${
-            scrolled || mobileMenuOpen
-              ? "bg-[#090C18]/85 backdrop-blur-2xl border border-white/[0.14] shadow-[0_16px_48px_-14px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.14)]"
-              : "bg-[#0B0F1E]/55 backdrop-blur-xl border border-white/[0.1] shadow-[0_12px_36px_-14px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.12)]"
+          className={`pointer-events-auto max-w-6xl mx-auto rounded-2xl border transition-all duration-300 ease-out ${
+            isFloatingGlass
+              ? "bg-[#090C18]/80 backdrop-blur-2xl border-white/[0.14] shadow-[0_16px_48px_-14px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.14)]"
+              : "bg-transparent border-transparent shadow-none"
           }`}
         >
-          <div className="px-3.5 sm:px-5">
-            <div className="flex items-center justify-between h-14 sm:h-[62px] gap-4">
+          <div
+            className={`transition-[padding] duration-300 ${
+              isFloatingGlass ? "px-3.5 sm:px-5" : "px-1 sm:px-2"
+            }`}
+          >
+            <div
+              className={`flex items-center justify-between gap-4 transition-[height] duration-300 ${
+                isFloatingGlass ? "h-14 sm:h-[60px]" : "h-16 sm:h-[66px]"
+              }`}
+            >
               {/* Left: Brand Identity */}
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-2.5 group shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
               >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#101528]/90 border border-[#8B9BF7]/30 p-1.5 flex items-center justify-center group-hover:border-[#A5B2FF]/65 group-hover:shadow-[0_0_16px_rgba(139,155,247,0.35)] transition-all overflow-hidden shrink-0">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0D1224]/70 backdrop-blur-md border border-[#8B9BF7]/30 p-1.5 flex items-center justify-center group-hover:border-[#A5B2FF]/65 group-hover:shadow-[0_0_16px_rgba(139,155,247,0.35)] transition-all overflow-hidden shrink-0">
                   <img
                     src="/images/extokened-logo-glow.png"
                     alt="Extokened"
@@ -91,10 +105,14 @@ export function Navbar() {
                 </div>
               </Link>
 
-              {/* Center: Sculpted Desktop Navigation */}
+              {/* Center: Airy Transparent Links at Top -> Subtle Pill Rail on Scroll */}
               <nav
                 aria-label="Primary Navigation"
-                className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/[0.04] border border-white/[0.08]"
+                className={`hidden md:flex items-center gap-1 p-1 rounded-full border transition-all duration-300 ${
+                  isFloatingGlass
+                    ? "bg-white/[0.04] border-white/[0.08]"
+                    : "bg-transparent border-transparent"
+                }`}
               >
                 {navItems.map((item) => {
                   const active = isRouteActive(item.href);
@@ -105,13 +123,17 @@ export function Navbar() {
                       className={`relative px-3.5 lg:px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
                         active
                           ? "text-white"
-                          : "text-[#B8C2E0] hover:text-white"
+                          : "text-[#CBD3F0] hover:text-white"
                       }`}
                     >
                       {active && (
                         <motion.span
                           layoutId="activeNavPill"
-                          className="absolute inset-0 rounded-full bg-white/[0.12] border border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_0_18px_rgba(139,155,247,0.22)]"
+                          className={`absolute inset-0 rounded-full border transition-colors ${
+                            isFloatingGlass
+                              ? "bg-white/[0.12] border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]"
+                              : "bg-white/[0.08] backdrop-blur-md border-white/[0.14]"
+                          }`}
                           transition={{ type: "spring", stiffness: 420, damping: 32 }}
                         />
                       )}
@@ -134,7 +156,7 @@ export function Navbar() {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen((prev) => !prev)}
-                  className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.14] text-white hover:border-[#A5B2FF]/55 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
+                  className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#0D1224]/70 backdrop-blur-md border border-white/[0.16] text-white hover:border-[#A5B2FF]/55 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
                   aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                   aria-expanded={mobileMenuOpen}
                   aria-controls="mobile-navigation-drawer"

@@ -94,7 +94,7 @@ export default function LinksPage() {
             Extokened
           </h1>
           <p className="text-xs font-mono text-[#8B9BF7]">{siteConfig.tagline}</p>
-          <p className="text-sm text-[#A8B2CF] max-w-sm mx-auto leading-relaxed pt-1">
+          <p className="text-sm text-[#CFD7F2] max-w-sm mx-auto leading-relaxed pt-1">
             {siteConfig.positioning}
           </p>
         </div>

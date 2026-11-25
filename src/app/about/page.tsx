@@ -57,9 +57,12 @@ export default function AboutPage() {
       <MotionReveal className="space-y-5 max-w-4xl">
         <span className="eyebrow-badge">About / Extokened</span>
         <h1 className="font-page-title font-bold text-white">
-          An independent engineering team exploring what&apos;s next.
+          An independent engineering team exploring{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            what&apos;s next.
+          </span>
         </h1>
-        <p className="text-base sm:text-lg text-[#A8B2CF] leading-relaxed max-w-2xl">
+        <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72] max-w-2xl">
           Extokened was formed with a straightforward belief: practical software, built under real technical constraints, is the most reliable way to learn, compete, and ship.
         </p>
       </MotionReveal>
@@ -159,9 +162,12 @@ export default function AboutPage() {
           <div className="space-y-3 max-w-xl">
             <span className="eyebrow-badge">Technical Breadth</span>
             <h2 className="font-section-title font-bold text-white">
-              Demonstrated Capabilities
+              Demonstrated{" "}
+              <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                Capabilities
+              </span>
             </h2>
-            <p className="text-sm sm:text-base text-[#A8B2CF]">
+            <p className="text-sm sm:text-base text-[#CFD7F2]">
               Verified proficiencies evidenced through deployed software and competitive podium records.
             </p>
           </div>
@@ -194,8 +200,13 @@ export default function AboutPage() {
         <section className="pt-16 border-t border-white/[0.08] space-y-10">
           <div className="space-y-3 max-w-xl">
             <span className="eyebrow-badge">Execution Playbook</span>
-            <h2 className="font-section-title font-bold text-white">How We Work</h2>
-            <p className="text-sm sm:text-base text-[#A8B2CF]">
+            <h2 className="font-section-title font-bold text-white">
+              How We{" "}
+              <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                Work
+              </span>
+            </h2>
+            <p className="text-sm sm:text-base text-[#CFD7F2]">
               Our disciplined 6-stage sequence for turning 36–48 hour constraints into stage-winning software.
             </p>
           </div>

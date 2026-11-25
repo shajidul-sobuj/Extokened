@@ -105,14 +105,14 @@ export default async function HackathonDetailPage({ params }: HackathonPageProps
           {hackathon.name}
         </h1>
 
-        <p className="text-base text-[#A8B2CF]">
+        <p className="text-base text-[#CFD7F2]">
           Organized by <strong className="text-white font-semibold">{hackathon.organizer}</strong>
         </p>
 
-        {/* Hairline Telemetry Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.08] rounded-2xl overflow-hidden border border-white/[0.08] pt-0 mt-4">
-          <div className="bg-[#0D1019] p-5 space-y-1.5">
-            <div className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider">
+        {/* Hairline Frosted Telemetry Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.1] rounded-2xl overflow-hidden border border-white/[0.1] backdrop-blur-xl mt-4">
+          <div className="bg-[#0B0F1D]/80 p-5 space-y-1.5">
+            <div className="text-[11px] font-mono text-[#8F99B8] uppercase tracking-wider">
               Sprint Duration
             </div>
             <div className="text-sm font-semibold text-white flex items-center gap-2">
@@ -121,8 +121,8 @@ export default async function HackathonDetailPage({ params }: HackathonPageProps
             </div>
           </div>
 
-          <div className="bg-[#0D1019] p-5 space-y-1.5">
-            <div className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider">
+          <div className="bg-[#0B0F1D]/80 p-5 space-y-1.5">
+            <div className="text-[11px] font-mono text-[#8F99B8] uppercase tracking-wider">
               Location &amp; Venue
             </div>
             <div className="text-sm font-semibold text-white flex items-center gap-2">
@@ -131,8 +131,8 @@ export default async function HackathonDetailPage({ params }: HackathonPageProps
             </div>
           </div>
 
-          <div className="bg-[#0D1019] p-5 space-y-1.5">
-            <div className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-wider">
+          <div className="bg-[#0B0F1D]/80 p-5 space-y-1.5">
+            <div className="text-[11px] font-mono text-[#8F99B8] uppercase tracking-wider">
               Official Award
             </div>
             <div className="text-sm font-semibold text-[#F5C451] flex items-center gap-2">

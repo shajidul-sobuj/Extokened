@@ -29,7 +29,12 @@ export default function PrivacyPage() {
           <ShieldCheck className="w-3.5 h-3.5 text-[#8B9BF7]" />
           <span>Data Handling &amp; Privacy</span>
         </span>
-        <h1 className="font-page-title font-bold text-white">Privacy Policy</h1>
+        <h1 className="font-page-title font-bold text-white">
+          Privacy{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            Policy
+          </span>
+        </h1>
         <p className="text-xs font-mono text-[#7D87A6]">Last updated: November 24, 2026</p>
       </MotionReveal>
 

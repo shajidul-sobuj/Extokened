@@ -66,9 +66,12 @@ export default function ContactPage() {
       <MotionReveal className="space-y-4 max-w-3xl">
         <span className="eyebrow-badge">Collaboration &amp; Dispatch</span>
         <h1 className="font-page-title font-bold text-white">
-          Let&apos;s build something meaningful.
+          Let&apos;s build something{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            meaningful.
+          </span>
         </h1>
-        <p className="text-base sm:text-lg text-[#A8B2CF] leading-relaxed">
+        <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72]">
           Whether you are an event organizer inviting Extokened to a competition, an organization seeking a prototype execution team, or an engineering collaborator—we respond promptly.
         </p>
       </MotionReveal>

@@ -53,9 +53,12 @@ export default function ProjectsPage() {
       <MotionReveal className="space-y-4 max-w-3xl">
         <span className="eyebrow-badge">Portfolio / Selected Work</span>
         <h1 className="font-page-title font-bold text-white">
-          Everything We Have Shipped
+          Everything We Have{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            Shipped
+          </span>
         </h1>
-        <p className="text-base sm:text-lg text-[#A8B2CF] leading-relaxed">
+        <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72]">
           From 36-hour hackathon winning prototypes to production systems and open-source tooling ({projects.length} documented case studies). Every build includes architecture notes, verified code, and measured outcomes.
         </p>
       </MotionReveal>

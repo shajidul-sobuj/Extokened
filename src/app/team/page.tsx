@@ -50,9 +50,12 @@ export default function TeamPage() {
       <MotionReveal className="space-y-4 max-w-3xl">
         <span className="eyebrow-badge">Team / Operational Roster</span>
         <h1 className="font-page-title font-bold text-white">
-          The People Behind the Work
+          The People Behind{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            the Work
+          </span>
         </h1>
-        <p className="text-base sm:text-lg text-[#A8B2CF] leading-relaxed">
+        <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72]">
           Extokened operates as a permanent squad. Four builders combining deep technical specialization with an established collaboration shorthand honed across 18 competitions.
         </p>
       </MotionReveal>
@@ -75,9 +78,12 @@ export default function TeamPage() {
           <div className="space-y-3 max-w-xl">
             <span className="eyebrow-badge">Competency Matrix</span>
             <h2 className="font-section-title font-bold text-white">
-              Collective Discipline Mastery
+              Collective Discipline{" "}
+              <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                Mastery
+              </span>
             </h2>
-            <p className="text-sm sm:text-base text-[#A8B2CF]">
+            <p className="text-sm sm:text-base text-[#CFD7F2]">
               Grouped technical competencies backed by shipped software and competitive validation.
             </p>
           </div>
@@ -121,9 +127,12 @@ export default function TeamPage() {
           <div className="space-y-3 max-w-xl">
             <span className="eyebrow-badge">Team Culture</span>
             <h2 className="font-section-title font-bold text-white">
-              Why a Permanent Squad Wins
+              Why a Permanent Squad{" "}
+              <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                Wins
+              </span>
             </h2>
-            <p className="text-sm sm:text-base text-[#A8B2CF]">
+            <p className="text-sm sm:text-base text-[#CFD7F2]">
               Ad-hoc hackathon teams spend the first 8 hours figuring out personalities. We spend those hours building schemas.
             </p>
           </div>

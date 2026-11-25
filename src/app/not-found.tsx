@@ -16,7 +16,7 @@ export default function NotFound() {
             <h1 className="text-2xl sm:text-3xl font-display font-bold text-white">
               Page Not Located
             </h1>
-            <p className="text-sm sm:text-base text-[#A8B2CF] leading-relaxed">
+            <p className="text-sm sm:text-base text-[#CFD7F2] leading-relaxed">
               The resource, case study, or page you requested does not exist or may have been moved.
             </p>
           </div>

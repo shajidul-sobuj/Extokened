@@ -52,9 +52,12 @@ export default function HackathonsPage() {
       <MotionReveal className="space-y-4 max-w-3xl">
         <span className="eyebrow-badge">Competitions / Hall of Fame</span>
         <h1 className="font-page-title font-bold text-white">
-          Hackathon Archive
+          Hackathon{" "}
+          <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+            Archive
+          </span>
         </h1>
-        <p className="text-base sm:text-lg text-[#A8B2CF] leading-relaxed">
+        <p className="text-base sm:text-lg text-[#CFD7F2] leading-[1.72]">
           A chronological record of hackathons entered, problems tackled under tight deadlines, and verified outcomes. Championships, runner-up podiums, and finalists are counted separately.
         </p>
       </MotionReveal>

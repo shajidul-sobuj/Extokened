@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Inter,
+  Space_Grotesk,
+  JetBrains_Mono,
+  Plus_Jakarta_Sans,
+  Instrument_Serif,
+} from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -23,6 +29,14 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
   display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -79,7 +93,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
       >
         <InteractiveBackground />
         <Navbar />

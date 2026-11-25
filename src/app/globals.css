@@ -57,33 +57,40 @@ body {
 }
 
 @layer components {
-  /* Fluid Display Typography Scale */
+  /* Fluid Display Typography Scale (Architectural Space Grotesk + Editorial Serif Pairing) */
   .font-hero-display {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(2.65rem, 6vw, 4.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.04em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(2.85rem, 6.8vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .font-hero-serif {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
 
   .font-page-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(2.15rem, 4.5vw, 3.75rem);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(2.25rem, 4.6vw, 3.85rem);
+    line-height: 1.06;
+    letter-spacing: -0.038em;
   }
 
   .font-section-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(1.75rem, 3.2vw, 2.65rem);
-    line-height: 1.14;
-    letter-spacing: -0.03em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(1.8rem, 3.3vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.032em;
   }
 
   .font-card-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
     font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-    line-height: 1.28;
-    letter-spacing: -0.02em;
+    line-height: 1.26;
+    letter-spacing: -0.022em;
   }
 
   /* Refined Twilight Frosted Glass Card (Zero !important conflicts) */

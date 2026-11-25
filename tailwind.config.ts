@@ -58,11 +58,12 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
         display: [
-          "var(--font-plus-jakarta)",
           "var(--font-space-grotesk)",
+          "var(--font-plus-jakarta)",
           "system-ui",
           "sans-serif",
         ],
+        serif: ["var(--font-instrument-serif)", "Georgia", "serif"],
         tech: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"],
       },

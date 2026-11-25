@@ -29,10 +29,14 @@ export function CollabCTAEditorial() {
               </span>
 
               <h2 className="font-section-title font-bold text-white">
-                Have a tough problem or competition ahead?
+                Have a tough problem or{" "}
+                <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                  competition
+                </span>{" "}
+                ahead?
               </h2>
 
-              <p className="text-sm sm:text-base text-[#A8B2CF] leading-relaxed">
+              <p className="text-sm sm:text-base text-[#CFD7F2] leading-[1.72]">
                 We partner with hackathon organizers, sponsors, and technical teams to turn complex ideas into working, verifiable software on tight timelines.
               </p>
 

@@ -17,9 +17,12 @@ export function TeamPreviewEditorial() {
             <div className="space-y-3 max-w-2xl">
               <span className="eyebrow-badge">Squad Roster</span>
               <h2 className="font-section-title font-bold text-white">
-                The Builders Behind Extokened
+                The Builders Behind{" "}
+                <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                  Extokened
+                </span>
               </h2>
-              <p className="text-sm sm:text-base text-[#A8B2CF] leading-relaxed">
+              <p className="text-sm sm:text-base text-[#C8D0EC] leading-[1.7]">
                 A synchronized permanent unit. Complementary domain mastery, shared accountability, and zero role confusion.
               </p>
             </div>

@@ -32,10 +32,13 @@ export function HackathonHighlightEditorial() {
             <span className="eyebrow-badge">Competitive Crucible</span>
 
             <h2 className="font-section-title font-bold text-white">
-              Verified Hackathon Achievements
+              Verified Hackathon{" "}
+              <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                Achievements
+              </span>
             </h2>
 
-            <p className="text-sm sm:text-base text-[#A8B2CF] leading-relaxed">
+            <p className="text-sm sm:text-base text-[#C8D0EC] leading-[1.72]">
               Hackathons are our testing ground. We separate championship titles, runner-up podiums, and competitor sprints transparently with verifiable evidence and live code links.
             </p>
 

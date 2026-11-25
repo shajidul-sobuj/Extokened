@@ -15,14 +15,17 @@ export function PhilosophyEditorial() {
           <MotionReveal direction="left" className="lg:col-span-5 space-y-4">
             <span className="eyebrow-badge">Operating Philosophy</span>
             <h2 className="font-section-title font-bold text-white">
-              We reject speculative slides. We ship verifiable software.
+              We reject speculative slides. We ship{" "}
+              <span className="font-hero-serif text-[1.14em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                verifiable software.
+              </span>
             </h2>
           </MotionReveal>
 
           <MotionReveal
             direction="right"
             delay={0.1}
-            className="lg:col-span-7 space-y-5 text-[#B4BDD8] text-sm sm:text-base leading-[1.75]"
+            className="lg:col-span-7 space-y-5 text-[#CFD7F2] text-sm sm:text-base leading-[1.78]"
           >
             <p>
               In competitive technology sprints, teams often optimize for flashy pitch decks. Extokened was founded on the opposite premise: deep engineering rigor, clean schema contracts, and genuine working software that holds up under scrutiny.

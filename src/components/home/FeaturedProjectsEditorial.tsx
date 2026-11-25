@@ -1,149 +1,188 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { ArrowRight, ExternalLink, Trophy } from "lucide-react";
+import { ArrowRight, ArrowUpRight, ExternalLink, Trophy } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
 import { MotionReveal, MotionStagger, MotionItem } from "@/components/ui/MotionReveal";
 
+function ProjectThumb({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#141A33] via-[#0B0E1A] to-[#07080D]">
+        <span className="font-display font-bold text-lg text-white/25 tracking-tight">
+          {alt}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      onError={() => setFailed(true)}
+      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+      loading="lazy"
+    />
+  );
+}
+
 export function FeaturedProjectsEditorial() {
-  // Take top 3 flagship projects
   const featuredList = projects.filter((p) => p.featured).slice(0, 3);
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E2337] relative overflow-hidden bg-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
-        {/* Section Header */}
+    <section className="py-16 sm:py-20 lg:py-24 border-b border-white/[0.08] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Elevated Two-Font Section Header */}
         <MotionReveal>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-[#1E2337]">
-            <div className="space-y-2 max-w-xl">
-              <span className="pill-lavender">SELECTED PORTFOLIO</span>
-              <h2 className="font-section-title font-semibold text-white">
-                Featured Engineering Builds
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 pb-6 border-b border-white/[0.1]">
+            <div className="space-y-3 max-w-xl">
+              <span className="eyebrow-badge">Selected Portfolio</span>
+              <h2 className="font-section-title font-bold text-white">
+                Featured Engineering{" "}
+                <span className="font-hero-serif text-[1.15em] bg-gradient-to-r from-[#A9B7FF] via-[#F0F4FF] to-[#F7CA63] bg-clip-text text-transparent">
+                  Builds
+                </span>
               </h2>
-              <p className="text-sm text-[#BAC0DC] leading-relaxed">
-                Real software architectures engineered under 24–48h hackathons and production sprints.
+              <p className="text-sm sm:text-[15px] text-[#C8D0EC] leading-[1.68]">
+                Production-grade systems and stage-winning prototypes shipped under 24–48 hour hackathon pressure.
               </p>
             </div>
 
             <Link
               href="/projects"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-[#8B9BF7] hover:text-white transition-colors"
+              className="btn-secondary py-2 px-4 text-xs sm:text-[13px] shrink-0 group self-start md:self-auto"
             >
               <span>Explore all {projects.length} projects</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
         </MotionReveal>
 
-        {/* Balanced, Animated 3-Card Grid (No Giant Oversized Banner) */}
-        <MotionStagger stagger={0.12} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {featuredList.map((project) => (
-            <MotionItem key={project.slug}>
-              <div className="meadow-card p-5 sm:p-6 flex flex-col justify-between h-full group hover:border-[#8B9BF7]/50 transition-all duration-300">
-                
-                <div className="space-y-4">
-                  {/* Clean Proportional Screenshot / Visual Preview */}
-                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-[#1E2337] bg-[#0A0D18] group-hover:border-[#8B9BF7]/40 transition-colors">
-                    <img
-                      src={project.coverImage}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    
-                    {/* Category & Status Overlay */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#08090E]/85 backdrop-blur-md text-[#B8C0EC] border border-[#1E2337]">
-                        {project.category}
-                      </span>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#08090E]/85 backdrop-blur-md text-[#2FB36A] border border-[#2FB36A]/30">
-                        {project.status}
-                      </span>
-                    </div>
-                  </div>
+        {/* Compact, Crisp 3-Column Grid (Fits Cleanly in One Viewport) */}
+        <MotionStagger
+          stagger={0.08}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          {featuredList.map((project, idx) => {
+            const isWinner =
+              project.outcome.toLowerCase().includes("champion") ||
+              project.outcome.toLowerCase().includes("1st") ||
+              project.outcome.toLowerCase().includes("runner");
 
-                  {/* Title & Metadata */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-mono text-[#727896]">
-                      <span>{project.year}</span>
-                      {project.outcome.toLowerCase().includes("champion") || project.outcome.toLowerCase().includes("1st") ? (
-                        <span className="text-[#FFC857] flex items-center gap-1 font-semibold text-[11px]">
-                          <Trophy className="w-3 h-3 text-[#FFC857]" />
-                          Award Winner
+            return (
+              <MotionItem key={project.slug} className="h-full">
+                <article className="surface-card surface-card-interactive p-4 sm:p-5 flex flex-col justify-between h-full group gap-4">
+                  <div className="space-y-4">
+                    {/* Compact Proportional Preview */}
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/[0.1] bg-[#0B0E1A] block"
+                    >
+                      <ProjectThumb src={project.coverImage} alt={project.title} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#07080D]/85 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 flex flex-wrap items-center gap-1.5">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#07080D]/90 backdrop-blur-md text-[#E4E9FF] border border-white/[0.14]">
+                          {project.category}
                         </span>
-                      ) : null}
-                    </div>
-
-                    <Link href={`/projects/${project.slug}`} className="block group/link">
-                      <h3 className="text-xl font-bold text-white group-hover/link:text-[#8B9BF7] transition-colors">
-                        {project.title}
-                      </h3>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#07080D]/90 backdrop-blur-md text-[#34D399] border border-[#34D399]/35">
+                          {project.status}
+                        </span>
+                      </div>
                     </Link>
 
-                    <p className="text-xs text-[#BAC0DC] leading-relaxed line-clamp-3 font-sans">
-                      {project.summary}
-                    </p>
-                  </div>
+                    {/* Meta + Title + Description */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[#8F99B8]">
+                        <span>
+                          0{idx + 1} · {project.year}
+                        </span>
+                        {isWinner && (
+                          <span className="inline-flex items-center gap-1 text-[#F5C451] font-semibold">
+                            <Trophy className="w-3 h-3" />
+                            <span>
+                              {project.outcome.toLowerCase().includes("runner")
+                                ? "Finalist"
+                                : "Winner"}
+                            </span>
+                          </span>
+                        )}
+                      </div>
 
-                  {/* Tech Stack Chips */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span key={tech} className="tech-tag text-[10px]">
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <span className="tech-tag text-[10px] text-[#727896]">
-                        +{project.technologies.length - 4}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Footer Action Links */}
-                <div className="pt-4 mt-5 border-t border-[#1E2337] flex items-center justify-between">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8B9BF7] hover:text-white transition-colors"
-                  >
-                    <span>Read case study</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-
-                  <div className="flex items-center gap-2">
-                    {project.sourceUrl && (
-                      <a
-                        href={project.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-white hover:border-[#8B9BF7]/40 transition-colors"
-                        title="View Source Code"
+                      <Link
+                        href={`/projects/${project.slug}`}
+                        className="inline-flex items-center gap-1.5 group/link"
                       >
-                        <Github className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-white hover:border-[#8B9BF7]/40 transition-colors"
-                        title="Live Deployment"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
+                        <h3 className="text-lg sm:text-[1.2rem] font-display font-bold tracking-tight text-white group-hover/link:text-[#B4C0FF] transition-colors">
+                          {project.title}
+                        </h3>
+                        <ArrowUpRight className="w-4 h-4 text-[#8B9BF7] opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
+                      </Link>
 
-              </div>
-            </MotionItem>
-          ))}
+                      <p className="text-[13px] text-[#CFD7F2] leading-[1.6] line-clamp-2">
+                        {project.summary}
+                      </p>
+                    </div>
+
+                    {/* Compact Tech Stack */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.technologies.slice(0, 3).map((tech) => (
+                        <span key={tech} className="tech-tag text-[11px] py-0.5 px-2">
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="tech-tag text-[11px] py-0.5 px-2 text-[#8F99B8]">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="pt-3.5 border-t border-white/[0.1] flex items-center justify-between gap-3">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#A5B2FF] hover:text-white transition-colors"
+                    >
+                      <span>Read case study</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+
+                    <div className="flex items-center gap-1.5">
+                      {project.sourceUrl && (
+                        <a
+                          href={project.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.12] flex items-center justify-center text-[#C8D0EC] hover:text-white hover:border-[#8B9BF7]/50 transition-colors"
+                          aria-label={`${project.title} source code`}
+                        >
+                          <Github className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.12] flex items-center justify-center text-[#C8D0EC] hover:text-white hover:border-[#8B9BF7]/50 transition-colors"
+                          aria-label={`${project.title} live deployment`}
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </MotionItem>
+            );
+          })}
         </MotionStagger>
-
       </div>
     </section>
   );

@@ -124,7 +124,7 @@ export const projects: Project[] = [
     category: "FinTech & Data",
     status: "Prototype",
     year: 2024,
-    coverImage: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&auto=format&fit=crop&q=80",
+    coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80",
     technologies: ["Next.js", "Whisper AI", "FastAPI", "Supabase", "IndexedDB PWA", "Tailwind CSS"],
     liveUrl: "https://khashra.extokened.dev",
     sourceUrl: "https://github.com/extokened/khashra-ledger",

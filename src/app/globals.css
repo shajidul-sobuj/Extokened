@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #08090E;
-  --foreground: #FFFFFF;
-  --mist: #161928;
+  --background: #07080D;
+  --foreground: #F5F7FF;
+  --surface-1: rgba(14, 18, 32, 0.72);
+  --surface-2: rgba(20, 25, 44, 0.8);
+  --border-subtle: rgba(148, 163, 224, 0.16);
+  --accent: #8B9BF7;
 }
 
 * {
@@ -19,341 +22,312 @@ html {
 }
 
 body {
-  background-color: #08090E;
-  color: #FFFFFF;
+  background-color: #07080D;
+  color: #F5F7FF;
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Custom Editorial Dark Twilight Scrollbar */
+/* Precision Dark Twilight Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #08090E;
+  background: #07080D;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E2337;
-  border-radius: 3px;
+  background: #232A42;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2B324E;
+  background: #364166;
 }
 
-/* Selection highlight using Twilight Periwinkle */
 ::selection {
   background-color: rgba(139, 155, 247, 0.35);
   color: #FFFFFF;
 }
 
-@layer utilities {
-  /* Fluid Typography Scale */
+@layer components {
+  /* Fluid Display Typography Scale (Architectural Space Grotesk + Editorial Serif Pairing) */
   .font-hero-display {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(3rem, 7.2vw, 5.85rem);
-    line-height: 1.02;
-    letter-spacing: -0.04em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(2.85rem, 6.8vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+  }
+
+  .font-hero-serif {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
 
   .font-page-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(2.25rem, 4.5vw, 4.25rem);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(2.25rem, 4.6vw, 3.85rem);
+    line-height: 1.06;
+    letter-spacing: -0.038em;
   }
 
   .font-section-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(1.85rem, 3.5vw, 3rem);
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(1.8rem, 3.3vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.032em;
   }
 
   .font-card-title {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(1.25rem, 2vw, 1.65rem);
-    line-height: 1.25;
-    letter-spacing: -0.02em;
+    font-family: var(--font-space-grotesk), var(--font-plus-jakarta), system-ui, sans-serif;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    line-height: 1.26;
+    letter-spacing: -0.022em;
   }
 
-  /* Architectural Twilight Meadow Grid */
-  .meadow-grid,
-  .editorial-grid,
-  .studio-grid,
-  .warm-grid {
-    background-size: 64px 64px;
-    background-image: 
-      linear-gradient(to right, rgba(139, 155, 247, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(139, 155, 247, 0.03) 1px, transparent 1px);
-  }
-
-  /* True Twilight Frosted Glass Cards (Driftbar Meadow Aesthetic) */
+  /* Refined Twilight Frosted Glass Card (Zero !important conflicts) */
+  .surface-card,
   .meadow-card,
   .editorial-card,
-  .studio-card,
-  .warm-card {
-    background: linear-gradient(145deg, rgba(16, 20, 34, 0.62) 0%, rgba(9, 11, 18, 0.74) 100%) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    border: 1px solid rgba(139, 155, 247, 0.18) !important;
+  .studio-card {
+    background: linear-gradient(
+      155deg,
+      rgba(15, 19, 34, 0.72) 0%,
+      rgba(9, 11, 20, 0.82) 100%
+    );
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(148, 163, 224, 0.16);
     border-radius: 16px;
-    box-shadow: 
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.14),
-      inset 0 0 24px rgba(139, 155, 247, 0.04),
-      0 20px 48px -12px rgba(0, 0, 0, 0.75);
-    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), 
-                border-color 260ms ease, 
-                box-shadow 260ms ease,
-                background 260ms ease;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+      0 18px 40px -18px rgba(0, 0, 0, 0.78);
+    transition:
+      transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 240ms ease,
+      box-shadow 240ms ease,
+      background 240ms ease;
   }
 
-  .meadow-card:hover,
-  .editorial-card:hover,
-  .studio-card:hover,
-  .warm-card:hover {
-    transform: translateY(-3px);
-    background: linear-gradient(145deg, rgba(22, 28, 48, 0.75) 0%, rgba(12, 15, 26, 0.86) 100%) !important;
-    border-color: rgba(139, 155, 247, 0.42) !important;
-    box-shadow: 
-      inset 0 1px 2px 0 rgba(255, 255, 255, 0.28),
-      0 24px 60px -12px rgba(0, 0, 0, 0.85),
-      0 0 36px rgba(139, 155, 247, 0.18);
+  .surface-card-interactive:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(
+      155deg,
+      rgba(20, 26, 46, 0.8) 0%,
+      rgba(11, 14, 25, 0.88) 100%
+    );
+    border-color: rgba(139, 155, 247, 0.38);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+      0 24px 52px -18px rgba(0, 0, 0, 0.86),
+      0 0 28px -8px rgba(139, 155, 247, 0.22);
   }
 
-  /* Inset Glass Panel for interior cards, telemetry boxes, and code displays */
+  /* Frosted Inset Panel for sub-containers, outcomes, and metadata */
+  .surface-inset,
   .glass-panel-inset {
-    background: rgba(10, 13, 24, 0.58) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border: 1px solid rgba(139, 155, 247, 0.16) !important;
+    background: rgba(8, 10, 18, 0.62);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(148, 163, 224, 0.14);
     border-radius: 12px;
   }
 
-  /* Sleek Dark Button (Signature Meadow CTA) */
-  .btn-meadow-dark,
-  .btn-amber-glass,
-  .btn-primary {
+  /* Primary High-Contrast Luminous CTA Button */
+  .btn-primary,
+  .btn-meadow-dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.4rem;
-    background: linear-gradient(135deg, #121522 0%, #1D2236 100%);
-    color: #FFFFFF;
+    padding: 0.7rem 1.4rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #EBF0FF 100%);
+    color: #07080D;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: -0.01em;
     border-radius: 9999px;
-    border: 1px solid rgba(139, 155, 247, 0.35);
-    box-shadow: 0 0 20px rgba(139, 155, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-    transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.92);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.28),
+      0 10px 28px -8px rgba(139, 155, 247, 0.5);
+    transition:
+      transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      background 180ms ease,
+      box-shadow 180ms ease;
+    white-space: nowrap;
   }
 
-  .btn-meadow-dark:hover,
-  .btn-amber-glass:hover,
-  .btn-primary:hover {
-    background: linear-gradient(135deg, #181C2E 0%, #262D47 100%);
-    border-color: rgba(139, 155, 247, 0.6);
-    box-shadow: 0 0 28px rgba(139, 155, 247, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  .btn-primary:hover,
+  .btn-meadow-dark:hover {
+    background: #FFFFFF;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.32),
+      0 14px 34px -8px rgba(139, 155, 247, 0.72);
     transform: translateY(-1px);
-    color: #FFFFFF;
+    color: #07080D;
   }
 
-  .btn-meadow-dark:active,
-  .btn-amber-glass:active,
-  .btn-primary:active {
-    transform: scale(0.98);
+  .btn-primary:active,
+  .btn-meadow-dark:active {
+    transform: translateY(0) scale(0.985);
   }
 
-  /* Secondary Button */
+  /* Secondary Frosted Twilight Glass Button */
   .btn-secondary,
   .btn-meadow-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.65rem 1.25rem;
-    background: rgba(16, 20, 36, 0.65);
+    padding: 0.7rem 1.3rem;
+    background: rgba(16, 20, 36, 0.68);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    color: #CAD1F0;
+    color: #E2E7FA;
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: -0.01em;
-    border: 1px solid rgba(139, 155, 247, 0.22);
+    border: 1px solid rgba(148, 163, 224, 0.22);
     border-radius: 9999px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 16px rgba(0, 0, 0, 0.25);
-    transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 6px 18px -6px rgba(0, 0, 0, 0.4);
+    transition:
+      transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease;
+    white-space: nowrap;
   }
 
   .btn-secondary:hover,
   .btn-meadow-secondary:hover {
     background: rgba(24, 30, 54, 0.85);
-    border-color: rgba(139, 155, 247, 0.5);
+    border-color: rgba(139, 155, 247, 0.48);
     color: #FFFFFF;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 0 24px rgba(139, 155, 247, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 0 22px rgba(139, 155, 247, 0.22);
     transform: translateY(-1px);
   }
 
   .btn-secondary:active,
   .btn-meadow-secondary:active {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.985);
   }
 
-  /* Dark Metal Key / Quick Action Button */
-  .btn-metal {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #161928 0%, #252B44 100%);
-    color: #FFFFFF;
-    border: 1px solid rgba(139, 155, 247, 0.3);
-    border-radius: 8px;
-    transition: all 180ms ease;
-  }
-
-  .btn-metal:hover {
-    background: linear-gradient(135deg, #1C2033 0%, #303756 100%);
-    border-color: rgba(139, 155, 247, 0.6);
-    box-shadow: 0 0 18px rgba(139, 155, 247, 0.25);
-  }
-
-  /* Driftbar Spec: Status Chips */
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    height: 26px;
-    padding: 0 10px;
-    border: 1px solid rgba(139, 155, 247, 0.18);
-    border-radius: 9999px;
-    background: rgba(21, 24, 36, 0.65);
-    backdrop-filter: blur(8px);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    max-width: 100%;
-    color: #BAC0DC;
-    transition: all 180ms ease;
-  }
-
-  .chip:hover {
-    border-color: rgba(139, 155, 247, 0.4);
-    color: #FFFFFF;
-    background: rgba(27, 31, 48, 0.75);
-  }
-
-  .chip svg {
-    width: 11px;
-    height: 11px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .chip__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 9999px;
-    background-color: #2FB36A;
-    box-shadow: 0 0 0 2.5px rgba(47, 179, 106, 0.25);
-    display: inline-block;
-  }
-
-  /* Twilight Pill Badge */
+  /* Frosted Eyebrow Pill Badge */
+  .eyebrow-badge,
   .pill-lavender,
-  .pill-amber,
   .eyebrow-label {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.85rem;
-    background: rgba(22, 27, 44, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(139, 155, 247, 0.3);
+    gap: 0.45rem;
+    padding: 0.34rem 0.85rem;
+    background: rgba(18, 23, 40, 0.68);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 155, 247, 0.28);
     border-radius: 9999px;
     font-family: var(--font-jetbrains-mono), monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #B8C0EC;
-    box-shadow: 0 0 16px rgba(139, 155, 247, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.08em;
+    color: #C4CCFA;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
-  /* Compact Tech & Result Tags */
+  /* Compact Tech & Metadata Tag */
   .tech-tag {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.6875rem;
+    gap: 0.3rem;
+    padding: 0.24rem 0.6rem;
+    border-radius: 7px;
+    font-size: 0.72rem;
+    line-height: 1.2;
     font-family: var(--font-jetbrains-mono), monospace;
     font-weight: 500;
-    border: 1px solid rgba(139, 155, 247, 0.18);
-    background: rgba(18, 22, 36, 0.65);
+    border: 1px solid rgba(148, 163, 224, 0.16);
+    background: rgba(16, 20, 36, 0.68);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    color: #CAD1F0;
+    color: #C8D0EC;
+    white-space: nowrap;
   }
 
-  /* Giant Frosted Glass Wordmark (Driftbar Spec Exact Styling) */
-  .footer__wordmark-glass {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -15px;
-    z-index: 10;
-    margin: 0;
+  /* Form Input Standard */
+  .field-input {
+    width: 100%;
+    background: rgba(8, 10, 18, 0.78);
+    border: 1px solid rgba(148, 163, 224, 0.2);
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.875rem;
+    color: #F5F7FF;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+
+  .field-input::placeholder {
+    color: #6B7596;
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: rgba(139, 155, 247, 0.65);
+    box-shadow: 0 0 0 3px rgba(139, 155, 247, 0.16);
+    background: rgba(11, 14, 24, 0.9);
+  }
+
+  /* GPU-Clean Frosted Glass Footer Wordmark (Zero drop-shadow artifact bug) */
+  .footer-wordmark-glass {
     font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(3.8rem, 18.5vw, 24rem);
+    font-size: clamp(2.85rem, 14.8vw, 15.5rem);
     font-weight: 700;
-    line-height: 0.74;
-    letter-spacing: -0.045em;
+    line-height: 0.82;
+    letter-spacing: -0.04em;
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    color: rgba(232, 234, 250, 0.4);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.92) 0%, rgba(195, 205, 252, 0.5) 46%, rgba(255, 255, 255, 0.72) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(210, 218, 255, 0.66) 44%,
+      rgba(165, 178, 245, 0.36) 78%,
+      rgba(139, 155, 247, 0.12) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 -2px 1px rgba(255, 255, 255, 0.65)) drop-shadow(0 0 32px rgba(139, 155, 247, 0.45));
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+  }
+}
+
+@layer utilities {
+  /* Architectural Twilight Grid */
+  .architectural-grid,
+  .meadow-grid {
+    background-size: 64px 64px;
+    background-image:
+      linear-gradient(to right, rgba(139, 155, 247, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(139, 155, 247, 0.035) 1px, transparent 1px);
   }
 
-  /* Hide scrollbars for clean horizontal swipe on mobile */
+  /* Hide scrollbars cleanly for horizontal filter chips on mobile */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  .wordmark-sunken {
-    font-size: clamp(4.5rem, 15vw, 15rem);
-    font-weight: 200;
-    letter-spacing: 0.05em;
-    line-height: 0.75;
-    color: #252B44;
-    user-select: none;
-    pointer-events: none;
-    text-align: center;
-  }
-  /* Atmospheric Content Scrim */
-  .atmospheric-veil {
-    background-color: rgba(8, 9, 14, 0.72);
-    backdrop-filter: blur(1px);
   }
 
   /* Drifting Cloud Layers ("Megh") */
@@ -382,11 +356,11 @@ body {
   }
 
   .animate-cloud-drift {
-    animation: cloudDriftSlow 36s ease-in-out infinite;
+    animation: cloudDriftSlow 38s ease-in-out infinite;
   }
 
   .animate-cloud-drift-reverse {
-    animation: cloudDriftReverse 48s ease-in-out infinite;
+    animation: cloudDriftReverse 50s ease-in-out infinite;
   }
 }
 
@@ -401,5 +375,3 @@ body {
     scroll-behavior: auto !important;
   }
 }
-
-

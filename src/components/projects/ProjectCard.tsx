@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Project } from "@/data/projects";
-import { ExternalLink, ArrowRight, CheckCircle2, Trophy } from "lucide-react";
+import { ExternalLink, ArrowRight, ArrowUpRight, Trophy } from "lucide-react";
 import { Github } from "@/components/ui/Icons";
 
 interface ProjectCardProps {
@@ -11,106 +11,116 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const isAwardWinner = project.outcome.toLowerCase().includes("champion") || 
-                        project.outcome.toLowerCase().includes("1st") || 
-                        project.outcome.toLowerCase().includes("runner");
+  const [imgFailed, setImgFailed] = useState(false);
+
+  const isWinner =
+    project.outcome.toLowerCase().includes("champion") ||
+    project.outcome.toLowerCase().includes("1st place");
+  const isFinalist =
+    !isWinner && project.outcome.toLowerCase().includes("runner");
 
   return (
-    <div className="meadow-card p-5 sm:p-6 flex flex-col justify-between group h-full hover:border-[#8B9BF7]/50 transition-all duration-300">
-      {/* Top Section */}
+    <article className="surface-card surface-card-interactive p-4 sm:p-5 flex flex-col justify-between gap-4 group h-full">
       <div className="space-y-4">
-        
-        {/* Project Visual Preview / Screenshot */}
+        {/* Compact Visual Preview */}
         {project.coverImage && (
-          <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-[#1E2337] bg-[#0A0D18] group-hover:border-[#8B9BF7]/40 transition-colors">
-            <img
-              src={project.coverImage}
-              alt={project.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            
-            {/* Overlay Badges */}
-            <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#08090E]/85 backdrop-blur-md text-[#B8C0EC] border border-[#1E2337]">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/[0.1] bg-gradient-to-br from-[#141A33] via-[#0B0E1A] to-[#07080D] block"
+          >
+            {!imgFailed ? (
+              <img
+                src={project.coverImage}
+                alt={project.title}
+                onError={() => setImgFailed(true)}
+                className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                loading="lazy"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center p-4">
+                <span className="font-display font-bold text-lg text-white/25 tracking-tight">
+                  {project.title}
+                </span>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#07080D]/85 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 flex flex-wrap items-center gap-1.5">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#07080D]/90 backdrop-blur-md text-[#E4E9FF] border border-white/[0.14]">
                 {project.category}
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-[#08090E]/85 backdrop-blur-md text-[#2FB36A] border border-[#2FB36A]/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#07080D]/90 backdrop-blur-md text-[#34D399] border border-[#34D399]/35">
                 {project.status}
               </span>
             </div>
-          </div>
+          </Link>
         )}
 
-        {/* Title, Year & Award */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-mono text-[#727896]">
+        {/* Title & Summary */}
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[#8F99B8]">
             <span>{project.year}</span>
-            {isAwardWinner && (
-              <span className="text-[#FFC857] flex items-center gap-1 font-semibold text-[11px]">
-                <Trophy className="w-3 h-3 text-[#FFC857]" />
-                Podium Winner
+            {isWinner ? (
+              <span className="inline-flex items-center gap-1 text-[#F5C451] font-semibold">
+                <Trophy className="w-3 h-3" />
+                Winner
               </span>
-            )}
+            ) : isFinalist ? (
+              <span className="inline-flex items-center gap-1 text-[#A5B2FF] font-semibold">
+                <Trophy className="w-3 h-3" />
+                Finalist
+              </span>
+            ) : null}
           </div>
 
-          <Link href={`/projects/${project.slug}`} className="group/link block">
-            <h3 className="text-xl font-bold text-white group-hover/link:text-[#8B9BF7] transition-colors">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="inline-flex items-center gap-1.5 group/link"
+          >
+            <h3 className="text-lg sm:text-[1.2rem] font-display font-bold tracking-tight text-white group-hover/link:text-[#B4C0FF] transition-colors">
               {project.title}
             </h3>
+            <ArrowUpRight className="w-4 h-4 text-[#8B9BF7] opacity-0 -translate-x-1 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all" />
           </Link>
-          
-          <p className="text-xs text-[#BAC0DC] font-sans leading-relaxed line-clamp-2">
+
+          <p className="text-[13px] text-[#CFD7F2] leading-[1.6] line-clamp-2">
             {project.summary}
           </p>
         </div>
-
-        {/* Validated Outcome Strip */}
-        <div className="p-3 rounded-lg glass-panel-inset text-xs space-y-0.5">
-          <div className="text-[10px] font-mono uppercase tracking-wider text-[#8E96B8]">
-            Key Outcome
-          </div>
-          <div className="text-[11px] text-[#CAD1F0] font-sans line-clamp-2">
-            {project.outcome}
-          </div>
-        </div>
       </div>
 
-      {/* Bottom Section: Technologies & Action Links */}
-      <div className="pt-4 mt-5 border-t border-[#1E2337] space-y-4">
-        {/* Tech Stack Pills */}
+      {/* Footer: Stack & Links */}
+      <div className="pt-3.5 border-t border-white/[0.1] space-y-3">
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 4).map((tech) => (
-            <span key={tech} className="tech-tag text-[10px]">
+          {project.technologies.slice(0, 3).map((tech) => (
+            <span key={tech} className="tech-tag text-[11px] py-0.5 px-2">
               {tech}
             </span>
           ))}
-          {project.technologies.length > 4 && (
-            <span className="tech-tag text-[10px] text-[#727896]">
-              +{project.technologies.length - 4}
+          {project.technologies.length > 3 && (
+            <span className="tech-tag text-[11px] py-0.5 px-2 text-[#8F99B8]">
+              +{project.technologies.length - 3}
             </span>
           )}
         </div>
 
-        {/* Action Links */}
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between gap-3">
           <Link
             href={`/projects/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#8B9BF7] hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#A5B2FF] hover:text-white transition-colors"
           >
             <span>Read case study</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {project.sourceUrl && (
               <a
                 href={project.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-white hover:border-[#8B9BF7]/40 transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.12] flex items-center justify-center text-[#C8D0EC] hover:text-white hover:border-[#8B9BF7]/50 transition-colors"
                 title="GitHub Source"
-                aria-label="View Source Code"
+                aria-label={`${project.title} source code`}
               >
                 <Github className="w-3.5 h-3.5" />
               </a>
@@ -120,9 +130,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1.5 rounded-md bg-[#151824] border border-[#1E2337] text-[#BAC0DC] hover:text-white hover:border-[#8B9BF7]/40 transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/[0.12] flex items-center justify-center text-[#C8D0EC] hover:text-white hover:border-[#8B9BF7]/50 transition-colors"
                 title="Live Deployment"
-                aria-label="View Live Deployment"
+                aria-label={`${project.title} live deployment`}
               >
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -130,6 +140,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

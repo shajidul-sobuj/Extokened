@@ -7,16 +7,13 @@ import { HackathonCard } from "./HackathonCard";
 import { Trophy, ArrowRight, ShieldCheck } from "lucide-react";
 
 export function HackathonHallOfFame() {
-  const [filter, setFilter] = useState<"all" | "winner" | "runner_up" | "finalist">("all");
+  const [filter, setFilter] = useState<"all" | "winner" | "finalist" | "participant">("all");
 
   const filteredHackathons = hackathons
     .filter((h) => h.featured)
     .filter((h) => {
       if (filter === "all") return true;
-      if (filter === "winner") return h.resultType === "winner";
-      if (filter === "runner_up") return h.resultType === "runner_up";
-      if (filter === "finalist") return h.resultType === "finalist";
-      return true;
+      return h.resultType === filter;
     });
 
   return (
@@ -58,17 +55,7 @@ export function HackathonHallOfFame() {
                   : "text-zinc-400 hover:text-white"
               }`}
             >
-              🏆 Champions
-            </button>
-            <button
-              onClick={() => setFilter("runner_up")}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                filter === "runner_up"
-                  ? "bg-[#22D3C5]/20 text-[#22D3C5] border border-[#22D3C5]/30 shadow-sm"
-                  : "text-zinc-400 hover:text-white"
-              }`}
-            >
-              🥈 Runners-Up
+              Winner
             </button>
             <button
               onClick={() => setFilter("finalist")}
@@ -78,7 +65,17 @@ export function HackathonHallOfFame() {
                   : "text-zinc-400 hover:text-white"
               }`}
             >
-              Finalists
+              Finalist
+            </button>
+            <button
+              onClick={() => setFilter("participant")}
+              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                filter === "participant"
+                  ? "bg-[#22D3C5]/20 text-[#22D3C5] border border-[#22D3C5]/30 shadow-sm"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Participated
             </button>
           </div>
         </div>

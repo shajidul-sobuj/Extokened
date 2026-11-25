@@ -7,6 +7,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight, ChevronRight } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Projects", href: "/projects" },
+  { name: "Hackathons", href: "/hackathons" },
+  { name: "Team", href: "/team" },
+];
+
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -14,207 +22,240 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 15);
+      setScrolled(window.scrollY > 24);
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle body scroll lock & Escape key when mobile menu is open
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") setMobileMenuOpen(false);
-      };
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.body.style.overflow = "unset";
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    } else {
-      document.body.style.overflow = "unset";
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = "";
+      return;
     }
+
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [mobileMenuOpen]);
 
-  const navItems = [
-    { name: "About", href: "/about" },
-    { name: "Projects", href: "/projects" },
-    { name: "Hackathons", href: "/hackathons" },
-    { name: "Team", href: "/team" },
-  ];
+  const isRouteActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  const isFloatingGlass = scrolled || mobileMenuOpen;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        // Always provide a solid, crisp, frosted glass backdrop on mobile for 100% contrast & visibility
-        scrolled || mobileMenuOpen
-          ? "bg-[#08090E]/95 backdrop-blur-2xl border-b border-[#1E2337] shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
-          : "bg-[#08090E]/80 backdrop-blur-xl border-b border-[#1E2337]/50 md:bg-transparent md:border-transparent md:backdrop-blur-none"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
-          
-          {/* Left: Extokened Symbol + Wordmark */}
-          <Link
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
+    <>
+      {/* Transparent at Top -> Morphs into Sculpted Floating Glass Island on Scroll */}
+      <div
+        className={`fixed top-0 inset-x-0 z-50 px-3 sm:px-6 pointer-events-none transition-[padding] duration-300 ease-out ${
+          isFloatingGlass ? "pt-3 sm:pt-3.5" : "pt-2 sm:pt-4"
+        }`}
+      >
+        <header
+          className={`pointer-events-auto max-w-6xl mx-auto rounded-2xl border transition-all duration-300 ease-out ${
+            isFloatingGlass
+              ? "bg-[#090C18]/80 backdrop-blur-2xl border-white/[0.14] shadow-[0_16px_48px_-14px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.14)]"
+              : "bg-transparent border-transparent shadow-none"
+          }`}
+        >
+          <div
+            className={`transition-[padding] duration-300 ${
+              isFloatingGlass ? "px-3.5 sm:px-5" : "px-1 sm:px-2"
+            }`}
           >
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl glass-panel-inset p-1 flex items-center justify-center group-hover:border-[#8B9BF7]/60 group-hover:shadow-[0_0_18px_rgba(139,155,247,0.4)] transition-all overflow-hidden shrink-0 border border-[#8B9BF7]/30">
-              <img
-                src="/images/extokened-logo-glow.png"
-                alt="Extokened Logo"
-                className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(139,155,247,0.4)] group-hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-semibold text-sm sm:text-base tracking-tight text-white group-hover:text-[#B8C0EC] transition-colors leading-tight">
-                Extokened
-              </span>
-              <span className="text-[9px] sm:text-[10px] font-mono text-[#8B9BF7] uppercase tracking-wider">
-                Tech Team
-              </span>
-            </div>
-          </Link>
+            <div
+              className={`flex items-center justify-between gap-4 transition-[height] duration-300 ${
+                isFloatingGlass ? "h-14 sm:h-[60px]" : "h-16 sm:h-[66px]"
+              }`}
+            >
+              {/* Left: Brand Identity */}
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2.5 group shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
+              >
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0D1224]/70 backdrop-blur-md border border-[#8B9BF7]/30 p-1.5 flex items-center justify-center group-hover:border-[#A5B2FF]/65 group-hover:shadow-[0_0_16px_rgba(139,155,247,0.35)] transition-all overflow-hidden shrink-0">
+                  <img
+                    src="/images/extokened-logo-glow.png"
+                    alt="Extokened"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-display font-bold text-[15px] sm:text-base tracking-tight text-white leading-none">
+                    Extokened
+                  </span>
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#A5B2FF] uppercase tracking-[0.14em] mt-1 leading-none">
+                    Engineering Squad
+                  </span>
+                </div>
+              </Link>
 
-          {/* Center Desktop Navigation with Animated Indicator */}
-          <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
+              {/* Center: Airy Transparent Links at Top -> Subtle Pill Rail on Scroll */}
+              <nav
+                aria-label="Primary Navigation"
+                className={`hidden md:flex items-center gap-1 p-1 rounded-full border transition-all duration-300 ${
+                  isFloatingGlass
+                    ? "bg-white/[0.04] border-white/[0.08]"
+                    : "bg-transparent border-transparent"
+                }`}
+              >
+                {navItems.map((item) => {
+                  const active = isRouteActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`relative px-3.5 lg:px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
+                        active
+                          ? "text-white"
+                          : "text-[#CBD3F0] hover:text-white"
+                      }`}
+                    >
+                      {active && (
+                        <motion.span
+                          layoutId="activeNavPill"
+                          className={`absolute inset-0 rounded-full border transition-colors ${
+                            isFloatingGlass
+                              ? "bg-white/[0.12] border-white/[0.18] shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]"
+                              : "bg-white/[0.08] backdrop-blur-md border-white/[0.14]"
+                          }`}
+                          transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative z-10">{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              {/* Right: High-Contrast Luminous CTA & Mobile Menu Toggle */}
+              <div className="flex items-center gap-2.5 shrink-0">
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`text-xs font-mono uppercase tracking-wider transition-colors relative px-4 py-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7] ${
-                    isActive
-                      ? "text-[#8B9BF7] font-semibold"
-                      : "text-[#BAC0DC] hover:text-white"
-                  }`}
+                  href="/contact"
+                  className="hidden sm:inline-flex btn-primary py-2 px-4 text-xs sm:text-[13px] group"
                 >
-                  {isActive && (
-                    <motion.span
-                      layoutId="activeNavIndicator"
-                      className="absolute inset-0 bg-[#151824] border border-[#1E2337] rounded-full -z-10 shadow-[0_0_12px_rgba(139,155,247,0.15)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  {item.name}
+                  <span>Let&apos;s Collaborate</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </Link>
-              );
-            })}
-          </nav>
 
-          {/* Far Right: Contact CTA & High-Contrast Mobile Menu Button */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <Link
-              href="/contact"
-              className="hidden sm:inline-flex btn-meadow-dark text-xs py-2 px-4 shadow-[0_0_20px_rgba(139,155,247,0.2)]"
-            >
-              <span>Contact the Team</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-
-            {/* High-Contrast Mobile Hamburger Toggle Button (Minimum 44px Touch Target) */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#121626] border border-[#8B9BF7]/35 text-white hover:border-[#8B9BF7]/60 active:scale-95 transition-all shadow-[0_0_14px_rgba(139,155,247,0.15)] focus:outline-none focus:ring-2 focus:ring-[#8B9BF7]"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X className="w-5 h-5 text-[#8B9BF7]" />
-              ) : (
-                <Menu className="w-5 h-5 text-white" />
-              )}
-            </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen((prev) => !prev)}
+                  className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-[#0D1224]/70 backdrop-blur-md border border-white/[0.16] text-white hover:border-[#A5B2FF]/55 active:scale-95 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9BF7]"
+                  aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                  aria-expanded={mobileMenuOpen}
+                  aria-controls="mobile-navigation-drawer"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-5 h-5 text-[#A5B2FF]" />
+                  ) : (
+                    <Menu className="w-5 h-5 text-white" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </header>
       </div>
 
-      {/* Mobile Navigation Drawer: Full Viewport-Safe (100dvh safe, zero cutoff) */}
+      {/* Sibling Mobile Navigation Drawer (Zero backdrop-filter fixed containment bug) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            id="mobile-navigation-drawer"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="md:hidden fixed inset-x-0 top-16 sm:top-20 bottom-0 bg-[#08090E]/98 backdrop-blur-2xl border-t border-[#1E2337] p-5 sm:p-6 flex flex-col justify-between overflow-y-auto z-50"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="md:hidden fixed inset-0 z-40 pt-24 pb-8 px-4 bg-[#07080F]/96 backdrop-blur-2xl overflow-y-auto"
           >
-            {/* Top Navigation Links */}
-            <div className="space-y-2 pt-2">
-              <div className="text-[10px] font-mono text-[#727896] uppercase tracking-wider pb-2 border-b border-[#1E2337] mb-3">
-                Main Navigation
+            <div className="min-h-full flex flex-col justify-between gap-8 max-w-md mx-auto">
+              <div className="space-y-2.5">
+                <div className="text-[11px] font-mono text-[#7D87A6] uppercase tracking-[0.14em] pb-2.5 border-b border-white/[0.08] mb-3">
+                  Navigation
+                </div>
+                {navItems.map((item) => {
+                  const active = isRouteActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-4 py-3.5 rounded-xl border text-[15px] font-medium transition-all ${
+                        active
+                          ? "bg-[#151B34] text-white border-[#8B9BF7]/45 shadow-[0_0_18px_rgba(139,155,247,0.16)]"
+                          : "bg-[#0D101D]/80 text-[#B8C2E0] border-white/[0.08] hover:text-white hover:border-white/[0.16]"
+                      }`}
+                    >
+                      <span>{item.name}</span>
+                      {active ? (
+                        <span className="w-2 h-2 rounded-full bg-[#A5B2FF]" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-[#6B7596]" />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
-              {navItems.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between p-3.5 rounded-xl border text-base font-medium transition-all ${
-                      isActive
-                        ? "bg-[#15192C] text-[#8B9BF7] border-[#8B9BF7]/40 shadow-[0_0_14px_rgba(139,155,247,0.15)] font-semibold"
-                        : "bg-[#0E111C]/60 text-white border-[#1E2337]/70 hover:border-[#8B9BF7]/30"
-                    }`}
+
+              <div className="pt-6 border-t border-white/[0.08] space-y-5">
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="btn-primary w-full py-3.5 text-sm justify-center"
+                >
+                  <span>Let&apos;s Collaborate</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+
+                <div className="flex items-center justify-center gap-6 text-xs font-mono text-[#8F99B8]">
+                  <a
+                    href={siteConfig.socials.github.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
                   >
-                    <span>{item.name}</span>
-                    {isActive ? (
-                      <span className="w-2 h-2 rounded-full bg-[#8B9BF7] shadow-[0_0_8px_rgba(139,155,247,0.9)]" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-[#727896]" />
-                    )}
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Bottom Contact & Quick Socials */}
-            <div className="pt-6 pb-2 space-y-4 border-t border-[#1E2337]">
-              <Link
-                href="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-meadow-dark w-full py-3.5 text-sm font-semibold justify-center shadow-[0_0_20px_rgba(139,155,247,0.25)]"
-              >
-                <span>Contact the Team</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-
-              <div className="flex items-center justify-center gap-6 pt-1 text-xs font-mono text-[#727896]">
-                <a
-                  href={siteConfig.socials.github.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  GitHub
-                </a>
-                <span>•</span>
-                <a
-                  href={siteConfig.socials.linkedin.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  LinkedIn
-                </a>
-                <span>•</span>
-                <a
-                  href={siteConfig.socials.facebook.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  Facebook
-                </a>
+                    GitHub
+                  </a>
+                  <span className="text-white/20">•</span>
+                  <a
+                    href={siteConfig.socials.linkedin.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                  <span className="text-white/20">•</span>
+                  <a
+                    href={siteConfig.socials.facebook.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Facebook
+                  </a>
+                </div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

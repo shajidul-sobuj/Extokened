@@ -1,103 +1,265 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 interface Firefly {
-  id: number;
   x: number;
   y: number;
-  size: number;
-  color: string;
-  duration: number;
-  delay: number;
+  vx: number;
+  vy: number;
+  r: number;
+  phase: number;
+  pulseSpeed: number;
+  swayAmp: number;
+  swaySpeed: number;
+  kind: "gold" | "amber" | "mist";
 }
 
-interface Star {
-  id: number;
+interface DistantStar {
   x: number;
   y: number;
-  size: number;
-  opacity: number;
-  pulseDuration: number;
+  r: number;
+  alpha: number;
+  phase: number;
+  speed: number;
 }
 
 export function InteractiveBackground() {
-  const [fireflies, setFireflies] = useState<Firefly[]>([]);
-  const [stars, setStars] = useState<Star[]>([]);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const mouseRef = useRef<{ x: number; y: number; active: boolean }>({
+    x: -1000,
+    y: -1000,
+    active: false,
+  });
   const [mounted, setMounted] = useState(false);
 
-  // Smooth scroll tracking across the entire document
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
+    stiffness: 65,
     damping: 26,
     restDelta: 0.001,
   });
 
-  // Vertical journey: from top (Sky & Stars: 0%) to bottom (Meadow & Hills: -48.5%)
-  const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-48.5%"]);
-  
-  // Parallax for drifting cloud layers ("megh")
-  const cloudsY = useTransform(smoothProgress, [0, 0.5, 1], ["0%", "-25%", "-60%"]);
-  const cloudsOpacity = useTransform(smoothProgress, [0, 0.45, 0.85, 1], [0.85, 0.65, 0.2, 0.05]);
+  // Single continuous panoramic journey: Top twilight sky/hills -> Bottom glowing firefly meadow (Footer)
+  // Container is 165vh tall, shifting from 0% to -39.3% lands the exact bottom meadow cleanly at scrollYProgress = 1
+  const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-39.3%"]);
+
+  // Velvety dark veil while reading content, lifting smoothly as you arrive at the footer meadow stage
+  const contentScrimOpacity = useTransform(
+    smoothProgress,
+    [0, 0.72, 0.92, 1],
+    [0.72, 0.68, 0.42, 0.24]
+  );
+
+  // Subtle top vignette softens slightly near the footer so the misty hills glow continuously
+  const bottomGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.22, 0.32, 0.65]);
 
   useEffect(() => {
     setMounted(true);
 
-    // Stars scattered across the celestial sky zone (top 45% of page)
-    const starList: Star[] = Array.from({ length: 32 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 45,
-      size: Math.random() * 1.8 + 0.8,
-      opacity: Math.random() * 0.6 + 0.3,
-      pulseDuration: Math.random() * 3 + 2,
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+
+    // Minimal distant night stars strictly in upper dark sky
+    const starCount = width < 768 ? 24 : 40;
+    const stars: DistantStar[] = Array.from({ length: starCount }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height * 0.32,
+      r: Math.random() * 1.0 + 0.35,
+      alpha: Math.random() * 0.36 + 0.14,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.01 + 0.004,
     }));
-    setStars(starList);
 
-    // Golden & Periwinkle fireflies (concentrated in lower altitudes / meadow)
-    const colors = [
-      "rgba(255, 200, 87, 0.65)",  // Firefly gold
-      "rgba(255, 200, 87, 0.45)",  // Soft amber
-      "rgba(139, 155, 247, 0.45)",  // Twilight periwinkle
-      "rgba(184, 192, 236, 0.40)",  // Lavender mist
-    ];
-
-    const fireflyList: Firefly[] = Array.from({ length: 28 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2.8 + 1.2,
-      color: colors[i % colors.length],
-      duration: Math.random() * 7 + 7,
-      delay: Math.random() * 5,
+    // Continuous living golden fireflies & soft twilight mist embers across the entire site & footer
+    const fireflyCount = width < 768 ? 18 : 30;
+    const fireflies: Firefly[] = Array.from({ length: fireflyCount }, (_, idx) => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.14,
+      vy: -(Math.random() * 0.2 + 0.07),
+      r: Math.random() * 1.85 + 0.95,
+      phase: Math.random() * Math.PI * 2,
+      pulseSpeed: Math.random() * 0.016 + 0.008,
+      swayAmp: Math.random() * 0.22 + 0.08,
+      swaySpeed: Math.random() * 0.008 + 0.004,
+      kind: idx % 5 === 0 ? "mist" : idx % 2 === 0 ? "gold" : "amber",
     }));
-    setFireflies(fireflyList);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+    let tick = 0;
+    let rafId = 0;
+    let isVisible = true;
+
+    const handleVisibility = () => {
+      isVisible = !document.hidden;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isFinePointer) return;
+      mouseRef.current = { x: e.clientX, y: e.clientY, active: true };
+    };
+
+    const handleMouseLeave = () => {
+      mouseRef.current.active = false;
+    };
+
+    window.addEventListener("resize", resize);
+    document.addEventListener("visibilitychange", handleVisibility);
+    if (isFinePointer) {
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+      window.addEventListener("mouseleave", handleMouseLeave);
+    }
+
+    const renderFrame = () => {
+      if (isVisible) {
+        ctx.clearRect(0, 0, width, height);
+        tick += 1;
+
+        // 1. Subtle interactive cursor twilight warmth
+        if (mouseRef.current.active && isFinePointer) {
+          const { x: mx, y: my } = mouseRef.current;
+          const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 210);
+          halo.addColorStop(0, "rgba(139, 155, 247, 0.055)");
+          halo.addColorStop(0.5, "rgba(245, 196, 81, 0.02)");
+          halo.addColorStop(1, "rgba(0, 0, 0, 0)");
+          ctx.fillStyle = halo;
+          ctx.beginPath();
+          ctx.arc(mx, my, 210, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 2. Subtle upper-sky pinpoint stars
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          const twinkle = prefersReducedMotion
+            ? 0.85
+            : 0.6 + 0.4 * Math.sin(tick * s.speed + s.phase);
+          ctx.fillStyle = `rgba(226, 232, 255, ${(s.alpha * twinkle).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 3. Calm, slow-rising warm fireflies flowing uninterrupted across page & footer
+        for (let i = 0; i < fireflies.length; i++) {
+          const f = fireflies[i];
+
+          if (!prefersReducedMotion) {
+            f.x += f.vx + Math.sin(tick * f.swaySpeed + f.phase) * f.swayAmp;
+            f.y += f.vy;
+
+            if (mouseRef.current.active && isFinePointer) {
+              const dx = f.x - mouseRef.current.x;
+              const dy = f.y - mouseRef.current.y;
+              const dist = Math.hypot(dx, dy);
+              if (dist < 115 && dist > 1) {
+                const push = ((115 - dist) / 115) * 0.26;
+                f.x += (dx / dist) * push;
+                f.y += (dy / dist) * push;
+              }
+            }
+
+            if (f.y < -18) {
+              f.y = height + 18;
+              f.x = Math.random() * width;
+            }
+            if (f.x < -18) f.x = width + 18;
+            if (f.x > width + 18) f.x = -18;
+          }
+
+          const breath = prefersReducedMotion
+            ? 0.72
+            : 0.28 + 0.72 * Math.pow(0.5 + 0.5 * Math.sin(tick * f.pulseSpeed + f.phase), 1.5);
+
+          let proximityBoost = 1;
+          if (mouseRef.current.active && isFinePointer) {
+            const dist = Math.hypot(f.x - mouseRef.current.x, f.y - mouseRef.current.y);
+            if (dist < 160) {
+              proximityBoost = 1 + (1 - dist / 160) * 0.45;
+            }
+          }
+
+          const finalAlpha = Math.min(1, breath * proximityBoost);
+          const rgb =
+            f.kind === "gold"
+              ? "255, 206, 98"
+              : f.kind === "amber"
+              ? "245, 182, 78"
+              : "165, 178, 255";
+
+          const haloR = f.r * 5.8;
+          const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, haloR);
+          grad.addColorStop(0, `rgba(${rgb}, ${(0.8 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(0.32, `rgba(${rgb}, ${(0.24 * finalAlpha).toFixed(3)})`);
+          grad.addColorStop(1, `rgba(${rgb}, 0)`);
+
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, haloR, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(255, 248, 228, ${(0.9 * finalAlpha).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r * 0.48, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      if (!prefersReducedMotion) {
+        rafId = requestAnimationFrame(renderFrame);
+      }
+    };
+
+    renderFrame();
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (isFinePointer) {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseleave", handleMouseLeave);
+      }
+    };
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#08090E] select-none">
-      
-      {/* 1. Global Panoramic Landscape Video (Sky -> Clouds -> Mountains -> Meadow) */}
+    <div
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#07080D] select-none"
+      aria-hidden="true"
+    >
+      {/* 1. Single Unified Panoramic Twilight Meadow Video (Runs seamlessly behind EVERY page + Footer) */}
       <motion.div
-        className="absolute inset-x-0 w-full will-change-transform"
+        className="absolute inset-x-0 top-0 w-full will-change-transform"
         style={{
-          top: 0,
-          height: "195vh",
+          height: "165vh",
           y: mounted ? videoY : "0%",
         }}
       >
         <video
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-bottom"
           src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/4d01c727-d9c5-47c8-a778-35a451ffd39f.mp4"
           poster="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20261014_121838_c97d0940-f430-4304-8573-4f47ee44f447.png"
           autoPlay
@@ -106,99 +268,51 @@ export function InteractiveBackground() {
           playsInline
           preload="auto"
         />
-
-        {/* Subtle dark gradient overlay to ensure text contrast while retaining vivid landscape colors */}
-        <div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "linear-gradient(to bottom, rgba(8, 9, 14, 0.42) 0%, rgba(8, 9, 14, 0.22) 15%, rgba(8, 9, 14, 0.55) 45%, rgba(8, 9, 14, 0.62) 75%, rgba(8, 9, 14, 0.15) 100%)",
-          }}
-        />
       </motion.div>
 
-      {/* 2. Drifting Celestial Clouds & Twilight Mist ("Megh") */}
-      <motion.div 
-        className="absolute inset-x-0 top-0 h-[80vh] pointer-events-none overflow-hidden"
+      {/* 2. Scroll-Linked Dynamic Atmospheric Veil (Velvety dark for content, opens smoothly into luminous meadow at footer) */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
         style={{
-          y: mounted ? cloudsY : "0%",
-          opacity: mounted ? cloudsOpacity : 0.85,
+          opacity: mounted ? contentScrimOpacity : 0.7,
+          background:
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0.92) 0%, rgba(7, 9, 16, 0.78) 42%, rgba(7, 9, 16, 0.65) 78%, rgba(7, 8, 13, 0.55) 100%)",
         }}
-      >
-        {/* Upper Billowing Cloud Bank 1 */}
-        <div 
-          className="absolute -top-16 -left-1/4 w-[150%] h-[420px] rounded-[50%] blur-[75px] opacity-25 animate-cloud-drift pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse at 50% 60%, rgba(184, 192, 236, 0.35) 0%, rgba(139, 155, 247, 0.2) 40%, rgba(196, 131, 169, 0.15) 60%, transparent 80%)",
-          }}
-        />
+      />
 
-        {/* Horizon Dusk Cloud Bank 2 ("Megh") */}
-        <div 
-          className="absolute top-48 -right-1/4 w-[140%] h-[360px] rounded-[50%] blur-[90px] opacity-20 animate-cloud-drift-reverse pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse at 50% 50%, rgba(212, 143, 178, 0.3) 0%, rgba(139, 155, 247, 0.18) 45%, transparent 75%)",
-          }}
-        />
-      </motion.div>
+      {/* 3. Subtle Continuous Top-to-Bottom Depth Gradient (Ensures navbar & bottom edge always feel grounded) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0.48) 0%, transparent 18%, transparent 78%, rgba(7, 8, 13, 0.62) 100%)",
+        }}
+      />
 
-      {/* 3. Twinkling Celestial Stars in Upper Sky Zone */}
-      <div className="absolute inset-x-0 top-0 h-[50vh] pointer-events-none">
-        {stars.map((s) => (
-          <div
-            key={s.id}
-            className="absolute rounded-full pointer-events-none animate-pulse"
-            style={{
-              left: `${s.x}%`,
-              top: `${s.y}%`,
-              width: `${s.size}px`,
-              height: `${s.size}px`,
-              backgroundColor: "#FFFFFF",
-              boxShadow: `0 0 ${s.size * 2}px rgba(255, 255, 255, 0.9), 0 0 ${s.size * 5}px rgba(139, 155, 247, 0.5)`,
-              opacity: s.opacity,
-              animationDuration: `${s.pulseDuration}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* 4. Soft Drifting Twilight Mist Ribbon (Intensifies softly near the meadow horizon) */}
+      <motion.div
+        className="absolute inset-x-0 bottom-[-10%] h-[52vh] pointer-events-none animate-cloud-drift"
+        style={{
+          opacity: mounted ? bottomGlowOpacity : 0.25,
+          background:
+            "radial-gradient(ellipse 78% 58% at 50% 84%, rgba(139, 155, 247, 0.26) 0%, rgba(184, 194, 242, 0.08) 48%, transparent 80%)",
+        }}
+      />
 
-      {/* 4. Architectural Twilight Grid */}
-      <div className="absolute inset-0 meadow-grid opacity-20 pointer-events-none" />
+      {/* 5. Gentle Editorial Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 84% 72% at 50% 40%, transparent 32%, rgba(6, 7, 12, 0.5) 100%)",
+        }}
+      />
 
-      {/* 5. Floating Ambient Firefly Motes */}
-      {fireflies.map((f) => (
-        <div
-          key={f.id}
-          className="absolute rounded-full pointer-events-none animate-pulse"
-          style={{
-            left: `${f.x}%`,
-            top: `${f.y}%`,
-            width: `${f.size}px`,
-            height: `${f.size}px`,
-            backgroundColor: f.color,
-            boxShadow: `0 0 ${f.size * 3}px ${f.color}`,
-            animationDuration: `${f.duration}s`,
-            animationDelay: `${f.delay}s`,
-            opacity: 0.65,
-          }}
-        />
-      ))}
+      {/* 6. Unified 60fps Live Fireflies & Pinpoint Stars Canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
-      {/* 6. Interactive Mouse Twilight Glow */}
-      {mousePos && (
-        <div
-          className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full blur-[130px] transition-transform duration-300 ease-out pointer-events-none"
-          style={{
-            left: `${mousePos.x}px`,
-            top: `${mousePos.y}px`,
-            width: "460px",
-            height: "460px",
-            background: "radial-gradient(circle, rgba(139, 155, 247, 0.06) 0%, rgba(255, 200, 87, 0.02) 45%, transparent 70%)",
-          }}
-        />
-      )}
-
-      {/* 7. Subtle Top Ambient Horizon Aura */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/30 to-transparent" />
+      {/* 7. Subtle Top Horizon Hairline */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#8B9BF7]/35 to-transparent" />
     </div>
   );
 }

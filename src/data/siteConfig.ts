@@ -97,14 +97,14 @@ export const siteConfig: SiteConfig = {
       description: "National and global competitions",
     },
     {
-      label: "Podiums & Awards",
+      label: "Wins & Finalists",
       value: "12",
-      description: "7 Winners, 5 Finalists & Special Tracks",
+      description: "Verified winner & finalist recognitions",
     },
     {
-      label: "Active Contributors",
+      label: "Core Squad",
       value: "4",
-      description: "Synchronized core engineering roster",
+      description: "Permanent engineering roster",
     },
   ],
   focusAreas: [

@@ -57,14 +57,14 @@ export default function TeamPage() {
         </p>
       </MotionReveal>
 
-      {/* Equal-Height Team Roster */}
+      {/* Equal-Height 2×2 Interactive Squad Roster */}
       <MotionStagger
-        stagger={0.08}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        stagger={0.09}
+        className="grid grid-cols-1 md:grid-cols-2 gap-5"
       >
-        {teamMembers.map((member) => (
-          <MotionItem key={member.slug} className="h-full">
-            <MemberCard member={member} />
+        {teamMembers.map((member, idx) => (
+          <MotionItem key={member.slug} className="h-full" distance={22}>
+            <MemberCard member={member} index={idx} variant="full" />
           </MotionItem>
         ))}
       </MotionStagger>

@@ -8,185 +8,369 @@ const STORAGE_KEY = "extokened_intro_seen";
 type IntroStep = 0 | 1 | 2 | 3 | 4 | 5;
 
 /**
- * 3D Beveled Dark-Obsidian Glass Rib Stack
- * Replicates glossy Cinema4D/Apple-keynote dark glass slabs with razor-sharp
- * electric sapphire/cobalt + ice-white specular rim lighting.
+ * Sculptural 3D Sweeping Glass Blades (Beats 0 -> 2, matching 00:00 - 00:03)
+ * Pure curved obsidian-glass edge reflections that fade seamlessly into #000000
+ * with ZERO rectangular box outlines.
  */
-function GlassRibStack({
-  side,
-  step,
-  isMelting,
-}: {
-  side: "left" | "right";
-  step: IntroStep;
-  isMelting: boolean;
-}) {
-  // Choreographed 3D camera positions per beat (matching the sweeping glass corridor)
-  const getPose = () => {
-    if (isMelting) {
-      return side === "left"
-        ? { x: "-48vw", y: "28vh", rotateZ: 28, rotateY: 42, scale: 1.32, opacity: 0 }
-        : { x: "48vw", y: "-28vh", rotateZ: 28, rotateY: -42, scale: 1.32, opacity: 0 };
-    }
+function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boolean }) {
+  const isVisible = !isMelting && step <= 2;
 
-    if (side === "left") {
-      switch (step) {
-        case 0: // "Building" — sweeping upper-left fin
-          return { x: "-30vw", y: "-26vh", rotateZ: -30, rotateY: 28, scale: 1.05, opacity: 0.92 };
-        case 1: // "real software is hard" — sliding down-left edge
-          return { x: "-32vw", y: "-8vh", rotateZ: -16, rotateY: 24, scale: 1.08, opacity: 0.95 };
-        case 2: // "Time to ship it" — banking left
-          return { x: "-38vw", y: "6vh", rotateZ: -24, rotateY: 32, scale: 1.02, opacity: 0.9 };
-        case 3: // "Meet" — retreats into pitch-black abyss
-          return { x: "-52vw", y: "20vh", rotateZ: -10, rotateY: 42, scale: 1.24, opacity: 0.06 };
-        case 4: // Logo + Extokened — dramatic bottom-left diagonal corridor
-          return { x: "-27vw", y: "25vh", rotateZ: 36, rotateY: 22, scale: 1.12, opacity: 1 };
-        case 5: // "We build. We compete." — widens gracefully for crisp legibility
-          return { x: "-37vw", y: "30vh", rotateZ: 32, rotateY: 28, scale: 1.15, opacity: 0.44 };
-      }
-    } else {
-      switch (step) {
-        case 0: // "Building" — angled top-right cobalt slash
-          return { x: "26vw", y: "-30vh", rotateZ: -34, rotateY: -26, scale: 1.06, opacity: 0.96 };
-        case 1: // "real software is hard" — upper-right vertical glint
-          return { x: "24vw", y: "-28vh", rotateZ: -18, rotateY: -22, scale: 1.04, opacity: 0.92 };
-        case 2: // "Time to ship it" — opens right space cleanly
-          return { x: "42vw", y: "-34vh", rotateZ: -26, rotateY: -32, scale: 1.0, opacity: 0.35 };
-        case 3: // "Meet" — retreats into pitch-black abyss
-          return { x: "52vw", y: "-26vh", rotateZ: -12, rotateY: -42, scale: 1.24, opacity: 0.06 };
-        case 4: // Logo + Extokened — dramatic top-right diagonal corridor
-          return { x: "27vw", y: "-25vh", rotateZ: 36, rotateY: -22, scale: 1.12, opacity: 1 };
-        case 5: // "We build. We compete." — widens gracefully for crisp legibility
-          return { x: "37vw", y: "-30vh", rotateZ: 32, rotateY: -28, scale: 1.15, opacity: 0.44 };
-      }
+  const getPose = () => {
+    if (!isVisible) {
+      return { x: "-48vw", y: "-14vh", rotate: -24, scale: 1.12, opacity: 0 };
+    }
+    switch (step) {
+      case 0: // 00:00 — Dramatic angled blades sweeping across top-left & upper-right
+        return { x: "0vw", y: "-4vh", rotate: 0, scale: 1, opacity: 1 };
+      case 1: // 00:01-00:02 — Glides into vertical-slanted cobalt streaks along upper-left & top-center
+        return { x: "-12vw", y: "2vh", rotate: -14, scale: 1.06, opacity: 0.96 };
+      case 2: // 00:03 — Banks cleanly to the far-left edge, leaving 80%+ pitch black
+        return { x: "-38vw", y: "8vh", rotate: -20, scale: 1.02, opacity: 0.92 };
+      default:
+        return { x: "-52vw", y: "-10vh", rotate: -26, scale: 1.1, opacity: 0 };
     }
   };
-
-  const pose = getPose();
-  const slabs = [0, 1, 2, 3];
 
   return (
     <motion.div
       aria-hidden="true"
-      initial={
-        side === "left"
-          ? { x: "-46vw", y: "-36vh", rotateZ: -38, rotateY: 36, scale: 0.95, opacity: 0 }
-          : { x: "42vw", y: "-40vh", rotateZ: -40, rotateY: -36, scale: 0.95, opacity: 0 }
-      }
-      animate={pose}
+      initial={{ x: "14vw", y: "-14vh", rotate: 8, scale: 0.94, opacity: 0 }}
+      animate={getPose()}
       transition={{
-        duration: isMelting ? 0.9 : step === 3 ? 0.52 : step === 4 ? 0.78 : 0.95,
+        duration: step === 3 ? 0.42 : 0.92,
         ease: [0.16, 1, 0.3, 1],
       }}
-      style={{ transformStyle: "preserve-3d" }}
-      className="pointer-events-none absolute inset-0 flex items-center justify-center will-change-transform"
+      className="pointer-events-none absolute inset-0 flex items-start justify-center overflow-hidden will-change-transform"
     >
-      {/* Ambient Sapphire Spill Behind the Glass Stack */}
-      <div
-        className="absolute w-[380px] sm:w-[540px] h-[380px] sm:h-[540px] rounded-full blur-[95px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(37, 99, 235, 0.32) 0%, rgba(29, 78, 216, 0.1) 48%, transparent 72%)",
-        }}
-      />
+      <svg
+        viewBox="0 0 1440 900"
+        fill="none"
+        preserveAspectRatio="xMidYMin slice"
+        className="w-full h-full max-w-[1680px]"
+      >
+        <defs>
+          {/* Wide volumetric electric sapphire glow */}
+          <linearGradient id="bladeBloomA" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1D4ED8" stopOpacity="0" />
+            <stop offset="28%" stopColor="#2563EB" stopOpacity="0.68" />
+            <stop offset="56%" stopColor="#60A5FA" stopOpacity="0.88" />
+            <stop offset="78%" stopColor="#1E40AF" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+          </linearGradient>
 
-      {/* 4 Stacked Concentric Beveled Obsidian Glass Plates */}
-      <div className="relative w-[340px] h-[440px] sm:w-[490px] sm:h-[620px] md:w-[580px] md:h-[720px]">
-        {slabs.map((idx) => {
-          const offset = idx * 34;
-          const inset = idx * 14;
-          const isOuter = idx === 0;
-          const isInner = idx === slabs.length - 1;
+          {/* Crisp metallic cobalt rim */}
+          <linearGradient id="bladeRimA" x1="10%" y1="0%" x2="90%" y2="100%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
+            <stop offset="25%" stopColor="#3B82F6" stopOpacity="0.85" />
+            <stop offset="52%" stopColor="#DBEAFE" stopOpacity="1" />
+            <stop offset="68%" stopColor="#60A5FA" stopOpacity="0.92" />
+            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+          </linearGradient>
 
-          return (
-            <div
-              key={idx}
-              style={{
-                position: "absolute",
-                inset: `${inset}px`,
-                transform:
-                  side === "left"
-                    ? `translate3d(${-offset * 0.68}px, ${offset * 0.56}px, ${-idx * 24}px)`
-                    : `translate3d(${offset * 0.68}px, ${-offset * 0.56}px, ${-idx * 24}px)`,
-                borderRadius: `${66 - idx * 8}px`,
-                background:
-                  side === "left"
-                    ? "linear-gradient(135deg, #061028 0%, #020510 26%, #000000 68%, #020818 100%)"
-                    : "linear-gradient(315deg, #061028 0%, #020510 26%, #000000 68%, #020818 100%)",
-                boxShadow:
-                  side === "left"
-                    ? [
-                        // Razor-sharp specular highlight on top/right facing edge
-                        `inset -1.5px 1.5px 0px rgba(226, 240, 255, ${isOuter ? 0.92 : 0.72 - idx * 0.12})`,
-                        `inset -4px 4px 10px rgba(59, 130, 246, ${isOuter ? 0.72 : 0.52 - idx * 0.08})`,
-                        `inset 1px -1px 0px rgba(56, 130, 246, ${isInner ? 0.28 : 0.16})`,
-                        `inset 0 0 36px rgba(15, 40, 110, 0.34)`,
-                        // Deep obsidian shadow separating each beveled plate
-                        `-18px 22px 46px rgba(0, 0, 0, 0.96)`,
-                        `0 0 26px rgba(37, 99, 235, ${isOuter ? 0.34 : 0.16})`,
-                      ].join(", ")
-                    : [
-                        // Razor-sharp specular highlight on bottom/left facing edge
-                        `inset 1.5px -1.5px 0px rgba(226, 240, 255, ${isOuter ? 0.92 : 0.72 - idx * 0.12})`,
-                        `inset 4px -4px 10px rgba(59, 130, 246, ${isOuter ? 0.72 : 0.52 - idx * 0.08})`,
-                        `inset -1px 1px 0px rgba(56, 130, 246, ${isInner ? 0.28 : 0.16})`,
-                        `inset 0 0 36px rgba(15, 40, 110, 0.34)`,
-                        `18px -22px 46px rgba(0, 0, 0, 0.96)`,
-                        `0 0 26px rgba(37, 99, 235, ${isOuter ? 0.34 : 0.16})`,
-                      ].join(", "),
-                border: `1px solid rgba(96, 165, 250, ${isOuter ? 0.48 : 0.32 - idx * 0.05})`,
-              }}
-            >
-              {/* Glossy Curved Bevel Rim Streak (mimics high-IOR 3D glass refraction) */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: "inherit",
-                  background:
-                    side === "left"
-                      ? "linear-gradient(52deg, transparent 42%, rgba(37, 99, 235, 0.18) 78%, rgba(191, 219, 254, 0.32) 95%, rgba(255, 255, 255, 0.5) 100%)"
-                      : "linear-gradient(232deg, transparent 42%, rgba(37, 99, 235, 0.18) 78%, rgba(191, 219, 254, 0.32) 95%, rgba(255, 255, 255, 0.5) 100%)",
-                  maskImage:
-                    "linear-gradient(black, black) content-box, linear-gradient(black, black)",
-                  WebkitMaskImage:
-                    "linear-gradient(black, black) content-box, linear-gradient(black, black)",
-                  padding: "2px",
-                  maskComposite: "exclude",
-                  WebkitMaskComposite: "xor",
-                  opacity: isOuter ? 1 : 0.75,
-                }}
-              />
+          {/* Razor-sharp white-hot specular core reflection */}
+          <linearGradient id="bladeSpecA" x1="20%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+            <stop offset="38%" stopColor="#BFDBFE" stopOpacity="0.55" />
+            <stop offset="52%" stopColor="#FFFFFF" stopOpacity="1" />
+            <stop offset="64%" stopColor="#93C5FD" stopOpacity="0.55" />
+            <stop offset="84%" stopColor="#FFFFFF" stopOpacity="0" />
+          </linearGradient>
 
-              {/* Subtle Soft Specular Reflection Sheen Across Corner Curve */}
-              {isOuter && (
-                <motion.div
-                  animate={{
-                    opacity: [0.65, 1, 0.7],
-                    scale: [1, 1.04, 1],
-                  }}
-                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-                  style={{
-                    position: "absolute",
-                    inset: "5px",
-                    borderRadius: "inherit",
-                    background:
-                      side === "left"
-                        ? "radial-gradient(ellipse 72% 46% at 88% 10%, rgba(191, 219, 254, 0.34) 0%, rgba(59, 130, 246, 0.14) 42%, transparent 74%)"
-                        : "radial-gradient(ellipse 72% 46% at 12% 90%, rgba(191, 219, 254, 0.34) 0%, rgba(59, 130, 246, 0.14) 42%, transparent 74%)",
-                  }}
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
+          {/* Secondary distant soft-focus cobalt reflection */}
+          <linearGradient id="bladeSoftB" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0" />
+            <stop offset="42%" stopColor="#3B82F6" stopOpacity="0.72" />
+            <stop offset="66%" stopColor="#93C5FD" stopOpacity="0.62" />
+            <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0" />
+          </linearGradient>
+
+          {/* Obsidian dark glass body fill */}
+          <linearGradient id="obsidianFill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#040C24" stopOpacity="0.85" />
+            <stop offset="45%" stopColor="#01030A" stopOpacity="0.96" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+          </linearGradient>
+
+          <filter id="glowWide" x="-25%" y="-25%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="20" />
+          </filter>
+          <filter id="glowSoft" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+          <filter id="dofBlur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="12" />
+          </filter>
+        </defs>
+
+        {/* Left Sweeping Sculptural Glass Fin (curved edge reflection from top-left) */}
+        <g>
+          <path
+            d="M 270 -70 L 82 545 C 62 612 96 650 165 628 L 285 575 L 440 -120 Z"
+            fill="url(#obsidianFill)"
+          />
+          <path
+            d="M 272 -70 L 84 548 C 66 606 94 642 152 628"
+            stroke="url(#bladeBloomA)"
+            strokeWidth="34"
+            strokeLinecap="round"
+            filter="url(#glowWide)"
+          />
+          <path
+            d="M 272 -70 L 84 548 C 66 606 94 642 152 628"
+            stroke="url(#bladeRimA)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            filter="url(#glowSoft)"
+          />
+          <path
+            d="M 254 -15 L 86 544 C 70 596 92 630 138 622"
+            stroke="url(#bladeSpecA)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+          />
+        </g>
+
+        {/* Center-Top Vertical Sculptural Glass Edge (glints strongly at 00:00-00:02) */}
+        <g>
+          <path
+            d="M 808 -90 L 716 142 C 696 196 732 232 786 206 L 948 118 L 1060 -130 Z"
+            fill="url(#obsidianFill)"
+          />
+          <path
+            d="M 812 -85 L 718 144 C 700 192 732 224 780 202 L 882 150"
+            stroke="url(#bladeBloomA)"
+            strokeWidth="38"
+            strokeLinecap="round"
+            filter="url(#glowWide)"
+          />
+          <path
+            d="M 812 -85 L 718 144 C 700 192 732 224 780 202 L 860 162"
+            stroke="url(#bladeRimA)"
+            strokeWidth="8.5"
+            strokeLinecap="round"
+            filter="url(#glowSoft)"
+          />
+          <path
+            d="M 792 -35 L 720 144 C 705 186 730 212 772 195"
+            stroke="url(#bladeSpecA)"
+            strokeWidth="3.2"
+            strokeLinecap="round"
+          />
+        </g>
+
+        {/* Far-Right Out-of-Focus Slanted Cobalt Reflection Streaks (depth of field) */}
+        <g filter="url(#dofBlur)" opacity="0.82">
+          <path
+            d="M 1210 -60 L 910 278"
+            stroke="url(#bladeSoftB)"
+            strokeWidth="22"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 1365 20 L 1062 342"
+            stroke="url(#bladeSoftB)"
+            strokeWidth="26"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 1212 -52 L 948 240"
+            stroke="url(#bladeSpecA)"
+            strokeWidth="5"
+            strokeLinecap="round"
+            opacity="0.7"
+          />
+        </g>
+      </svg>
     </motion.div>
   );
 }
 
 /**
- * Word-by-word kinetic motion-blur snap (Apple / Linear / Synaps style)
+ * Symmetric Opposing Curved Bevel Glass Corridor (Beat 4 ONLY — matching 00:05-00:06)
+ * Nested concentric obsidian-glass elbow ridges framing the Extokened logo lockup
+ * on a diagonal corridor, with pure pitch-black negative space and zero boxy borders.
+ */
+function BrandCorridorWaves({ active }: { active: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+    >
+      {/* Top-Right Opposing Concentric Beveled Glass Wave */}
+      <motion.div
+        initial={{ x: "26vw", y: "-26vh", scale: 0.9, opacity: 0 }}
+        animate={
+          active
+            ? { x: "0vw", y: "0vh", scale: 1, opacity: 1 }
+            : { x: "32vw", y: "-32vh", scale: 1.12, opacity: 0 }
+        }
+        transition={{
+          duration: active ? 0.78 : 0.48,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="absolute inset-0 will-change-transform"
+      >
+        <svg
+          viewBox="0 0 1440 900"
+          fill="none"
+          preserveAspectRatio="xMidYMid slice"
+          className="w-full h-full"
+        >
+          <defs>
+            <linearGradient id="waveBloomTR" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1D4ED8" stopOpacity="0" />
+              <stop offset="30%" stopColor="#2563EB" stopOpacity="0.82" />
+              <stop offset="52%" stopColor="#93C5FD" stopOpacity="0.95" />
+              <stop offset="76%" stopColor="#1E40AF" stopOpacity="0.62" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="waveSpecTR" x1="15%" y1="5%" x2="88%" y2="95%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+              <stop offset="36%" stopColor="#93C5FD" stopOpacity="0.7" />
+              <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
+              <stop offset="65%" stopColor="#60A5FA" stopOpacity="0.65" />
+              <stop offset="86%" stopColor="#FFFFFF" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="waveBodyTR" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#051232" stopOpacity="0.92" />
+              <stop offset="32%" stopColor="#01040D" stopOpacity="0.98" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="1" />
+            </linearGradient>
+            <filter id="corridorBloom" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur stdDeviation="18" />
+            </filter>
+            <filter id="corridorCrisp" x="-15%" y="-15%" width="130%" height="130%">
+              <feGaussianBlur stdDeviation="3.5" />
+            </filter>
+          </defs>
+
+          {/* 3 Nested Concentric Sculptural Elbow Waves (Top-Right Quadrant) */}
+          {[0, 1, 2].map((idx) => {
+            const shiftX = idx * 82;
+            const shiftY = -idx * 72;
+            const opacityScale = idx === 0 ? 1 : idx === 1 ? 0.78 : 0.56;
+            const d = `M ${745 + shiftX} ${-110 + shiftY} L ${955 + shiftX} ${215 + shiftY} C ${995 + shiftX} ${278 + shiftY} ${1058 + shiftX} ${325 + shiftY} ${1134 + shiftX} ${362 + shiftY} L ${1560 + shiftX} ${568 + shiftY}`;
+            const bodyD = `${d} L 1750 -200 Z`;
+
+            return (
+              <g key={`tr-${idx}`} opacity={opacityScale}>
+                <path d={bodyD} fill="url(#waveBodyTR)" />
+                <path
+                  d={d}
+                  stroke="url(#waveBloomTR)"
+                  strokeWidth={idx === 0 ? 32 : 24}
+                  strokeLinecap="round"
+                  filter="url(#corridorBloom)"
+                />
+                <path
+                  d={d}
+                  stroke="url(#waveBloomTR)"
+                  strokeWidth={idx === 0 ? 7.5 : 5.5}
+                  strokeLinecap="round"
+                  filter="url(#corridorCrisp)"
+                />
+                <path
+                  d={d}
+                  stroke="url(#waveSpecTR)"
+                  strokeWidth={idx === 0 ? 2.6 : 1.8}
+                  strokeLinecap="round"
+                />
+              </g>
+            );
+          })}
+        </svg>
+      </motion.div>
+
+      {/* Bottom-Left Opposing Concentric Beveled Glass Wave */}
+      <motion.div
+        initial={{ x: "-26vw", y: "26vh", scale: 0.9, opacity: 0 }}
+        animate={
+          active
+            ? { x: "0vw", y: "0vh", scale: 1, opacity: 1 }
+            : { x: "-32vw", y: "32vh", scale: 1.12, opacity: 0 }
+        }
+        transition={{
+          duration: active ? 0.78 : 0.48,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="absolute inset-0 will-change-transform"
+      >
+        <svg
+          viewBox="0 0 1440 900"
+          fill="none"
+          preserveAspectRatio="xMidYMid slice"
+          className="w-full h-full"
+        >
+          <defs>
+            <linearGradient id="waveBloomBL" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#000000" stopOpacity="0" />
+              <stop offset="24%" stopColor="#1E40AF" stopOpacity="0.62" />
+              <stop offset="48%" stopColor="#93C5FD" stopOpacity="0.95" />
+              <stop offset="70%" stopColor="#2563EB" stopOpacity="0.82" />
+              <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="waveSpecBL" x1="12%" y1="5%" x2="85%" y2="95%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+              <stop offset="34%" stopColor="#60A5FA" stopOpacity="0.65" />
+              <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
+              <stop offset="66%" stopColor="#93C5FD" stopOpacity="0.7" />
+              <stop offset="88%" stopColor="#FFFFFF" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="waveBodyBL" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#051232" stopOpacity="0.92" />
+              <stop offset="32%" stopColor="#01040D" stopOpacity="0.98" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="1" />
+            </linearGradient>
+            <filter id="corridorBloomBL" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur stdDeviation="18" />
+            </filter>
+            <filter id="corridorCrispBL" x="-15%" y="-15%" width="130%" height="130%">
+              <feGaussianBlur stdDeviation="3.5" />
+            </filter>
+          </defs>
+
+          {/* 3 Nested Concentric Sculptural Elbow Waves (Bottom-Left Quadrant) */}
+          {[0, 1, 2].map((idx) => {
+            const shiftX = -idx * 82;
+            const shiftY = idx * 72;
+            const opacityScale = idx === 0 ? 1 : idx === 1 ? 0.78 : 0.56;
+            const d = `M ${-120 + shiftX} ${332 + shiftY} L ${306 + shiftX} ${538 + shiftY} C ${382 + shiftX} ${575 + shiftY} ${445 + shiftX} ${622 + shiftY} ${485 + shiftX} ${685 + shiftY} L ${695 + shiftX} ${1010 + shiftY}`;
+            const bodyD = `${d} L -310 1100 Z`;
+
+            return (
+              <g key={`bl-${idx}`} opacity={opacityScale}>
+                <path d={bodyD} fill="url(#waveBodyBL)" />
+                <path
+                  d={d}
+                  stroke="url(#waveBloomBL)"
+                  strokeWidth={idx === 0 ? 32 : 24}
+                  strokeLinecap="round"
+                  filter="url(#corridorBloomBL)"
+                />
+                <path
+                  d={d}
+                  stroke="url(#waveBloomBL)"
+                  strokeWidth={idx === 0 ? 7.5 : 5.5}
+                  strokeLinecap="round"
+                  filter="url(#corridorCrispBL)"
+                />
+                <path
+                  d={d}
+                  stroke="url(#waveSpecBL)"
+                  strokeWidth={idx === 0 ? 2.6 : 1.8}
+                  strokeLinecap="round"
+                />
+              </g>
+            );
+          })}
+        </svg>
+      </motion.div>
+    </div>
+  );
+}
+
+/**
+ * Word-by-word kinetic motion-blur snap (matching 00:01 - 00:03 & 00:07)
  */
 function KineticLine({
   words,
@@ -200,11 +384,11 @@ function KineticLine({
   const toneClass = (tone?: "white" | "periwinkle" | "cobalt" | "sheen") => {
     switch (tone) {
       case "periwinkle":
-        return "text-[#7A90FF] drop-shadow-[0_0_24px_rgba(112,136,255,0.4)]";
+        return "text-[#7A90FF] drop-shadow-[0_0_24px_rgba(112,136,255,0.42)]";
       case "cobalt":
-        return "text-[#3B9BFF] drop-shadow-[0_0_28px_rgba(59,155,255,0.48)]";
+        return "text-[#3B9BFF] drop-shadow-[0_0_28px_rgba(59,155,255,0.5)]";
       case "sheen":
-        return "bg-gradient-to-r from-[#FFFFFF] via-[#9EC5FF] to-[#4E96FF] bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(78,150,255,0.35)]";
+        return "bg-gradient-to-r from-[#FFFFFF] via-[#A9CCFF] to-[#4E96FF] bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(78,150,255,0.36)]";
       default:
         return "text-[#F8FAFF]";
     }
@@ -217,7 +401,7 @@ function KineticLine({
       {words.map((word, index) => (
         <motion.span
           key={`${word.text}-${index}`}
-          initial={{ opacity: 0, x: 14, scale: 0.94, filter: "blur(14px)" }}
+          initial={{ opacity: 0, x: 16, scale: 0.94, filter: "blur(14px)" }}
           animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
           transition={{
             delay: index * stagger,
@@ -277,7 +461,7 @@ export function CinematicIntro() {
       return;
     }
 
-    // Mark seen immediately so a refresh in the same tab never replays it
+    // Mark seen immediately so refreshing in the same tab never replays it
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
@@ -292,22 +476,22 @@ export function CinematicIntro() {
       document.documentElement.classList.remove("intro-pending");
     }, 60);
 
-    // Beat Choreography (~8.15s total with generous hold on "We build. We compete." before melt)
-    // 0.00s - 1.05s: "Building"
-    // 1.05s - 2.35s: "real software is hard"
-    // 2.35s - 3.45s: "Time to ship it"
-    // 3.45s - 4.25s: "Meet" (metallic zoom-through)
-    // 4.25s - 4.82s: Extokened Logo Icon Bloom between 3D glass corridor
-    // 4.82s - 6.30s: Logo glides left + "Extokened" kinetic letter assembly
-    // 6.30s - 8.20s: "We build. We compete." (clearly readable hold ~1.9s)
-    // 8.20s -> melt: Smooth 3D curtain split + dissolve into live site
+    // Hackathon-Team Kinetic Choreography (~8.2s total before smooth melt-away)
+    // 0.00s - 1.05s: "48 hours." (top sweeping sculptural cobalt blades)
+    // 1.05s - 2.35s: "High stakes. Real code." (vertical-slanted cobalt streaks)
+    // 2.35s - 3.45s: "Built under pressure" (far-left edge sweep, wide pure black)
+    // 3.45s - 4.25s: "Meet" (100% pure black + giant metallic zoom-through)
+    // 4.25s - 4.82s: Extokened Logo Icon blooms in symmetric curved glass corridor
+    // 4.82s - 6.30s: Logo glides left + bouncy "Extokened" letter assembly
+    // 6.30s - 8.25s: "We build. We compete." (pure black stage, ~1.95s readable hold)
+    // 8.25s -> melt: Smooth melt-away dissolve into the live website
     const t1 = window.setTimeout(() => setStep(1), 1050);
     const t2 = window.setTimeout(() => setStep(2), 2350);
     const t3 = window.setTimeout(() => setStep(3), 3450);
     const t4 = window.setTimeout(() => setStep(4), 4250);
     const t4Expand = window.setTimeout(() => setLogoExpanded(true), 4820);
     const t5 = window.setTimeout(() => setStep(5), 6300);
-    const tMelt = window.setTimeout(() => startMelt(), 8200);
+    const tMelt = window.setTimeout(() => startMelt(), 8250);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") startMelt();
@@ -363,29 +547,20 @@ export function CinematicIntro() {
         duration: 0.92,
         ease: [0.22, 1, 0.36, 1],
       }}
-      style={{ perspective: "1400px" }}
       className={`fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-[#000000] select-none ${
         isMelting ? "pointer-events-none" : "pointer-events-auto"
       }`}
     >
-      {/* Subtle Deep Cobalt Atmospheric Vignette */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 72% 58% at 50% 50%, rgba(16, 36, 92, 0.18) 0%, rgba(3, 6, 16, 0.55) 56%, rgba(0, 0, 0, 0.96) 100%)",
-        }}
-      />
+      {/* Beats 0-2: Sculptural Top-Sweeping Glass Edge Reflections (NO blue boxes) */}
+      <TopSweepBlades step={step} isMelting={isMelting} />
 
-      {/* Signature 3D Sweeping Dark-Glass Beveled Ribs (Left & Right Clusters) */}
-      <GlassRibStack side="left" step={step} isMelting={isMelting} />
-      <GlassRibStack side="right" step={step} isMelting={isMelting} />
+      {/* Beat 4 ONLY: Symmetric Opposing Curved Bevel Corridor framing Extokened */}
+      <BrandCorridorWaves active={!isMelting && step === 4} />
 
       {/* Center Kinetic Typography & Brand Assembly Stage */}
       <div className="relative z-10 max-w-5xl w-full px-6 text-center min-h-[220px] flex items-center justify-center">
         <AnimatePresence mode="wait">
-          {/* Beat 0: "Building" */}
+          {/* Beat 0: "48 hours." */}
           {step === 0 && (
             <motion.div
               key="beat-0"
@@ -395,12 +570,12 @@ export function CinematicIntro() {
               transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
             >
               <p className="font-display font-medium text-4xl sm:text-6xl md:text-[4.25rem] tracking-[-0.04em] bg-gradient-to-b from-white via-[#F1F5FF] to-[#BCC8E8] bg-clip-text text-transparent">
-                Building
+                48 hours.
               </p>
             </motion.div>
           )}
 
-          {/* Beat 1: "real software is hard" */}
+          {/* Beat 1: "High stakes. Real code." */}
           {step === 1 && (
             <motion.div
               key="beat-1"
@@ -413,16 +588,16 @@ export function CinematicIntro() {
               <KineticLine
                 stagger={0.11}
                 words={[
-                  { text: "real", tone: "periwinkle" },
-                  { text: "software", tone: "white" },
-                  { text: "is", tone: "white" },
-                  { text: "hard", tone: "cobalt" },
+                  { text: "High", tone: "periwinkle" },
+                  { text: "stakes.", tone: "white" },
+                  { text: "Real", tone: "white" },
+                  { text: "code.", tone: "cobalt" },
                 ]}
               />
             </motion.div>
           )}
 
-          {/* Beat 2: "Time to ship it" */}
+          {/* Beat 2: "Built under pressure" */}
           {step === 2 && (
             <motion.div
               key="beat-2"
@@ -433,18 +608,17 @@ export function CinematicIntro() {
               className="text-3xl sm:text-5xl md:text-[3.85rem]"
             >
               <KineticLine
-                stagger={0.085}
+                stagger={0.095}
                 words={[
-                  { text: "Time", tone: "white" },
-                  { text: "to", tone: "white" },
-                  { text: "ship", tone: "cobalt" },
-                  { text: "it", tone: "white" },
+                  { text: "Built", tone: "white" },
+                  { text: "under", tone: "white" },
+                  { text: "pressure", tone: "cobalt" },
                 ]}
               />
             </motion.div>
           )}
 
-          {/* Beat 3: Giant Metallic "Meet" Camera Zoom-Through */}
+          {/* Beat 3: Pure Black + Giant Metallic "Meet" Zoom-Through */}
           {step === 3 && (
             <motion.div
               key="beat-3"
@@ -469,7 +643,7 @@ export function CinematicIntro() {
               transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
               className="relative flex items-center justify-center"
             >
-              {/* Subtle Blue Luminous Core Glow Behind Brand Lockup */}
+              {/* Soft Blue Luminous Core Glow Behind Brand Lockup */}
               <motion.div
                 aria-hidden="true"
                 initial={{ opacity: 0, scale: 0.6 }}
@@ -478,7 +652,7 @@ export function CinematicIntro() {
                 className="pointer-events-none absolute w-56 h-56 sm:w-80 sm:h-80 rounded-full blur-[85px]"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(96, 165, 250, 0.34) 0%, rgba(37, 99, 235, 0.12) 52%, transparent 75%)",
+                    "radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, rgba(37, 99, 235, 0.1) 52%, transparent 75%)",
                 }}
               />
 
@@ -545,14 +719,14 @@ export function CinematicIntro() {
             </motion.div>
           )}
 
-          {/* Beat 5: "We build. We compete." — Generous Hold Before Smooth Melt */}
+          {/* Beat 5: Pure Black Stage + "We build. We compete." (Generous Hold Before Melt) */}
           {step === 5 && (
             <motion.div
               key="beat-5"
               initial={{ opacity: 1, scale: 0.985 }}
               animate={{ opacity: 1, scale: 1.025 }}
               exit={{ opacity: 0, scale: 1.08, filter: "blur(18px)" }}
-              transition={{ duration: 1.85, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.9, ease: [0.22, 1, 0.36, 1] }}
               className="text-3xl sm:text-5xl md:text-[3.9rem]"
             >
               <KineticLine
@@ -575,7 +749,7 @@ export function CinematicIntro() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 8.15, ease: "linear" }}
+            transition={{ duration: 8.2, ease: "linear" }}
             style={{ transformOrigin: "0% 50%" }}
             className="w-full h-full bg-gradient-to-r from-[#2563EB] via-[#93C5FD] to-[#FFFFFF]"
           />

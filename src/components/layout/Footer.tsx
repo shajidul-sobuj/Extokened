@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { Github, Linkedin, Facebook } from "@/components/ui/Icons";
 
 export function Footer() {
@@ -227,7 +227,10 @@ export function Footer() {
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-[#DCE2FF]">
             <span>© {currentYear} Extokened</span>
             <span className="text-white/25">•</span>
-            <span>Made in Dhaka</span>
+            <span className="inline-flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-[#8B9BF7]" />
+              <span>Dhaka, Bangladesh</span>
+            </span>
           </div>
 
           <div className="text-[#DCE2FF]">

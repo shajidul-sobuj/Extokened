@@ -5,39 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const STORAGE_KEY = "extokened_intro_seen";
 
-type IntroStep = 0 | 1 | 2 | 3 | 4 | 5;
+type IntroStep = 0 | 1 | 2 | 3;
 
 /**
- * Sculptural 3D Sweeping Glass Blades (Beats 0 -> 2, matching 00:00 - 00:03)
- * Pure curved obsidian-glass edge reflections that fade seamlessly into #000000
+ * Sculptural 3D Sweeping Glass Blades (Beat 0 ONLY — matching 00:00)
+ * Open curved obsidian-glass edge reflections that fade seamlessly into #000000
  * with ZERO rectangular box outlines.
  */
-function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boolean }) {
-  const isVisible = !isMelting && step <= 2;
-
-  const getPose = () => {
-    if (!isVisible) {
-      return { x: "-48vw", y: "-14vh", rotate: -24, scale: 1.12, opacity: 0 };
-    }
-    switch (step) {
-      case 0: // 00:00 — Dramatic angled blades sweeping across top-left & upper-right
-        return { x: "0vw", y: "-4vh", rotate: 0, scale: 1, opacity: 1 };
-      case 1: // 00:01-00:02 — Glides into vertical-slanted cobalt streaks along upper-left & top-center
-        return { x: "-12vw", y: "2vh", rotate: -14, scale: 1.06, opacity: 0.96 };
-      case 2: // 00:03 — Banks cleanly to the far-left edge, leaving 80%+ pitch black
-        return { x: "-38vw", y: "8vh", rotate: -20, scale: 1.02, opacity: 0.92 };
-      default:
-        return { x: "-52vw", y: "-10vh", rotate: -26, scale: 1.1, opacity: 0 };
-    }
-  };
-
+function TopSweepBlades({ active }: { active: boolean }) {
   return (
     <motion.div
       aria-hidden="true"
       initial={{ x: "14vw", y: "-14vh", rotate: 8, scale: 0.94, opacity: 0 }}
-      animate={getPose()}
+      animate={
+        active
+          ? { x: "-4vw", y: "-3vh", rotate: -6, scale: 1.02, opacity: 1 }
+          : { x: "-46vw", y: "-14vh", rotate: -22, scale: 1.12, opacity: 0 }
+      }
       transition={{
-        duration: step === 3 ? 0.42 : 0.92,
+        duration: active ? 1.15 : 0.44,
         ease: [0.16, 1, 0.3, 1],
       }}
       className="pointer-events-none absolute inset-0 flex items-start justify-center overflow-hidden will-change-transform"
@@ -49,7 +35,6 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
         className="w-full h-full max-w-[1680px]"
       >
         <defs>
-          {/* Wide volumetric electric sapphire glow */}
           <linearGradient id="bladeBloomA" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1D4ED8" stopOpacity="0" />
             <stop offset="28%" stopColor="#2563EB" stopOpacity="0.68" />
@@ -58,7 +43,6 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
             <stop offset="100%" stopColor="#000000" stopOpacity="0" />
           </linearGradient>
 
-          {/* Crisp metallic cobalt rim */}
           <linearGradient id="bladeRimA" x1="10%" y1="0%" x2="90%" y2="100%">
             <stop offset="0%" stopColor="#3B82F6" stopOpacity="0" />
             <stop offset="25%" stopColor="#3B82F6" stopOpacity="0.85" />
@@ -67,7 +51,6 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
             <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0" />
           </linearGradient>
 
-          {/* Razor-sharp white-hot specular core reflection */}
           <linearGradient id="bladeSpecA" x1="20%" y1="0%" x2="80%" y2="100%">
             <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
             <stop offset="38%" stopColor="#BFDBFE" stopOpacity="0.55" />
@@ -76,7 +59,6 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
             <stop offset="84%" stopColor="#FFFFFF" stopOpacity="0" />
           </linearGradient>
 
-          {/* Secondary distant soft-focus cobalt reflection */}
           <linearGradient id="bladeSoftB" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0" />
             <stop offset="42%" stopColor="#3B82F6" stopOpacity="0.72" />
@@ -84,7 +66,6 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
             <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0" />
           </linearGradient>
 
-          {/* Obsidian dark glass body fill */}
           <linearGradient id="obsidianFill" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#040C24" stopOpacity="0.85" />
             <stop offset="45%" stopColor="#01030A" stopOpacity="0.96" />
@@ -102,7 +83,7 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
           </filter>
         </defs>
 
-        {/* Left Sweeping Sculptural Glass Fin (curved edge reflection from top-left) */}
+        {/* Left Sweeping Sculptural Glass Fin */}
         <g>
           <path
             d="M 270 -70 L 82 545 C 62 612 96 650 165 628 L 285 575 L 440 -120 Z"
@@ -130,7 +111,7 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
           />
         </g>
 
-        {/* Center-Top Vertical Sculptural Glass Edge (glints strongly at 00:00-00:02) */}
+        {/* Center-Top Vertical Sculptural Glass Edge */}
         <g>
           <path
             d="M 808 -90 L 716 142 C 696 196 732 232 786 206 L 948 118 L 1060 -130 Z"
@@ -158,7 +139,7 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
           />
         </g>
 
-        {/* Far-Right Out-of-Focus Slanted Cobalt Reflection Streaks (depth of field) */}
+        {/* Far-Right Out-of-Focus Slanted Cobalt Reflection Streaks */}
         <g filter="url(#dofBlur)" opacity="0.82">
           <path
             d="M 1210 -60 L 910 278"
@@ -186,9 +167,8 @@ function TopSweepBlades({ step, isMelting }: { step: IntroStep; isMelting: boole
 }
 
 /**
- * Symmetric Opposing Curved Bevel Glass Corridor (Beat 4 ONLY — matching 00:05-00:06)
- * Nested concentric obsidian-glass elbow ridges framing the Extokened logo lockup
- * on a diagonal corridor, with pure pitch-black negative space and zero boxy borders.
+ * Symmetric Opposing Curved Bevel Glass Corridor (Beat 2 ONLY — matching 00:05-00:06)
+ * Nested concentric obsidian-glass elbow ridges framing Team EXTOKENED.
  */
 function BrandCorridorWaves({ active }: { active: boolean }) {
   return (
@@ -196,7 +176,7 @@ function BrandCorridorWaves({ active }: { active: boolean }) {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {/* Top-Right Opposing Concentric Beveled Glass Wave */}
+      {/* Top-Right Concentric Beveled Glass Wave */}
       <motion.div
         initial={{ x: "26vw", y: "-26vh", scale: 0.9, opacity: 0 }}
         animate={
@@ -244,7 +224,6 @@ function BrandCorridorWaves({ active }: { active: boolean }) {
             </filter>
           </defs>
 
-          {/* 3 Nested Concentric Sculptural Elbow Waves (Top-Right Quadrant) */}
           {[0, 1, 2].map((idx) => {
             const shiftX = idx * 82;
             const shiftY = -idx * 72;
@@ -281,7 +260,7 @@ function BrandCorridorWaves({ active }: { active: boolean }) {
         </svg>
       </motion.div>
 
-      {/* Bottom-Left Opposing Concentric Beveled Glass Wave */}
+      {/* Bottom-Left Concentric Beveled Glass Wave */}
       <motion.div
         initial={{ x: "-26vw", y: "26vh", scale: 0.9, opacity: 0 }}
         animate={
@@ -329,7 +308,6 @@ function BrandCorridorWaves({ active }: { active: boolean }) {
             </filter>
           </defs>
 
-          {/* 3 Nested Concentric Sculptural Elbow Waves (Bottom-Left Quadrant) */}
           {[0, 1, 2].map((idx) => {
             const shiftX = -idx * 82;
             const shiftY = idx * 72;
@@ -370,11 +348,11 @@ function BrandCorridorWaves({ active }: { active: boolean }) {
 }
 
 /**
- * Word-by-word kinetic motion-blur snap (matching 00:01 - 00:03 & 00:07)
+ * Word-by-word kinetic motion-blur snap
  */
 function KineticLine({
   words,
-  stagger = 0.11,
+  stagger = 0.12,
   className = "",
 }: {
   words: Array<{ text: string; tone?: "white" | "periwinkle" | "cobalt" | "sheen" }>;
@@ -419,14 +397,14 @@ function KineticLine({
 
 const BRAND_LETTERS = [
   { char: "E", y: -26, x: -10, rotate: -6 },
-  { char: "x", y: 24, x: 4, rotate: 5 },
-  { char: "t", y: -20, x: -4, rotate: -4 },
-  { char: "o", y: 30, x: 6, rotate: 6 },
-  { char: "k", y: -24, x: -5, rotate: -5 },
-  { char: "e", y: 26, x: 4, rotate: 4 },
-  { char: "n", y: -18, x: -4, rotate: -3 },
-  { char: "e", y: 28, x: 6, rotate: 5 },
-  { char: "d", y: -16, x: 16, rotate: -4 },
+  { char: "X", y: 24, x: 4, rotate: 5 },
+  { char: "T", y: -20, x: -4, rotate: -4 },
+  { char: "O", y: 30, x: 6, rotate: 6 },
+  { char: "K", y: -24, x: -5, rotate: -5 },
+  { char: "E", y: 26, x: 4, rotate: 4 },
+  { char: "N", y: -18, x: -4, rotate: -3 },
+  { char: "E", y: 28, x: 6, rotate: 5 },
+  { char: "D", y: -16, x: 16, rotate: -4 },
 ];
 
 export function CinematicIntro() {
@@ -476,22 +454,18 @@ export function CinematicIntro() {
       document.documentElement.classList.remove("intro-pending");
     }, 60);
 
-    // Hackathon-Team Kinetic Choreography (~8.2s total before smooth melt-away)
-    // 0.00s - 1.05s: "48 hours." (top sweeping sculptural cobalt blades)
-    // 1.05s - 2.35s: "High stakes. Real code." (vertical-slanted cobalt streaks)
-    // 2.35s - 3.45s: "Built under pressure" (far-left edge sweep, wide pure black)
-    // 3.45s - 4.25s: "Meet" (100% pure black + giant metallic zoom-through)
-    // 4.25s - 4.82s: Extokened Logo Icon blooms in symmetric curved glass corridor
-    // 4.82s - 6.30s: Logo glides left + bouncy "Extokened" letter assembly
-    // 6.30s - 8.25s: "We build. We compete." (pure black stage, ~1.95s readable hold)
-    // 8.25s -> melt: Smooth melt-away dissolve into the live website
-    const t1 = window.setTimeout(() => setStep(1), 1050);
-    const t2 = window.setTimeout(() => setStep(2), 2350);
-    const t3 = window.setTimeout(() => setStep(3), 3450);
-    const t4 = window.setTimeout(() => setStep(4), 4250);
-    const t4Expand = window.setTimeout(() => setLogoExpanded(true), 4820);
-    const t5 = window.setTimeout(() => setStep(5), 6300);
-    const tMelt = window.setTimeout(() => startMelt(), 8250);
+    // Tight 4-Beat Kinetic Choreography (~6.2s total before smooth melt-away)
+    // 0.00s - 1.30s: "Hello, world." (sculptural top cobalt-glass blades)
+    // 1.30s - 2.15s: "Meet" (100% pure black + giant metallic zoom-through)
+    // 2.15s - 2.70s: Extokened Logo blooms dead-center in symmetric curved glass corridor
+    // 2.70s - 4.25s: Logo glides left + "Team EXTOKENED" bouncy letter assembly
+    // 4.25s - 6.20s: "We Build. We Compete." (pure black stage, ~1.95s clear hold)
+    // 6.20s -> melt: Smooth melt-away dissolve into the live website
+    const t1 = window.setTimeout(() => setStep(1), 1300);
+    const t2 = window.setTimeout(() => setStep(2), 2150);
+    const t2Expand = window.setTimeout(() => setLogoExpanded(true), 2700);
+    const t3 = window.setTimeout(() => setStep(3), 4250);
+    const tMelt = window.setTimeout(() => startMelt(), 6200);
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") startMelt();
@@ -502,10 +476,8 @@ export function CinematicIntro() {
       window.clearTimeout(clearCurtainTimer);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
+      window.clearTimeout(t2Expand);
       window.clearTimeout(t3);
-      window.clearTimeout(t4);
-      window.clearTimeout(t4Expand);
-      window.clearTimeout(t5);
       window.clearTimeout(tMelt);
       window.removeEventListener("keydown", handleKeyDown);
       document.documentElement.classList.remove("intro-pending");
@@ -527,7 +499,7 @@ export function CinematicIntro() {
   return (
     <motion.div
       role="dialog"
-      aria-label="Extokened Cinematic Intro"
+      aria-label="Team Extokened Cinematic Intro"
       aria-modal="true"
       initial={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       animate={
@@ -551,77 +523,39 @@ export function CinematicIntro() {
         isMelting ? "pointer-events-none" : "pointer-events-auto"
       }`}
     >
-      {/* Beats 0-2: Sculptural Top-Sweeping Glass Edge Reflections (NO blue boxes) */}
-      <TopSweepBlades step={step} isMelting={isMelting} />
+      {/* Beat 0 ONLY: Sculptural Top-Sweeping Cobalt-Glass Blades */}
+      <TopSweepBlades active={!isMelting && step === 0} />
 
-      {/* Beat 4 ONLY: Symmetric Opposing Curved Bevel Corridor framing Extokened */}
-      <BrandCorridorWaves active={!isMelting && step === 4} />
+      {/* Beat 2 ONLY: Symmetric Opposing Curved Bevel Corridor framing Team EXTOKENED */}
+      <BrandCorridorWaves active={!isMelting && step === 2} />
 
       {/* Center Kinetic Typography & Brand Assembly Stage */}
       <div className="relative z-10 max-w-5xl w-full px-6 text-center min-h-[220px] flex items-center justify-center">
         <AnimatePresence mode="wait">
-          {/* Beat 0: "48 hours." */}
+          {/* Beat 0: "Hello, world." */}
           {step === 0 && (
             <motion.div
               key="beat-0"
-              initial={{ opacity: 0, scale: 0.9, filter: "blur(14px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 1.08, filter: "blur(14px)" }}
-              transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl sm:text-6xl md:text-[4.35rem]"
             >
-              <p className="font-display font-medium text-4xl sm:text-6xl md:text-[4.25rem] tracking-[-0.04em] bg-gradient-to-b from-white via-[#F1F5FF] to-[#BCC8E8] bg-clip-text text-transparent">
-                48 hours.
-              </p>
+              <KineticLine
+                stagger={0.14}
+                words={[
+                  { text: "Hello,", tone: "white" },
+                  { text: "world.", tone: "cobalt" },
+                ]}
+              />
             </motion.div>
           )}
 
-          {/* Beat 1: "High stakes. Real code." */}
+          {/* Beat 1: Pure Black + Giant Metallic "Meet" Zoom-Through */}
           {step === 1 && (
             <motion.div
               key="beat-1"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 1.06, filter: "blur(14px)" }}
-              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-5xl md:text-[3.85rem]"
-            >
-              <KineticLine
-                stagger={0.11}
-                words={[
-                  { text: "High", tone: "periwinkle" },
-                  { text: "stakes.", tone: "white" },
-                  { text: "Real", tone: "white" },
-                  { text: "code.", tone: "cobalt" },
-                ]}
-              />
-            </motion.div>
-          )}
-
-          {/* Beat 2: "Built under pressure" */}
-          {step === 2 && (
-            <motion.div
-              key="beat-2"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.92, filter: "blur(14px)" }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-5xl md:text-[3.85rem]"
-            >
-              <KineticLine
-                stagger={0.095}
-                words={[
-                  { text: "Built", tone: "white" },
-                  { text: "under", tone: "white" },
-                  { text: "pressure", tone: "cobalt" },
-                ]}
-              />
-            </motion.div>
-          )}
-
-          {/* Beat 3: Pure Black + Giant Metallic "Meet" Zoom-Through */}
-          {step === 3 && (
-            <motion.div
-              key="beat-3"
               initial={{ opacity: 0, scale: 0.78, filter: "blur(16px)" }}
               animate={{ opacity: 1, scale: 1.04, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 1.48, filter: "blur(20px)" }}
@@ -633,10 +567,10 @@ export function CinematicIntro() {
             </motion.div>
           )}
 
-          {/* Beat 4: Centered Logo Bloom -> Bouncy Kinetic "Extokened" Assembly */}
-          {step === 4 && (
+          {/* Beat 2: Centered Logo Bloom -> Bouncy "Team EXTOKENED" Lockup */}
+          {step === 2 && (
             <motion.div
-              key="beat-4"
+              key="beat-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 1.08, filter: "blur(16px)" }}
@@ -669,60 +603,70 @@ export function CinematicIntro() {
                 >
                   <img
                     src="/images/extokened-logo-glow.png"
-                    alt="Extokened"
+                    alt="Team EXTOKENED"
                     className="w-full h-full object-contain drop-shadow-[0_0_26px_rgba(147,197,253,0.7)]"
                   />
                 </motion.div>
 
-                {/* Bouncy Letter-by-Letter "Extokened" Assembly */}
+                {/* "Team" + Bouncy Letter-by-Letter "EXTOKENED" Assembly */}
                 {logoExpanded && (
                   <motion.div
                     initial={{ width: 0, marginLeft: 0 }}
-                    animate={{ width: "auto", marginLeft: 14 }}
+                    animate={{ width: "auto", marginLeft: 16 }}
                     transition={{ duration: 0.46, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-visible flex items-baseline font-display font-semibold text-4xl sm:text-6xl md:text-[4.5rem] tracking-[-0.04em] text-white whitespace-nowrap"
+                    className="overflow-visible flex flex-col items-start text-left whitespace-nowrap"
                   >
-                    {BRAND_LETTERS.map((item, i) => (
-                      <motion.span
-                        key={`${item.char}-${i}`}
-                        initial={{
-                          opacity: 0,
-                          y: item.y,
-                          x: item.x,
-                          rotate: item.rotate,
-                          scale: 0.72,
-                          filter: "blur(10px)",
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          x: 0,
-                          rotate: 0,
-                          scale: 1,
-                          filter: "blur(0px)",
-                        }}
-                        transition={{
-                          delay: i * 0.038,
-                          type: "spring",
-                          stiffness: 360,
-                          damping: 22,
-                          mass: 0.75,
-                        }}
-                        className="inline-block will-change-transform bg-gradient-to-b from-white via-[#F4F7FF] to-[#C8D6FF] bg-clip-text text-transparent"
-                      >
-                        {item.char}
-                      </motion.span>
-                    ))}
+                    <motion.span
+                      initial={{ opacity: 0, y: 8, filter: "blur(8px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      transition={{ duration: 0.36, ease: [0.16, 1, 0.3, 1] }}
+                      className="font-display font-medium text-xs sm:text-sm md:text-base uppercase tracking-[0.28em] text-[#7DA8FF] mb-0.5 sm:mb-1 pl-0.5"
+                    >
+                      Team
+                    </motion.span>
+                    <div className="flex items-baseline font-display font-bold text-3xl sm:text-5xl md:text-[4.15rem] tracking-[-0.025em] leading-none text-white">
+                      {BRAND_LETTERS.map((item, i) => (
+                        <motion.span
+                          key={`${item.char}-${i}`}
+                          initial={{
+                            opacity: 0,
+                            y: item.y,
+                            x: item.x,
+                            rotate: item.rotate,
+                            scale: 0.72,
+                            filter: "blur(10px)",
+                          }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            x: 0,
+                            rotate: 0,
+                            scale: 1,
+                            filter: "blur(0px)",
+                          }}
+                          transition={{
+                            delay: i * 0.036,
+                            type: "spring",
+                            stiffness: 360,
+                            damping: 22,
+                            mass: 0.75,
+                          }}
+                          className="inline-block will-change-transform bg-gradient-to-b from-white via-[#F4F7FF] to-[#C8D6FF] bg-clip-text text-transparent"
+                        >
+                          {item.char}
+                        </motion.span>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
               </div>
             </motion.div>
           )}
 
-          {/* Beat 5: Pure Black Stage + "We build. We compete." (Generous Hold Before Melt) */}
-          {step === 5 && (
+          {/* Beat 3: Pure Black Stage + "We Build. We Compete." (Generous Hold Before Melt) */}
+          {step === 3 && (
             <motion.div
-              key="beat-5"
+              key="beat-3"
               initial={{ opacity: 1, scale: 0.985 }}
               animate={{ opacity: 1, scale: 1.025 }}
               exit={{ opacity: 0, scale: 1.08, filter: "blur(18px)" }}
@@ -733,9 +677,9 @@ export function CinematicIntro() {
                 stagger={0.13}
                 words={[
                   { text: "We", tone: "white" },
-                  { text: "build.", tone: "sheen" },
+                  { text: "Build.", tone: "sheen" },
                   { text: "We", tone: "white" },
-                  { text: "compete.", tone: "cobalt" },
+                  { text: "Compete.", tone: "cobalt" },
                 ]}
               />
             </motion.div>
@@ -749,7 +693,7 @@ export function CinematicIntro() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 8.2, ease: "linear" }}
+            transition={{ duration: 6.15, ease: "linear" }}
             style={{ transformOrigin: "0% 50%" }}
             className="w-full h-full bg-gradient-to-r from-[#2563EB] via-[#93C5FD] to-[#FFFFFF]"
           />

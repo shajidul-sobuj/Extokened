@@ -11,6 +11,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { InteractiveBackground } from "@/components/ui/InteractiveBackground";
+import { CinematicIntro } from "@/components/intro/CinematicIntro";
 import { siteConfig } from "@/data/siteConfig";
 
 const inter = Inter({
@@ -99,10 +100,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(!sessionStorage.getItem('extokened_intro_seen')&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-pending');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${oxanium.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
       >
+        <CinematicIntro />
         <InteractiveBackground />
         <Navbar />
         <main className="flex-1 relative z-10 w-full">{children}</main>

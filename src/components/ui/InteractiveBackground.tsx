@@ -25,6 +25,70 @@ interface DistantStar {
   speed: number;
 }
 
+interface SkyCloud {
+  x: number;
+  yRatio: number;
+  w: number;
+  h: number;
+  speed: number;
+  alpha: number;
+  spriteIdx: number;
+  bobPhase: number;
+  bobSpeed: number;
+}
+
+function createCloudSprite(
+  palette: "twilight" | "duskRose" | "paleLavender" | "horizonWarm"
+): HTMLCanvasElement {
+  const sprite = document.createElement("canvas");
+  const sw = 520;
+  const sh = 170;
+  sprite.width = sw;
+  sprite.height = sh;
+  const sctx = sprite.getContext("2d");
+  if (!sctx) return sprite;
+
+  const colorMap: Record<typeof palette, { main: string; rim: string }> = {
+    twilight: { main: "152, 166, 228", rim: "194, 204, 246" },
+    duskRose: { main: "192, 146, 178", rim: "228, 176, 172" },
+    paleLavender: { main: "168, 178, 236", rim: "212, 220, 255" },
+    horizonWarm: { main: "214, 158, 152", rim: "245, 198, 146" },
+  };
+  const { main, rim } = colorMap[palette];
+
+  // Layered multi-puff stratus/cirrus wisp geometry (tapered tails + soft sculpted ridge)
+  const puffs = [
+    { cx: 0.16, cy: 0.58, rx: 0.16, ry: 0.2, a: 0.18, tone: main },
+    { cx: 0.27, cy: 0.5, rx: 0.19, ry: 0.27, a: 0.28, tone: main },
+    { cx: 0.39, cy: 0.45, rx: 0.22, ry: 0.33, a: 0.34, tone: rim },
+    { cx: 0.5, cy: 0.48, rx: 0.25, ry: 0.35, a: 0.36, tone: main },
+    { cx: 0.62, cy: 0.46, rx: 0.21, ry: 0.3, a: 0.32, tone: rim },
+    { cx: 0.74, cy: 0.53, rx: 0.18, ry: 0.24, a: 0.24, tone: main },
+    { cx: 0.85, cy: 0.59, rx: 0.15, ry: 0.18, a: 0.16, tone: main },
+    // Soft bottom mist base connecting the wisp organically
+    { cx: 0.48, cy: 0.62, rx: 0.36, ry: 0.22, a: 0.2, tone: main },
+    { cx: 0.56, cy: 0.58, rx: 0.28, ry: 0.18, a: 0.16, tone: rim },
+  ];
+
+  for (const p of puffs) {
+    sctx.save();
+    sctx.translate(p.cx * sw, p.cy * sh);
+    sctx.scale(1, (p.ry * sh) / (p.rx * sw));
+    const radius = p.rx * sw;
+    const grad = sctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+    grad.addColorStop(0, `rgba(${p.tone}, ${p.a})`);
+    grad.addColorStop(0.45, `rgba(${p.tone}, ${(p.a * 0.45).toFixed(3)})`);
+    grad.addColorStop(1, `rgba(${p.tone}, 0)`);
+    sctx.fillStyle = grad;
+    sctx.beginPath();
+    sctx.arc(0, 0, radius, 0, Math.PI * 2);
+    sctx.fill();
+    sctx.restore();
+  }
+
+  return sprite;
+}
+
 export function InteractiveBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({
@@ -42,7 +106,6 @@ export function InteractiveBackground() {
   });
 
   // Single continuous panoramic journey: Top twilight sky/hills -> Bottom glowing firefly meadow (Footer)
-  // Container is 165vh tall, shifting from 0% to -39.3% lands the exact bottom meadow cleanly at scrollYProgress = 1
   const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-39.3%"]);
 
   // Keep velvety obsidian-twilight richness consistent all the way into the footer (no pale fog washout)
@@ -82,13 +145,94 @@ export function InteractiveBackground() {
     };
     resize();
 
+    // Pre-render 4 feathery dusk cloud sprites once for silky 60fps drawImage rendering
+    const cloudSprites: HTMLCanvasElement[] = [
+      createCloudSprite("twilight"),
+      createCloudSprite("paleLavender"),
+      createCloudSprite("duskRose"),
+      createCloudSprite("horizonWarm"),
+    ];
+
+    // 2 subtle depth layers of wispy drifting sky clouds ("halka megh") strictly in upper sky zone
+    const scaleFactor = width < 768 ? 0.65 : 1;
+    const skyClouds: SkyCloud[] = [
+      // Upper high-altitude twilight wisps (ultra-slow)
+      {
+        x: width * 0.04,
+        yRatio: 0.06,
+        w: 540 * scaleFactor,
+        h: 175 * scaleFactor,
+        speed: 0.14,
+        alpha: 0.34,
+        spriteIdx: 0,
+        bobPhase: 0.4,
+        bobSpeed: 0.004,
+      },
+      {
+        x: width * 0.48,
+        yRatio: 0.11,
+        w: 620 * scaleFactor,
+        h: 190 * scaleFactor,
+        speed: 0.11,
+        alpha: 0.3,
+        spriteIdx: 1,
+        bobPhase: 2.1,
+        bobSpeed: 0.0035,
+      },
+      {
+        x: width * 0.84,
+        yRatio: 0.05,
+        w: 480 * scaleFactor,
+        h: 155 * scaleFactor,
+        speed: 0.16,
+        alpha: 0.28,
+        spriteIdx: 0,
+        bobPhase: 4.0,
+        bobSpeed: 0.0045,
+      },
+      // Lower dusk horizon wisps right above the mountain silhouettes (slightly warmer & closer)
+      {
+        x: width * 0.16,
+        yRatio: 0.28,
+        w: 680 * scaleFactor,
+        h: 210 * scaleFactor,
+        speed: 0.24,
+        alpha: 0.36,
+        spriteIdx: 2,
+        bobPhase: 1.2,
+        bobSpeed: 0.005,
+      },
+      {
+        x: width * 0.62,
+        yRatio: 0.32,
+        w: 640 * scaleFactor,
+        h: 195 * scaleFactor,
+        speed: 0.28,
+        alpha: 0.34,
+        spriteIdx: 3,
+        bobPhase: 3.4,
+        bobSpeed: 0.0042,
+      },
+      {
+        x: -width * 0.18,
+        yRatio: 0.22,
+        w: 560 * scaleFactor,
+        h: 180 * scaleFactor,
+        speed: 0.2,
+        alpha: 0.3,
+        spriteIdx: 1,
+        bobPhase: 5.1,
+        bobSpeed: 0.0048,
+      },
+    ];
+
     // Minimal distant night stars strictly in upper dark sky
     const starCount = width < 768 ? 24 : 40;
     const stars: DistantStar[] = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
-      y: Math.random() * height * 0.32,
+      y: Math.random() * height * 0.34,
       r: Math.random() * 1.0 + 0.35,
-      alpha: Math.random() * 0.36 + 0.14,
+      alpha: Math.random() * 0.38 + 0.14,
       phase: Math.random() * Math.PI * 2,
       speed: Math.random() * 0.01 + 0.004,
     }));
@@ -137,7 +281,47 @@ export function InteractiveBackground() {
         ctx.clearRect(0, 0, width, height);
         tick += 1;
 
-        // 1. Subtle interactive cursor twilight warmth
+        // 1. Subtle upper-sky pinpoint stars
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          const twinkle = prefersReducedMotion
+            ? 0.85
+            : 0.6 + 0.4 * Math.sin(tick * s.speed + s.phase);
+          ctx.fillStyle = `rgba(226, 232, 255, ${(s.alpha * twinkle).toFixed(3)})`;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 2. Live Drifting Twilight Sky Clouds ("Halka Megh") — Scoped cleanly to top sky zone
+        const scrollRatio = scrollYProgress.get();
+        const skyFade = Math.max(0, Math.min(1, 1 - scrollRatio * 2.1));
+        if (skyFade > 0.01) {
+          ctx.save();
+          for (let i = 0; i < skyClouds.length; i++) {
+            const c = skyClouds[i];
+            if (!prefersReducedMotion) {
+              c.x += c.speed;
+              if (c.x > width + 60) {
+                c.x = -c.w - 60;
+              }
+            }
+            const bobY = prefersReducedMotion
+              ? 0
+              : Math.sin(tick * c.bobSpeed + c.bobPhase) * 4;
+            ctx.globalAlpha = c.alpha * skyFade;
+            ctx.drawImage(
+              cloudSprites[c.spriteIdx],
+              c.x,
+              height * c.yRatio + bobY,
+              c.w,
+              c.h
+            );
+          }
+          ctx.restore();
+        }
+
+        // 3. Subtle interactive cursor twilight warmth
         if (mouseRef.current.active && isFinePointer) {
           const { x: mx, y: my } = mouseRef.current;
           const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 210);
@@ -150,19 +334,7 @@ export function InteractiveBackground() {
           ctx.fill();
         }
 
-        // 2. Subtle upper-sky pinpoint stars
-        for (let i = 0; i < stars.length; i++) {
-          const s = stars[i];
-          const twinkle = prefersReducedMotion
-            ? 0.85
-            : 0.6 + 0.4 * Math.sin(tick * s.speed + s.phase);
-          ctx.fillStyle = `rgba(226, 232, 255, ${(s.alpha * twinkle).toFixed(3)})`;
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        // 3. Calm, slow-rising warm fireflies flowing uninterrupted across page & footer
+        // 4. Calm, slow-rising warm fireflies flowing uninterrupted across page & footer
         for (let i = 0; i < fireflies.length; i++) {
           const f = fireflies[i];
 
@@ -243,7 +415,7 @@ export function InteractiveBackground() {
         window.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, []);
+  }, [scrollYProgress]);
 
   return (
     <div
@@ -270,7 +442,7 @@ export function InteractiveBackground() {
         />
       </motion.div>
 
-      {/* 2. Scroll-Linked Dynamic Atmospheric Veil (Velvety dark for content, opens smoothly into luminous meadow at footer) */}
+      {/* 2. Scroll-Linked Dynamic Atmospheric Veil */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -280,7 +452,7 @@ export function InteractiveBackground() {
         }}
       />
 
-      {/* 3. Subtle Continuous Top-to-Bottom Depth Gradient (Ensures navbar & bottom edge always feel grounded) */}
+      {/* 3. Subtle Continuous Top-to-Bottom Depth Gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -289,7 +461,7 @@ export function InteractiveBackground() {
         }}
       />
 
-      {/* 4. Soft Drifting Twilight Mist Ribbon (Intensifies softly near the meadow horizon) */}
+      {/* 4. Soft Drifting Twilight Mist Ribbon */}
       <motion.div
         className="absolute inset-x-0 bottom-[-10%] h-[52vh] pointer-events-none animate-cloud-drift"
         style={{
@@ -308,7 +480,7 @@ export function InteractiveBackground() {
         }}
       />
 
-      {/* 6. Unified 60fps Live Fireflies & Pinpoint Stars Canvas */}
+      {/* 6. Unified 60fps Live Sky Clouds, Fireflies & Pinpoint Stars Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
       {/* 7. Subtle Top Horizon Hairline */}

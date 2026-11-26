@@ -25,68 +25,143 @@ interface DistantStar {
   speed: number;
 }
 
-interface SkyCloud {
-  x: number;
-  yRatio: number;
-  w: number;
-  h: number;
-  speed: number;
-  alpha: number;
-  spriteIdx: number;
-  bobPhase: number;
-  bobSpeed: number;
+// Deterministic periodic 2D hash so clouds tile seamlessly horizontally (mod periodX)
+function periodicHash(ix: number, iy: number, periodX: number, seed: number): number {
+  const wx = ((ix % periodX) + periodX) % periodX;
+  let n = wx * 374761393 + iy * 668265263 + seed * 1442695041;
+  n = (n ^ (n >> 13)) * 1274126177;
+  return ((n ^ (n >> 16)) >>> 0) / 4294967295;
 }
 
-function createCloudSprite(
-  palette: "twilight" | "duskRose" | "paleLavender" | "horizonWarm"
-): HTMLCanvasElement {
-  const sprite = document.createElement("canvas");
-  const sw = 520;
-  const sh = 170;
-  sprite.width = sw;
-  sprite.height = sh;
-  const sctx = sprite.getContext("2d");
-  if (!sctx) return sprite;
+function periodicValueNoise(
+  x: number,
+  y: number,
+  periodX: number,
+  seed: number
+): number {
+  const ix = Math.floor(x);
+  const iy = Math.floor(y);
+  const fx = x - ix;
+  const fy = y - iy;
 
-  const colorMap: Record<typeof palette, { main: string; rim: string }> = {
-    twilight: { main: "152, 166, 228", rim: "194, 204, 246" },
-    duskRose: { main: "192, 146, 178", rim: "228, 176, 172" },
-    paleLavender: { main: "168, 178, 236", rim: "212, 220, 255" },
-    horizonWarm: { main: "214, 158, 152", rim: "245, 198, 146" },
-  };
-  const { main, rim } = colorMap[palette];
+  // Quintic smoothstep interpolation for organic wispy curves (no blocky artifacts)
+  const ux = fx * fx * fx * (fx * (fx * 6 - 15) + 10);
+  const uy = fy * fy * fy * (fy * (fy * 6 - 15) + 10);
 
-  // Layered multi-puff stratus/cirrus wisp geometry (tapered tails + soft sculpted ridge)
-  const puffs = [
-    { cx: 0.16, cy: 0.58, rx: 0.16, ry: 0.2, a: 0.18, tone: main },
-    { cx: 0.27, cy: 0.5, rx: 0.19, ry: 0.27, a: 0.28, tone: main },
-    { cx: 0.39, cy: 0.45, rx: 0.22, ry: 0.33, a: 0.34, tone: rim },
-    { cx: 0.5, cy: 0.48, rx: 0.25, ry: 0.35, a: 0.36, tone: main },
-    { cx: 0.62, cy: 0.46, rx: 0.21, ry: 0.3, a: 0.32, tone: rim },
-    { cx: 0.74, cy: 0.53, rx: 0.18, ry: 0.24, a: 0.24, tone: main },
-    { cx: 0.85, cy: 0.59, rx: 0.15, ry: 0.18, a: 0.16, tone: main },
-    // Soft bottom mist base connecting the wisp organically
-    { cx: 0.48, cy: 0.62, rx: 0.36, ry: 0.22, a: 0.2, tone: main },
-    { cx: 0.56, cy: 0.58, rx: 0.28, ry: 0.18, a: 0.16, tone: rim },
-  ];
+  const a = periodicHash(ix, iy, periodX, seed);
+  const b = periodicHash(ix + 1, iy, periodX, seed);
+  const c = periodicHash(ix, iy + 1, periodX, seed);
+  const d = periodicHash(ix + 1, iy + 1, periodX, seed);
 
-  for (const p of puffs) {
-    sctx.save();
-    sctx.translate(p.cx * sw, p.cy * sh);
-    sctx.scale(1, (p.ry * sh) / (p.rx * sw));
-    const radius = p.rx * sw;
-    const grad = sctx.createRadialGradient(0, 0, 0, 0, 0, radius);
-    grad.addColorStop(0, `rgba(${p.tone}, ${p.a})`);
-    grad.addColorStop(0.45, `rgba(${p.tone}, ${(p.a * 0.45).toFixed(3)})`);
-    grad.addColorStop(1, `rgba(${p.tone}, 0)`);
-    sctx.fillStyle = grad;
-    sctx.beginPath();
-    sctx.arc(0, 0, radius, 0, Math.PI * 2);
-    sctx.fill();
-    sctx.restore();
+  return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy;
+}
+
+function periodicFbm(
+  u: number,
+  v: number,
+  basePeriodX: number,
+  freqY: number,
+  seed: number
+): number {
+  let value = 0;
+  let amp = 0.52;
+  let px = basePeriodX;
+  let fy = freqY;
+  let norm = 0;
+
+  for (let o = 0; o < 5; o++) {
+    value += amp * periodicValueNoise(u * px, v * fy, px, seed + o * 31);
+    norm += amp;
+    px *= 2;
+    fy *= 2;
+    amp *= 0.5;
   }
 
-  return sprite;
+  return value / norm;
+}
+
+function smoothstep(edge0: number, edge1: number, x: number): number {
+  const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+
+/**
+ * Generates a 100% seamlessly horizontally-tileable, realistic wispy twilight cloud layer
+ * using 5-octave periodic Fractal Brownian Motion (fBm) noise — zero circular blob shapes.
+ */
+function createRealisticCloudTile(options: {
+  width: number;
+  height: number;
+  basePeriodX: number;
+  freqY: number;
+  seed: number;
+  thresholdLow: number;
+  thresholdHigh: number;
+  maxAlpha: number;
+  topRgb: [number, number, number];
+  bottomRgb: [number, number, number];
+}): HTMLCanvasElement {
+  const {
+    width,
+    height,
+    basePeriodX,
+    freqY,
+    seed,
+    thresholdLow,
+    thresholdHigh,
+    maxAlpha,
+    topRgb,
+    bottomRgb,
+  } = options;
+
+  const tile = document.createElement("canvas");
+  tile.width = width;
+  tile.height = height;
+  const ctx = tile.getContext("2d");
+  if (!ctx) return tile;
+
+  const img = ctx.createImageData(width, height);
+  const data = img.data;
+
+  for (let y = 0; y < height; y++) {
+    const v = y / height;
+    // Soft vertical envelope so cloud band fades organically at top & bottom edges
+    const vertFade = smoothstep(0.0, 0.28, v) * (1 - smoothstep(0.68, 1.0, v));
+
+    // Blend subtle twilight sky color from upper cool tone to lower dusk backlit tone
+    const rBase = topRgb[0] + (bottomRgb[0] - topRgb[0]) * v;
+    const gBase = topRgb[1] + (bottomRgb[1] - topRgb[1]) * v;
+    const bBase = topRgb[2] + (bottomRgb[2] - topRgb[2]) * v;
+
+    for (let x = 0; x < width; x++) {
+      const u = x / width;
+
+      // Domain warp slightly for wind-sheared cirrus/stratus Realism
+      const warp = periodicFbm(u + 0.37, v * 0.8 + 0.19, basePeriodX, freqY * 0.7, seed + 101);
+      const n = periodicFbm(
+        u + (warp - 0.5) * 0.12,
+        v + (warp - 0.5) * 0.16,
+        basePeriodX,
+        freqY,
+        seed
+      );
+
+      // Carve crisp clear starry sky gaps and delicate wispy cloud tendrils
+      const density = smoothstep(thresholdLow, thresholdHigh, n);
+      const wispy = Math.pow(density, 1.35) * vertFade;
+
+      // Subtle rim-highlight variation inside thicker cloud veins
+      const sheen = 0.82 + 0.28 * density;
+      const idx = (y * width + x) * 4;
+      data[idx] = Math.min(255, Math.round(rBase * sheen));
+      data[idx + 1] = Math.min(255, Math.round(gBase * sheen));
+      data[idx + 2] = Math.min(255, Math.round(bBase * sheen));
+      data[idx + 3] = Math.round(wispy * maxAlpha * 255);
+    }
+  }
+
+  ctx.putImageData(img, 0, 0);
+  return tile;
 }
 
 export function InteractiveBackground() {
@@ -145,86 +220,37 @@ export function InteractiveBackground() {
     };
     resize();
 
-    // Pre-render 4 feathery dusk cloud sprites once for silky 60fps drawImage rendering
-    const cloudSprites: HTMLCanvasElement[] = [
-      createCloudSprite("twilight"),
-      createCloudSprite("paleLavender"),
-      createCloudSprite("duskRose"),
-      createCloudSprite("horizonWarm"),
-    ];
+    // Generate 2 photorealistic periodic fBm wispy twilight cloud strata ONCE (blazing fast 60fps drawImage)
+    // Layer A: High-altitude thin twilight indigo-violet cirrus wisps
+    const highCloudTile = createRealisticCloudTile({
+      width: 360,
+      height: 110,
+      basePeriodX: 4,
+      freqY: 6,
+      seed: 17,
+      thresholdLow: 0.5,
+      thresholdHigh: 0.82,
+      maxAlpha: 0.16,
+      topRgb: [108, 122, 186],
+      bottomRgb: [152, 134, 178],
+    });
 
-    // 2 subtle depth layers of wispy drifting sky clouds ("halka megh") strictly in upper sky zone
-    const scaleFactor = width < 768 ? 0.65 : 1;
-    const skyClouds: SkyCloud[] = [
-      // Upper high-altitude twilight wisps (ultra-slow)
-      {
-        x: width * 0.04,
-        yRatio: 0.06,
-        w: 540 * scaleFactor,
-        h: 175 * scaleFactor,
-        speed: 0.14,
-        alpha: 0.34,
-        spriteIdx: 0,
-        bobPhase: 0.4,
-        bobSpeed: 0.004,
-      },
-      {
-        x: width * 0.48,
-        yRatio: 0.11,
-        w: 620 * scaleFactor,
-        h: 190 * scaleFactor,
-        speed: 0.11,
-        alpha: 0.3,
-        spriteIdx: 1,
-        bobPhase: 2.1,
-        bobSpeed: 0.0035,
-      },
-      {
-        x: width * 0.84,
-        yRatio: 0.05,
-        w: 480 * scaleFactor,
-        h: 155 * scaleFactor,
-        speed: 0.16,
-        alpha: 0.28,
-        spriteIdx: 0,
-        bobPhase: 4.0,
-        bobSpeed: 0.0045,
-      },
-      // Lower dusk horizon wisps right above the mountain silhouettes (slightly warmer & closer)
-      {
-        x: width * 0.16,
-        yRatio: 0.28,
-        w: 680 * scaleFactor,
-        h: 210 * scaleFactor,
-        speed: 0.24,
-        alpha: 0.36,
-        spriteIdx: 2,
-        bobPhase: 1.2,
-        bobSpeed: 0.005,
-      },
-      {
-        x: width * 0.62,
-        yRatio: 0.32,
-        w: 640 * scaleFactor,
-        h: 195 * scaleFactor,
-        speed: 0.28,
-        alpha: 0.34,
-        spriteIdx: 3,
-        bobPhase: 3.4,
-        bobSpeed: 0.0042,
-      },
-      {
-        x: -width * 0.18,
-        yRatio: 0.22,
-        w: 560 * scaleFactor,
-        h: 180 * scaleFactor,
-        speed: 0.2,
-        alpha: 0.3,
-        spriteIdx: 1,
-        bobPhase: 5.1,
-        bobSpeed: 0.0048,
-      },
-    ];
+    // Layer B: Lower dusk-horizon stratus wisps right above the mountain silhouettes (subtle backlit rose-amber)
+    const horizonCloudTile = createRealisticCloudTile({
+      width: 360,
+      height: 110,
+      basePeriodX: 3,
+      freqY: 7,
+      seed: 83,
+      thresholdLow: 0.48,
+      thresholdHigh: 0.8,
+      maxAlpha: 0.2,
+      topRgb: [148, 126, 172],
+      bottomRgb: [212, 152, 148],
+    });
+
+    let highOffsetX = 0;
+    let horizonOffsetX = 0;
 
     // Minimal distant night stars strictly in upper dark sky
     const starCount = width < 768 ? 24 : 40;
@@ -293,31 +319,34 @@ export function InteractiveBackground() {
           ctx.fill();
         }
 
-        // 2. Live Drifting Twilight Sky Clouds ("Halka Megh") — Scoped cleanly to top sky zone
+        // 2. Photorealistic Seamlessly-Tiling fBm Twilight Cloud Strata (Top Sky Zone Only)
         const scrollRatio = scrollYProgress.get();
-        const skyFade = Math.max(0, Math.min(1, 1 - scrollRatio * 2.1));
+        const skyFade = Math.max(0, Math.min(1, 1 - scrollRatio * 2.15));
         if (skyFade > 0.01) {
-          ctx.save();
-          for (let i = 0; i < skyClouds.length; i++) {
-            const c = skyClouds[i];
-            if (!prefersReducedMotion) {
-              c.x += c.speed;
-              if (c.x > width + 60) {
-                c.x = -c.w - 60;
-              }
-            }
-            const bobY = prefersReducedMotion
-              ? 0
-              : Math.sin(tick * c.bobSpeed + c.bobPhase) * 4;
-            ctx.globalAlpha = c.alpha * skyFade;
-            ctx.drawImage(
-              cloudSprites[c.spriteIdx],
-              c.x,
-              height * c.yRatio + bobY,
-              c.w,
-              c.h
-            );
+          const tileDrawW = Math.max(width * 1.25, 1280);
+          const highBandH = Math.max(height * 0.42, 240);
+          const horizonBandH = Math.max(height * 0.34, 210);
+
+          if (!prefersReducedMotion) {
+            highOffsetX = (highOffsetX + 0.14) % tileDrawW;
+            horizonOffsetX = (horizonOffsetX + 0.24) % tileDrawW;
           }
+
+          ctx.save();
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
+
+          // High sky wispy cirrus veil
+          ctx.globalAlpha = skyFade;
+          const x1 = highOffsetX - tileDrawW;
+          ctx.drawImage(highCloudTile, x1, height * 0.02, tileDrawW, highBandH);
+          ctx.drawImage(highCloudTile, x1 + tileDrawW, height * 0.02, tileDrawW, highBandH);
+
+          // Dusk ridge wispy stratus veil (blends organically into the video's sunset horizon)
+          const x2 = horizonOffsetX - tileDrawW;
+          ctx.drawImage(horizonCloudTile, x2, height * 0.26, tileDrawW, horizonBandH);
+          ctx.drawImage(horizonCloudTile, x2 + tileDrawW, height * 0.26, tileDrawW, horizonBandH);
+
           ctx.restore();
         }
 
@@ -480,7 +509,7 @@ export function InteractiveBackground() {
         }}
       />
 
-      {/* 6. Unified 60fps Live Sky Clouds, Fireflies & Pinpoint Stars Canvas */}
+      {/* 6. Unified 60fps Realistic fBm Sky Clouds, Fireflies & Pinpoint Stars Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
       {/* 7. Subtle Top Horizon Hairline */}

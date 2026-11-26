@@ -45,15 +45,15 @@ export function InteractiveBackground() {
   // Container is 165vh tall, shifting from 0% to -39.3% lands the exact bottom meadow cleanly at scrollYProgress = 1
   const videoY = useTransform(smoothProgress, [0, 1], ["0%", "-39.3%"]);
 
-  // Velvety dark veil while reading content, lifting smoothly as you arrive at the footer meadow stage
+  // Keep velvety obsidian-twilight richness consistent all the way into the footer (no pale fog washout)
   const contentScrimOpacity = useTransform(
     smoothProgress,
-    [0, 0.72, 0.92, 1],
-    [0.72, 0.68, 0.42, 0.24]
+    [0, 0.72, 0.9, 1],
+    [0.72, 0.68, 0.63, 0.58]
   );
 
-  // Subtle top vignette softens slightly near the footer so the misty hills glow continuously
-  const bottomGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.22, 0.32, 0.65]);
+  // Restrained bottom mist sheen matching upper twilight mood
+  const bottomGlowOpacity = useTransform(smoothProgress, [0, 0.7, 1], [0.16, 0.22, 0.3]);
 
   useEffect(() => {
     setMounted(true);

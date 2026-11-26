@@ -11,12 +11,12 @@ export function Footer() {
 
   return (
     <footer className="relative z-10 overflow-hidden isolate bg-transparent border-t border-white/[0.06]">
-      {/* Zero-Seam Feathered Veil (Starts 100% transparent at top so there is zero shade jump) */}
+      {/* Zero-Seam Feathered Veil (Starts 100% transparent at top, deepens into rich obsidian-twilight) */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(7, 8, 13, 0) 0%, rgba(7, 8, 13, 0.24) 24%, rgba(7, 8, 13, 0.1) 64%, rgba(7, 8, 13, 0.56) 100%)",
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0) 0%, rgba(7, 8, 13, 0.38) 26%, rgba(7, 8, 13, 0.3) 64%, rgba(7, 8, 13, 0.78) 100%)",
         }}
         aria-hidden="true"
       />
@@ -245,10 +245,10 @@ export function Footer() {
         aria-hidden="true"
       >
         <div
-          className="absolute inset-x-0 bottom-0 h-[90%] pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-[85%] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 78% 72% at 50% 88%, rgba(139, 155, 247, 0.28) 0%, rgba(184, 194, 242, 0.1) 46%, transparent 78%)",
+              "radial-gradient(ellipse 75% 68% at 50% 88%, rgba(139, 155, 247, 0.14) 0%, rgba(165, 178, 242, 0.05) 45%, transparent 76%)",
           }}
         />
 
@@ -257,10 +257,10 @@ export function Footer() {
         </p>
 
         <div
-          className="absolute inset-x-0 bottom-0 h-[40%] z-20 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-[44%] z-20 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to top, rgba(7, 8, 13, 0.9) 0%, rgba(139, 155, 247, 0.14) 46%, transparent 100%)",
+              "linear-gradient(to top, rgba(7, 8, 13, 0.94) 0%, rgba(7, 8, 13, 0.45) 48%, transparent 100%)",
           }}
         />
       </div>

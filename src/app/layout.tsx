@@ -5,7 +5,7 @@ import {
   JetBrains_Mono,
   Plus_Jakarta_Sans,
   Instrument_Serif,
-  Syne,
+  Oxanium,
 } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
@@ -46,9 +46,9 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const syne = Syne({
+const oxanium = Oxanium({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-oxanium",
   display: "swap",
   weight: ["700", "800"],
 });
@@ -101,7 +101,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${syne.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
+        className={`${inter.variable} ${plusJakartaSans.variable} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${oxanium.variable} antialiased bg-[#07080D] text-[#F5F7FF] min-h-screen flex flex-col selection:bg-[#8B9BF7]/35 selection:text-white`}
       >
         <InteractiveBackground />
         <Navbar />

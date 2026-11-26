@@ -286,11 +286,10 @@ body {
     background: rgba(11, 14, 24, 0.9);
   }
 
-  /* GPU-Clean Frosted Glass Footer Wordmark (Zero drop-shadow artifact bug) */
+  /* GPU-Clean Sculptural Syne Frosted Glass Footer Wordmark (Zero drop-shadow artifact bug) */
   .footer-wordmark-glass {
-    font-family: var(--font-plus-jakarta), var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: clamp(2.85rem, 14.8vw, 15.5rem);
-    font-weight: 700;
+    font-family: var(--font-syne), var(--font-space-grotesk), system-ui, sans-serif;
+    font-weight: 800;
     line-height: 0.82;
     letter-spacing: -0.04em;
     white-space: nowrap;
@@ -298,15 +297,29 @@ body {
     user-select: none;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(210, 218, 255, 0.66) 44%,
-      rgba(165, 178, 245, 0.36) 78%,
-      rgba(139, 155, 247, 0.12) 100%
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(218, 226, 255, 0.72) 42%,
+      rgba(165, 178, 248, 0.36) 76%,
+      rgba(139, 155, 247, 0.1) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.28);
+  }
+
+  /* Sculptural Hollow Glass Outline Variant (for Mobile/Desktop architectural depth) */
+  .footer-wordmark-outline {
+    font-family: var(--font-syne), var(--font-space-grotesk), system-ui, sans-serif;
+    font-weight: 800;
+    line-height: 0.84;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1.25px rgba(210, 220, 255, 0.42);
   }
 }
 

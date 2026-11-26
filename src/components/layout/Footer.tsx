@@ -237,28 +237,91 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Dedicated Monumental Frosted-Glass EXTOKENED Stage (Normal Flow — Zero Overlap, Zero GPU Glitch) */}
+      {/* Dedicated Device-Tailored Monumental Syne Frosted-Glass Stage (Zero Overlap, Zero GPU Glitch) */}
       <div
-        className="relative z-10 w-full pt-8 sm:pt-12 md:pt-16 pb-2 sm:pb-3 px-4 flex justify-center overflow-hidden select-none pointer-events-none"
+        className="relative z-10 w-full pt-8 sm:pt-12 lg:pt-14 pb-3 sm:pb-4 overflow-hidden select-none pointer-events-none"
         aria-hidden="true"
       >
+        {/* Soft Twilight Lavender & Warm Horizon Mist Aura */}
         <div
-          className="absolute inset-x-0 bottom-0 h-[85%] pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-[90%] pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 75% 70% at 50% 85%, rgba(139, 155, 247, 0.24) 0%, rgba(184, 194, 242, 0.08) 45%, transparent 78%)",
+              "radial-gradient(ellipse 78% 72% at 50% 88%, rgba(139, 155, 247, 0.26) 0%, rgba(245, 196, 81, 0.08) 38%, transparent 78%)",
           }}
         />
 
-        <p className="footer-wordmark-glass relative z-10 m-0 text-center">
-          EXTOKENED
-        </p>
+        {/* MOBILE (< 640px): Bold 2-Line Stacked Editorial Poster Lockup (EX / TOKENED) */}
+        <div className="sm:hidden relative z-10 px-4 flex flex-col items-start gap-1">
+          <div className="w-full flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.2em] text-[#A5B2FF]/75 mb-1">
+            <span>23.81°N · 90.41°E</span>
+            <span>DHAKA SQUAD</span>
+          </div>
 
+          <div className="w-full flex items-center gap-3">
+            <span
+              className="footer-wordmark-outline leading-[0.86]"
+              style={{ fontSize: "clamp(3.4rem, 19vw, 5.2rem)" }}
+            >
+              EX
+            </span>
+            <span className="h-[1.5px] flex-1 bg-gradient-to-r from-[#A5B2FF]/50 via-[#F5C451]/45 to-transparent rounded-full" />
+            <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-[#F5C451]/80 shrink-0">
+              EST. 23
+            </span>
+          </div>
+
+          <span
+            className="footer-wordmark-glass leading-[0.86] w-full"
+            style={{ fontSize: "clamp(2.85rem, 13.4vw, 4.4rem)" }}
+          >
+            TOKENED
+          </span>
+        </div>
+
+        {/* TABLET (640px – 1023px): Editorial Framed Wide Coordinate Wordmark */}
+        <div className="hidden sm:flex lg:hidden relative z-10 px-6 flex-col items-center gap-3">
+          <div className="w-full max-w-3xl flex items-center gap-4 text-[10px] font-mono uppercase tracking-[0.22em] text-[#A5B2FF]/70">
+            <span>EXTOKENED COLLECTIVE</span>
+            <span className="h-px flex-1 bg-gradient-to-r from-white/20 via-[#8B9BF7]/35 to-white/20" />
+            <span>DHAKA · 23.81°N 90.41°E</span>
+          </div>
+
+          <p
+            className="footer-wordmark-glass m-0 text-center"
+            style={{ fontSize: "clamp(3.6rem, 10.6vw, 6.4rem)" }}
+          >
+            EXTOKENED
+          </p>
+        </div>
+
+        {/* DESKTOP (1024px+): Colossal Dual-Depth Liquid Frosted-Glass Syne Wordmark */}
+        <div className="hidden lg:flex relative z-10 px-6 flex-col items-center">
+          <div className="relative inline-flex items-center justify-center">
+            {/* Subtle Offset Hollow Glass Rim Layer for 3D Sculptural Depth */}
+            <span
+              className="footer-wordmark-outline absolute inset-0 translate-y-[4px] opacity-40"
+              style={{ fontSize: "clamp(5.4rem, 10.8vw, 11.8rem)" }}
+            >
+              EXTOKENED
+            </span>
+
+            {/* Primary Monumental Frosted Liquid-Glass Fill */}
+            <p
+              className="footer-wordmark-glass relative z-10 m-0 text-center"
+              style={{ fontSize: "clamp(5.4rem, 10.8vw, 11.8rem)" }}
+            >
+              EXTOKENED
+            </p>
+          </div>
+        </div>
+
+        {/* Bottom Horizon Mist Veil (Sinks the bottom edge smoothly into twilight fog) */}
         <div
-          className="absolute inset-x-0 bottom-0 h-[42%] z-20 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-[40%] z-20 pointer-events-none"
           style={{
             background:
-              "linear-gradient(to top, rgba(7, 8, 13, 0.88) 0%, rgba(139, 155, 247, 0.14) 45%, transparent 100%)",
+              "linear-gradient(to top, rgba(7, 8, 13, 0.9) 0%, rgba(139, 155, 247, 0.14) 48%, transparent 100%)",
           }}
         />
       </div>

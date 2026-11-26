@@ -64,6 +64,7 @@ const config: Config = {
           "sans-serif",
         ],
         serif: ["var(--font-instrument-serif)", "Georgia", "serif"],
+        syne: ["var(--font-syne)", "var(--font-space-grotesk)", "system-ui", "sans-serif"],
         tech: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"],
       },

@@ -10,13 +10,13 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 overflow-hidden isolate bg-transparent border-t border-white/[0.08]">
-      {/* Soft Translucent Contrast Veil (Zero Duplicate Video — Melds 100% Seamlessly with Global Backdrop) */}
+    <footer className="relative z-10 overflow-hidden isolate bg-transparent border-t border-white/[0.06]">
+      {/* Zero-Seam Feathered Veil (Starts 100% transparent at top so there is zero shade jump) */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(7, 8, 13, 0.45) 0%, rgba(7, 8, 13, 0.34) 38%, rgba(7, 8, 13, 0.08) 72%, rgba(7, 8, 13, 0.58) 100%)",
+            "linear-gradient(to bottom, rgba(7, 8, 13, 0) 0%, rgba(7, 8, 13, 0.24) 24%, rgba(7, 8, 13, 0.1) 64%, rgba(7, 8, 13, 0.56) 100%)",
         }}
         aria-hidden="true"
       />
@@ -222,17 +222,16 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright & Status Bar — Frosted Readability over Continuous Meadow */}
-        <div className="pt-6 border-t border-white/[0.12] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+        {/* Bottom Copyright & Credit Row */}
+        <div className="pt-6 border-t border-white/[0.1] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-[#DCE2FF]">
             <span>© {currentYear} Extokened</span>
             <span className="text-white/25">•</span>
             <span>Made in Dhaka</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0A0D18]/70 backdrop-blur-md border border-white/[0.14] text-[#E8ECFF]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
-            <span>Built by Extokened Squad</span>
+          <div className="text-[#DCE2FF]">
+            Built by <span className="text-white font-semibold">Extokened Squad</span>
           </div>
         </div>
       </div>
